@@ -70,96 +70,95 @@ const BossDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-primary/5 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-md mx-auto pb-24">
         {/* Header */}
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <Dog className="h-12 w-12 text-primary animate-tail-wag" />
+        <div className="bg-gradient-to-br from-primary via-primary/90 to-peach p-6 pt-12 pb-8 rounded-b-[2rem]">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                <Dog className="h-6 w-6 text-white" />
+              </div>
               <div>
-                <div className="text-xs uppercase tracking-wider text-primary font-semibold mb-1">
-                  🐕 Fur Boss Dashboard
-                </div>
-                <h1 className="text-3xl font-bold">
-                  Welcome, {profile?.name}!
+                <p className="text-white/80 text-sm">Welcome back</p>
+                <h1 className="text-2xl font-bold text-white">
+                  {profile?.name}! 🐕
                 </h1>
               </div>
             </div>
-            <p className="text-muted-foreground ml-[60px]">Manage your pets, sessions & caretakers</p>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={handleSignOut}
+              className="text-white hover:bg-white/20"
+            >
+              <LogOut className="h-5 w-5" />
+            </Button>
           </div>
-          <Button variant="outline" onClick={handleSignOut} size="sm">
-            <LogOut className="h-4 w-4 mr-2" />
-            Sign Out
-          </Button>
+
+          {/* Stats Pills */}
+          <div className="flex gap-3 overflow-x-auto pb-2">
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 whitespace-nowrap">
+              <Dog className="h-4 w-4 text-white" />
+              <span className="text-white text-sm font-medium">0 Pets</span>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 whitespace-nowrap">
+              <Calendar className="h-4 w-4 text-white" />
+              <span className="text-white text-sm font-medium">0 Sessions</span>
+            </div>
+          </div>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">My Pets</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-primary">0</div>
-              <p className="text-sm text-muted-foreground">Furry friends</p>
-            </CardContent>
-          </Card>
+        <div className="p-4 space-y-4 mt-4">
+          {/* Quick Actions */}
+          <div>
+            <h2 className="text-lg font-bold mb-3">Quick Actions</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <button className="bg-gradient-to-br from-primary to-primary/80 rounded-3xl p-6 text-left shadow-lg shadow-primary/20 hover:shadow-xl transition-shadow">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
+                  <Plus className="h-6 w-6 text-white" />
+                </div>
+                <p className="text-white font-semibold">Add Pet</p>
+              </button>
+              <button className="bg-gradient-to-br from-secondary to-secondary/80 rounded-3xl p-6 text-left shadow-lg shadow-secondary/20 hover:shadow-xl transition-shadow">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
+                  <Calendar className="h-6 w-6 text-white" />
+                </div>
+                <p className="text-white font-semibold">New Session</p>
+              </button>
+            </div>
+          </div>
 
-          <Card className="bg-gradient-to-br from-secondary/10 to-secondary/5 border-secondary/20">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Active Sessions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-secondary">0</div>
-              <p className="text-sm text-muted-foreground">Care periods</p>
-            </CardContent>
-          </Card>
+          {/* My Pets */}
+          <div>
+            <h2 className="text-lg font-bold mb-3">My Pets</h2>
+            <Card className="rounded-3xl border-0 shadow-lg overflow-hidden">
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Dog className="h-10 w-10 text-muted-foreground/40" />
+                </div>
+                <p className="text-muted-foreground mb-4">No pets yet</p>
+                <Button className="rounded-full bg-primary hover:bg-primary/90">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Your First Pet
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
 
-          <Card className="bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Fur Agents</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-accent">0</div>
-              <p className="text-sm text-muted-foreground">Trusted helpers</p>
-            </CardContent>
-          </Card>
+          {/* Care Sessions */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-bold">Care Sessions</h2>
+              <button className="text-sm text-primary font-medium">View All</button>
+            </div>
+            <Card className="rounded-3xl border-0 shadow-lg">
+              <CardContent className="p-6">
+                <p className="text-muted-foreground text-center py-4">No active sessions</p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-
-        {/* Quick Actions */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Get started with your pet care journey</CardDescription>
-          </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button className="h-24 flex flex-col items-center justify-center gap-2">
-              <Plus className="h-6 w-6" />
-              <span className="font-semibold">Add Your Pet</span>
-            </Button>
-            <Button variant="outline" className="h-24 flex flex-col items-center justify-center gap-2">
-              <Calendar className="h-6 w-6" />
-              <span className="font-semibold">Create Care Session</span>
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Coming Soon */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Your Pets</CardTitle>
-            <CardDescription>Add your first pet to get started!</CardDescription>
-          </CardHeader>
-          <CardContent className="text-center py-12">
-            <Dog className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-            <p className="text-muted-foreground">No pets yet. Add your first furry friend!</p>
-            <Button className="mt-4">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Pet
-            </Button>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

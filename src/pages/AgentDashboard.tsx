@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Dog, CheckCircle, Camera, LogOut, Award } from "lucide-react";
+import { Dog, CheckCircle, Camera, LogOut, Award, Calendar } from "lucide-react";
 
 interface Profile {
   name: string;
@@ -70,91 +70,94 @@ const AgentDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-secondary/10 via-background to-accent/5 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-md mx-auto pb-24">
         {/* Header */}
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <Award className="h-12 w-12 text-secondary animate-paw-bounce" />
+        <div className="bg-gradient-to-br from-secondary via-secondary/90 to-accent p-6 pt-12 pb-8 rounded-b-[2rem]">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                <Award className="h-6 w-6 text-white" />
+              </div>
               <div>
-                <div className="text-xs uppercase tracking-wider text-secondary font-semibold mb-1">
-                  🐾 Fur Agent Dashboard
-                </div>
-                <h1 className="text-3xl font-bold">
-                  Hello, {profile?.name}!
+                <p className="text-white/80 text-sm">Hello</p>
+                <h1 className="text-2xl font-bold text-white">
+                  {profile?.name}! 🐾
                 </h1>
               </div>
             </div>
-            <p className="text-muted-foreground ml-[60px]">Complete tasks & earn Paw Points</p>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={handleSignOut}
+              className="text-white hover:bg-white/20"
+            >
+              <LogOut className="h-5 w-5" />
+            </Button>
           </div>
-          <Button variant="outline" onClick={handleSignOut} size="sm">
-            <LogOut className="h-4 w-4 mr-2" />
-            Sign Out
-          </Button>
+
+          {/* Paw Points */}
+          <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-4 flex items-center justify-between">
+            <div>
+              <p className="text-white/80 text-sm mb-1">Your Paw Points</p>
+              <p className="text-3xl font-bold text-white">{profile?.paw_points || 0}</p>
+            </div>
+            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+              <Award className="h-8 w-8 text-white" />
+            </div>
+          </div>
         </div>
 
-        {/* Paw Points Card */}
-        <Card className="bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-2xl">Your Paw Points</CardTitle>
-                <CardDescription>Keep up the great work!</CardDescription>
-              </div>
-              <Award className="h-12 w-12 text-accent" />
+        <div className="p-4 space-y-4 mt-4">
+          {/* Today's Tasks */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-bold">Today's Tasks</h2>
+              <span className="text-sm text-muted-foreground">0 tasks</span>
             </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-5xl font-bold text-accent mb-2">
-              {profile?.paw_points || 0}
+            <Card className="rounded-3xl border-0 shadow-lg overflow-hidden">
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Calendar className="h-10 w-10 text-muted-foreground/40" />
+                </div>
+                <p className="text-muted-foreground mb-2">No tasks today</p>
+                <p className="text-sm text-muted-foreground">You're all caught up! 🎉</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* My Assignments */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-bold">My Assignments</h2>
+              <button className="text-sm text-secondary font-medium">View All</button>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Earned from caring for furry friends
-            </p>
-          </CardContent>
-        </Card>
+            <div className="space-y-3">
+              <Card className="rounded-3xl border-0 shadow-lg">
+                <CardContent className="p-6">
+                  <p className="text-muted-foreground text-center py-4">No assignments yet</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
 
-        {/* Today's Tasks */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Today's Tasks</CardTitle>
-            <CardDescription>Complete tasks to earn Paw Points!</CardDescription>
-          </CardHeader>
-          <CardContent className="text-center py-12">
-            <CheckCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-            <p className="text-muted-foreground mb-2">No tasks assigned yet</p>
-            <p className="text-sm text-muted-foreground">
-              Once a Fur Boss assigns you to a care session, your tasks will appear here
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Camera className="h-8 w-8 text-secondary" />
-                <div>
-                  <CardTitle>Photo Journal</CardTitle>
-                  <CardDescription>View your uploaded moments</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
-
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Award className="h-8 w-8 text-primary" />
-                <div>
-                  <CardTitle>My Achievements</CardTitle>
-                  <CardDescription>Badges and streaks</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
+          {/* Recent Activity */}
+          <div>
+            <h2 className="text-lg font-bold mb-3">Recent Activity</h2>
+            <div className="space-y-3">
+              <Card className="rounded-3xl border-0 shadow-lg bg-gradient-to-br from-mint/20 to-mint/5">
+                <CardContent className="p-4 flex items-center gap-3">
+                  <div className="w-10 h-10 bg-mint/30 rounded-full flex items-center justify-center">
+                    <Award className="h-5 w-5 text-mint-foreground" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium">Welcome to DingDongDog!</p>
+                    <p className="text-sm text-muted-foreground">Start earning Paw Points</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>
