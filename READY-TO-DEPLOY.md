@@ -26,6 +26,7 @@
 ### 5. ✅ Code Committed
 - ✅ All changes committed to git
 - ✅ Ready to push to GitHub
+- ✅ `bun.lockb` removed so Cloudflare uses `npm install`
 
 ---
 
@@ -43,6 +44,7 @@ git push origin main
 **If you get authentication errors:**
 - Use your GitHub username and personal access token
 - Or switch to SSH: `git remote set-url origin git@github.com:appsparrow/pettabl.git`
+- Double-check that `bun.lockb` is not committed (run `git status`). If you see it, run `git rm bun.lockb` before pushing.
 
 ### Step 2: Create Cloudflare Pages Project
 
@@ -92,6 +94,8 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4bnZzcWt
    ```
    https://your-project.pages.dev
    ```
+
+> 🛠️ **Cloudflare Build Tip:** Their build system auto-detects `bun.lockb`. If that file is present, Cloudflare runs `bun install --frozen-lockfile`, which fails on this project. Keep `bun.lockb` out of the repo (it's now in `.gitignore`) so the build uses `npm install`.
 
 ---
 

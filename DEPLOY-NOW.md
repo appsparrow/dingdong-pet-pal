@@ -18,6 +18,8 @@ git commit -m "feat: Ready for Cloudflare Pages deployment with updated logo"
 git push origin main
 ```
 
+> 🔧 **Before pushing:** Make sure `bun.lockb` is not in the repo. If you ever see it, run `git rm bun.lockb` and commit the removal. Cloudflare sees that file and runs `bun install --frozen-lockfile`, which fails — we rely on `npm install` instead.
+
 ### Step 2: Create Cloudflare Pages Project
 
 1. **Go to Cloudflare Dashboard**

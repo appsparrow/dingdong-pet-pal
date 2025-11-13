@@ -28,6 +28,8 @@ cd /Users/siva/Documents/GitHub/pettabl
 npm install
 ```
 
+> ⚠️ **Important:** Delete any `bun.lockb` file before deploying. If it exists, Cloudflare Pages will default to `bun install --frozen-lockfile` and the build will fail with `lockfile had changes, but lockfile is frozen`. Run `git rm bun.lockb` (and add it to `.gitignore`) so Cloudflare uses `npm install` instead.
+
 ### 1.2 Test Local Build
 
 ```bash
