@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Dog, Heart, Calendar, Users, Shield, Smartphone, Check } from "lucide-react";
 
 const Landing = () => {
-  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
@@ -52,6 +51,14 @@ const Landing = () => {
               >
                 Get it on Google Play 🤖
               </a>
+            </Button>
+            <Button
+              size="lg"
+              variant="ghost"
+              className="text-lg px-8 py-6"
+              asChild
+            >
+              <a href="#features">Learn More</a>
             </Button>
           </div>
         </div>
