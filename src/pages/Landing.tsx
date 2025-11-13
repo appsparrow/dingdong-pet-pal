@@ -19,12 +19,11 @@ const Landing = () => {
           </div>
           
           <p className="text-2xl md:text-3xl text-muted-foreground mb-8">
-            Modern Pet Care Coordination 🐾
+            Home Pet Sitting Simplified 🐾
           </p>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Seamlessly coordinate pet care between owners and caretakers. 
-            Track activities, manage schedules, and keep your furry friends happy — anywhere, anytime.
+            Coordinate in-home pet sitting with ease. Assign trusted caretakers, share daily routines, and keep your furry friends happy — even when you’re away.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -128,11 +127,11 @@ const Landing = () => {
       <div className="py-20 bg-gradient-to-br from-primary to-secondary text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Ready to Transform Pet Care?
+            Ready to Simplify Pet Sitting?
           </h2>
           
           <p className="text-xl md:text-2xl mb-12 opacity-90 max-w-2xl mx-auto">
-            Join pet owners and caretakers who trust Pettabl for seamless coordination.
+            Join pet parents and sitters who trust Pettabl for stress-free, in-home care coordination.
           </p>
           
           <Button

@@ -262,7 +262,7 @@ Users get updates automatically on next app launch.
 
 **Name**: DingDongDog
 
-**Subtitle**: Modern Pet Care Coordination
+**Subtitle**: Home Pet Sitting Simplified
 
 **Description**:
 ```

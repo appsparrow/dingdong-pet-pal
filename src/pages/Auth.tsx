@@ -138,7 +138,7 @@ const Auth = () => {
             />
           </div>
           <CardDescription className="text-base">
-            Modern pet care, anywhere 🐾
+            Home pet sitting, simplified 🐾
           </CardDescription>
         </CardHeader>
         <CardContent>

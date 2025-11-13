@@ -177,7 +177,7 @@ function AuthScreen({ onSignIn }: { onSignIn: () => void }) {
             <View style={styles.brandRow}>
               <Image source={logo} style={styles.brandLogo} resizeMode="contain" />
             </View>
-            <Text style={styles.subtitle}>Modern pet care, anywhere</Text>
+            <Text style={styles.subtitle}>Home pet sitting, simplified</Text>
 
             <View style={styles.card}>
               <Text style={styles.cardTitle}>{isSignUp ? 'Create Account' : 'Welcome Back!'}</Text>

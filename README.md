@@ -1,6 +1,6 @@
-# 🐕 DingDongDog - Modern Pet Care Coordination
+# 🐕 Pettabl - Home Pet Sitting Simplified
 
-Seamlessly coordinate pet care between owners and caretakers. Track activities, manage schedules, and keep your furry friends happy — anywhere, anytime.
+Coordinate in-home pet sitting with ease. Assign trusted caretakers, share daily routines, and keep your furry friends happy even when you’re away.
 
 ---
 

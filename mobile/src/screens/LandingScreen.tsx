@@ -19,11 +19,10 @@ export default function LandingScreen({ navigation }: any) {
           <View style={styles.logoContainer}>
             <Image source={logo} style={styles.logo} resizeMode="contain" />
           </View>
-          <Text style={styles.subtitle}>Modern Pet Care Coordination 🐾</Text>
+          <Text style={styles.subtitle}>Home Pet Sitting Simplified 🐾</Text>
           
           <Text style={styles.description}>
-            Seamlessly coordinate pet care between owners and caretakers. 
-            Track activities, manage schedules, and keep your furry friends happy.
+            Coordinate in-home pet sitting with ease. Assign trusted caretakers, share routines, and keep your furry friends happy while you’re away.
           </Text>
           
           <View style={styles.buttonGroup}>
@@ -84,9 +83,9 @@ export default function LandingScreen({ navigation }: any) {
           colors={[colors.primary, colors.secondary]}
           style={styles.cta}
         >
-          <Text style={styles.ctaTitle}>Ready to Transform Pet Care?</Text>
+          <Text style={styles.ctaTitle}>Ready to Simplify Pet Sitting?</Text>
           <Text style={styles.ctaSubtitle}>
-            Join pet owners and caretakers who trust Pettabl for seamless coordination
+            Join pet parents and sitters who trust Pettabl for stress-free, in-home care coordination
           </Text>
           
           <TouchableOpacity 
