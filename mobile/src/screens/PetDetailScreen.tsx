@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Image, TextInput, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft, Plus, Edit, Save, X, Camera } from 'lucide-react-native';
 import { supabase } from '../lib/supabase';
@@ -280,8 +280,11 @@ export default function PetDetailScreen({ route, navigation }: any) {
     <View style={styles.screen}>
       <LinearGradient
         colors={['#EEF2FF', '#FFFFFF']}
-        style={StyleSheet.absoluteFillObject}
-        pointerEvents="none"
+        style={[
+          StyleSheet.absoluteFillObject,
+          Platform.OS === 'web' ? { pointerEvents: 'none' } : undefined,
+        ]}
+        pointerEvents={Platform.OS === 'web' ? undefined : 'none'}
       />
       <LinearGradient
         colors={['#f39de6', '#f8c77f']}
@@ -585,6 +588,7 @@ export default function PetDetailScreen({ route, navigation }: any) {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: '#F8FAFF' },
   loadingText: { fontSize: 18, color: colors.textMuted, textAlign: 'center', marginTop: 40 },
   header: { paddingTop: 60, paddingBottom: 80, paddingHorizontal: 24, alignItems: 'center' },
   backButton: { position: 'absolute', top: 60, left: 20, width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(255,255,255,0.3)', justifyContent: 'center', alignItems: 'center' },

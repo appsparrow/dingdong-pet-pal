@@ -51,7 +51,14 @@ export default function AgentProfileScreen({ route, navigation }: any) {
 
   return (
     <View style={styles.screen}>
-      <LinearGradient colors={['#EEF2FF', '#FFFFFF']} style={StyleSheet.absoluteFillObject} pointerEvents="none" />
+      <LinearGradient
+        colors={['#EEF2FF', '#FFFFFF']}
+        style={[
+          StyleSheet.absoluteFillObject,
+          Platform.OS === 'web' ? { pointerEvents: 'none' } : undefined,
+        ]}
+        pointerEvents={Platform.OS === 'web' ? undefined : 'none'}
+      />
       <ScrollView contentContainerStyle={[styles.container, { paddingTop: insets.top + 12 }]} showsVerticalScrollIndicator={false}>
         <View style={styles.topRow}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()} activeOpacity={0.75}>

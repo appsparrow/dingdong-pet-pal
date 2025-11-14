@@ -1,15 +1,67 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, Image } from 'react-native';
+import { useState, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, Image, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Dog, Heart, Calendar, Users, Shield, Smartphone } from 'lucide-react-native';
+import { supabase } from '../lib/supabase';
 import { colors } from '../theme/colors';
 
 const logo = require('../../assets/logo-pettabl.png');
 
 export default function LandingScreen({ navigation }: any) {
   const isWeb = Platform.OS === 'web';
+  const scrollRef = useRef<ScrollView>(null);
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  const scrollToWaitlist = () => {
+    setWaitlistOpen(true);
+    setStatus('idle');
+    setMessage('');
+    setTimeout(() => {
+      scrollRef.current?.scrollTo({ y: 0, animated: true });
+    }, 100);
+  };
+
+  const submitWaitlist = async () => {
+    if (!fullName.trim() || !email.trim()) {
+      setStatus('error');
+      setMessage('Please add both your name and email.');
+      return;
+    }
+
+    try {
+      setStatus('loading');
+      setMessage('');
+
+      const { error } = await supabase
+        .from('waitlist')
+        .insert({
+          name: fullName.trim(),
+          email: email.trim().toLowerCase(),
+          source: Platform.OS === 'web' ? 'expo-web' : Platform.OS,
+          context: 'Landing page signup',
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      setStatus('success');
+      setMessage("Thanks! You're on the list. 🎉");
+      setFullName('');
+      setEmail('');
+    } catch (error: any) {
+      console.error('Waitlist error', error);
+      setStatus('error');
+      setMessage(error.message || 'Something went wrong. Please try again.');
+    }
+  };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+    <ScrollView ref={scrollRef} style={styles.container} contentContainerStyle={styles.scrollContent}>
       <LinearGradient
         colors={[colors.primary + '10', colors.background, colors.accent + '10']}
         style={styles.gradient}
@@ -19,20 +71,86 @@ export default function LandingScreen({ navigation }: any) {
           <View style={styles.logoContainer}>
             <Image source={logo} style={styles.logo} resizeMode="contain" />
           </View>
-          <Text style={styles.subtitle}>Home Pet Sitting Simplified 🐾</Text>
-          
           <Text style={styles.description}>
             Coordinate in-home pet sitting with ease. Assign trusted caretakers, share routines, and keep your furry friends happy while you’re away.
           </Text>
+          <Text style={styles.subtitle}>Home Pet Sitting Simplified 🐾</Text>
+          <View style={styles.waitlistPrompt}>
+            <Text style={styles.waitlistCopy}>Want early access?</Text>
+            <TouchableOpacity
+              style={styles.heartButton}
+              onPress={() => {
+                setWaitlistOpen((prev) => !prev);
+                setStatus('idle');
+                setMessage('');
+              }}
+              accessibilityLabel="Join Pettabl waitlist"
+            >
+              <Heart color={isWeb ? '#ff6b6b' : '#fff'} size={24} />
+            </TouchableOpacity>
+          </View>
+
           
-          <View style={styles.buttonGroup}>
+
+          {waitlistOpen && (
+            <View style={styles.waitlistCard}>
+              <Text style={styles.waitlistTitle}>Join the Pettabl waitlist</Text>
+              <Text style={styles.waitlistSubtitle}>
+                We’ll send invite codes and launch news to your inbox.
+              </Text>
+              <View style={styles.waitlistField}>
+                <Text style={styles.waitlistLabel}>Name</Text>
+                <TextInput
+                  style={styles.waitlistInput}
+                  placeholder="Jane Petlover"
+                  value={fullName}
+                  onChangeText={setFullName}
+                  editable={status !== 'loading'}
+                  autoCapitalize="words"
+                />
+              </View>
+              <View style={styles.waitlistField}>
+                <Text style={styles.waitlistLabel}>Email</Text>
+                <TextInput
+                  style={styles.waitlistInput}
+                  placeholder="you@example.com"
+                  value={email}
+                  onChangeText={setEmail}
+                  editable={status !== 'loading'}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+              <TouchableOpacity
+                style={[styles.waitlistButton, status === 'loading' && styles.waitlistButtonDisabled]}
+                onPress={submitWaitlist}
+                disabled={status === 'loading'}
+              >
+                <Text style={styles.waitlistButtonText}>
+                  {status === 'loading' ? 'Saving…' : 'Save my spot'}
+                </Text>
+              </TouchableOpacity>
+              {message ? (
+                <Text
+                  style={[
+                    styles.waitlistMessage,
+                    status === 'success' ? styles.waitlistSuccess : styles.waitlistError,
+                  ]}
+                >
+                  {message}
+                </Text>
+              ) : null}
+            </View>
+          )}
+
+          {/* <View style={styles.buttonGroup}>
             <TouchableOpacity 
               style={styles.primaryButton}
               onPress={() => navigation.navigate('Auth')}
             >
               <Text style={styles.primaryButtonText}>Get Started Free 🚀</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
 
         {/* Features Section */}
@@ -90,9 +208,9 @@ export default function LandingScreen({ navigation }: any) {
           
           <TouchableOpacity 
             style={styles.ctaButton}
-            onPress={() => navigation.navigate('Auth')}
+            onPress={scrollToWaitlist}
           >
-            <Text style={styles.ctaButtonText}>Get Started — It's Free! 🎉</Text>
+            <Text style={styles.ctaButtonText}>Join the Waitlist 🎉</Text>
           </TouchableOpacity>
         </LinearGradient>
 
@@ -101,8 +219,8 @@ export default function LandingScreen({ navigation }: any) {
           <Image source={logo} style={styles.footerLogo} resizeMode="contain" />
           <Text style={styles.footerText}>© 2025 Pettabl. Made with ❤️ for pets everywhere.</Text>
           <View style={styles.footerLinks}>
-            <TouchableOpacity onPress={() => navigation.navigate('Auth')}>
-              <Text style={styles.footerLink}>Sign In</Text>
+            <TouchableOpacity onPress={scrollToWaitlist}>
+              <Text style={styles.footerLink}>Join Waitlist</Text>
             </TouchableOpacity>
             <Text style={styles.footerDivider}>•</Text>
             <Text style={styles.footerLink}>Contact</Text>
@@ -159,6 +277,26 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     textAlign: 'center',
   },
+  waitlistPrompt: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 16,
+  },
+  waitlistCopy: {
+    fontSize: 16,
+    color: colors.textMuted,
+  },
+  heartButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: Platform.OS === 'web' ? '#ffe6f0' : 'rgba(255,255,255,0.15)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: Platform.OS === 'web' ? '#ff6b6b' : 'rgba(255,255,255,0.4)',
+  },
   description: {
     fontSize: 18,
     color: colors.textMuted,
@@ -166,6 +304,68 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     maxWidth: 600,
     lineHeight: 28,
+  },
+  waitlistCard: {
+    width: '100%',
+    maxWidth: 480,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255,255,255,0.85)',
+    padding: 20,
+    gap: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(148,163,184,0.25)',
+  },
+  waitlistTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: colors.text,
+  },
+  waitlistSubtitle: {
+    fontSize: 14,
+    textAlign: 'center',
+    color: colors.textMuted,
+  },
+  waitlistField: {
+    gap: 6,
+  },
+  waitlistLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  waitlistInput: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    color: colors.text,
+  },
+  waitlistButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 16,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  waitlistButtonDisabled: {
+    opacity: 0.6,
+  },
+  waitlistButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  waitlistMessage: {
+    textAlign: 'center',
+    fontSize: 13,
+    marginTop: 4,
+  },
+  waitlistSuccess: {
+    color: '#16a34a',
+  },
+  waitlistError: {
+    color: '#ef4444',
   },
   buttonGroup: {
     flexDirection: 'row',

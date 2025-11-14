@@ -10,6 +10,7 @@ import {
   Pressable,
   Alert,
   Image,
+  Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { CalendarDays, PawPrint, Plus } from 'lucide-react-native';
@@ -398,11 +399,15 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     padding: 18,
     gap: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 4,
+    ...(Platform.OS === 'web'
+      ? { boxShadow: '0px 16px 32px rgba(15, 23, 42, 0.12)' }
+      : {
+          shadowColor: '#000',
+          shadowOpacity: 0.08,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: 8 },
+          elevation: 4,
+        }),
   },
   quickAdd: { backgroundColor: '#FDE68A' },
   quickPlan: { backgroundColor: '#C4B5FD' },
@@ -423,11 +428,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     alignItems: 'flex-start',
     gap: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 4,
+    ...(Platform.OS === 'web'
+      ? { boxShadow: '0px 18px 36px rgba(15, 23, 42, 0.12)' }
+      : {
+          shadowColor: '#000',
+          shadowOpacity: 0.1,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: 8 },
+          elevation: 4,
+        }),
   },
   petIconBubble: {
     width: 62,
@@ -447,11 +456,15 @@ const styles = StyleSheet.create({
     paddingVertical: 48,
     paddingHorizontal: 24,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 3,
+    ...(Platform.OS === 'web'
+      ? { boxShadow: '0px 20px 40px rgba(15, 23, 42, 0.1)' }
+      : {
+          shadowColor: '#000',
+          shadowOpacity: 0.05,
+          shadowRadius: 10,
+          shadowOffset: { width: 0, height: 6 },
+          elevation: 3,
+        }),
   },
   emptyIcon: { fontSize: 48, marginBottom: 16 },
   emptyText: { fontSize: 15, color: '#7B7F9E', textAlign: 'center' },

@@ -36,7 +36,7 @@
 Pettabl orchestrates pet care between Pet Bosses (owners) and Pet Agents (caregivers) across mobile and web. The platform centralizes pet profiles, daily schedules, Pet Watches (care sessions), and activity logging with photo verification.
 
 ### Key Value Propositions
-1. **Coordinated Pet Watches:** Assign Pet Agents, share schedules, and monitor progress in real-time.  
+1. **Coordinated Pet Watches:** Assign Pet Agents, share schedules, and update progress in real-time.
 2. **Unified Experience:** Cross-platform (Expo mobile + Vite web) with shared Supabase backend.  
 3. **Evidence & Trust:** Activity checklists, photo receipts, and audit trails reduce anxiety for Pet Bosses.
 
@@ -127,6 +127,7 @@ Deliver the most trusted coordination hub for in-home pet care, enabling any hou
 ### Frontend Stack
 - **Expo (React Native) + TypeScript** for iOS/Android + RN Web.  
 - **React Navigation** for stacks/tabs; custom theming via `mobile/src/theme/colors.ts`.  
+- **Expo Web landing experience** (same codebase on port 8083) with Supabase-backed waitlist modal and Coming Soon CTAs.  
 - **Vite + React 18** for marketing landing page and lightweight admin surfaces.  
 - **UI Components:** Tailwind + shadcn/ui on web, custom StyleSheet components on mobile.  
 - **State/Data:** TanStack Query + Supabase client.
@@ -165,6 +166,10 @@ Deliver the most trusted coordination hub for in-home pet care, enabling any hou
    - Daily task templates (feed, walk, let out).  
 6. **activities**  
    - Logged completions with `photo_url`, `caretaker`, timestamps.
+7. **waitlist**  
+   - Captures marketing signups with `name`, `email`, `source`, `context`, `created_at`, `notified`.  
+   - Anonymous insert policy (join from landing page), admin-only select/update.  
+   - Indexed for growth analytics by `email` + `created_at`.
 
 ### Views & Functions
 - `handle_new_user()` trigger populates `profiles`.  
@@ -221,7 +226,8 @@ Deliver the most trusted coordination hub for in-home pet care, enabling any hou
 - **Activation:** % of Pet Bosses creating first Pet Watch within 48 hours.  
 - **Engagement:** Average check-ins per Pet Watch per day.  
 - **Trust:** Photo attachment rate (>70%).  
-- **Retention:** 30-day returning Pet Agents.
+- **Retention:** 30-day returning Pet Agents.  
+- **Top-of-Funnel:** Weekly waitlist submissions segmented by source (Expo web, iOS, Android previews).
 
 ---
 

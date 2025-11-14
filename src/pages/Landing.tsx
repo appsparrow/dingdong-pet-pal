@@ -1,7 +1,56 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dog, Heart, Calendar, Users, Shield, Smartphone, Check } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
 const Landing = () => {
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState<string>("");
+
+  const submitWaitlist = async () => {
+    if (!fullName.trim() || !email.trim()) {
+      setStatus("error");
+      setMessage("Please share both your name and email so we can keep you posted.");
+      return;
+    }
+
+    try {
+      setStatus("loading");
+      setMessage("");
+
+      const res = await fetch("https://formspree.io/f/xleqeeyr", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: fullName,
+          email,
+          source: "pettabl-waitlist",
+          context: "Landing page heart CTA",
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to join waitlist");
+      }
+
+      setStatus("success");
+      setMessage("Thanks! We'll send launch updates soon.");
+      setFullName("");
+      setEmail("");
+    } catch (error) {
+      console.error("Waitlist error", error);
+      setStatus("error");
+      setMessage("Something went wrong. Please try again in a moment.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
@@ -16,14 +65,83 @@ const Landing = () => {
             />
           </div>
           
-          <p className="text-2xl md:text-3xl text-muted-foreground mb-8">
+          <p className="text-2xl md:text-3xl text-muted-foreground mb-4">
             Home Pet Sitting Simplified 🐾
           </p>
-          
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <span className="text-lg text-muted-foreground">Want early access?</span>
+            <button
+              onClick={() => {
+                setWaitlistOpen((prev) => !prev);
+                setStatus("idle");
+                setMessage("");
+              }}
+              className={cn(
+                "inline-flex h-12 w-12 items-center justify-center rounded-full border border-primary bg-primary/10 text-primary transition-all",
+                "hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              )}
+              aria-label="Join the Pettabl waitlist"
+            >
+              <Heart className="h-6 w-6" />
+            </button>
+          </div>
+
           <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
             Coordinate in-home pet sitting with ease. Assign trusted caretakers, share daily routines, and keep your furry friends happy — even when you’re away.
           </p>
-          
+
+          {waitlistOpen && (
+            <div className="mx-auto mb-12 w-full max-w-xl rounded-2xl border border-border bg-background/70 p-6 shadow-xl backdrop-blur">
+              <h3 className="text-xl font-semibold text-foreground mb-4 text-center">
+                Join the Pettabl waitlist
+              </h3>
+              <p className="text-sm text-muted-foreground text-center mb-6">
+                We’ll send invite codes and insider updates to our earliest supporters.
+              </p>
+              <div className="flex flex-col gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="waitlist-name">Your name</Label>
+                  <Input
+                    id="waitlist-name"
+                    placeholder="Jane Petlover"
+                    value={fullName}
+                    onChange={(event) => setFullName(event.target.value)}
+                    disabled={status === "loading"}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="waitlist-email">Email</Label>
+                  <Input
+                    id="waitlist-email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    disabled={status === "loading"}
+                  />
+                </div>
+                <Button
+                  size="lg"
+                  className="mt-2"
+                  onClick={submitWaitlist}
+                  disabled={status === "loading"}
+                >
+                  {status === "loading" ? "Adding you…" : "Save my spot"}
+                </Button>
+                {message && (
+                  <p
+                    className={cn(
+                      "text-sm text-center",
+                      status === "success" ? "text-green-600" : "text-destructive"
+                    )}
+                  >
+                    {message}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
@@ -180,9 +298,12 @@ const Landing = () => {
           </p>
           
           <div className="flex justify-center gap-6 text-sm text-muted-foreground">
-            <a href="mailto:contact@pettabl.com" className="hover:text-primary transition-colors">
-              Contact
-            </a>
+            <button
+              onClick={() => setWaitlistOpen(true)}
+              className="hover:text-primary transition-colors"
+            >
+              Join the waitlist
+            </button>
             <span>•</span>
             <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
               Instagram

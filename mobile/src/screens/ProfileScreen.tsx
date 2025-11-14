@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert, Image, Linking } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert, Image, Linking, Platform } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -213,8 +213,11 @@ export default function ProfileScreen() {
     <View style={styles.screen}>
       <LinearGradient
         colors={['#EEF2FF', '#FFFFFF']}
-        style={StyleSheet.absoluteFillObject}
-        pointerEvents="none"
+        style={[
+          StyleSheet.absoluteFillObject,
+          Platform.OS === 'web' ? { pointerEvents: 'none' } : undefined,
+        ]}
+        pointerEvents={Platform.OS === 'web' ? undefined : 'none'}
       />
       <ScrollView style={styles.container}>
       {/* Header */}
