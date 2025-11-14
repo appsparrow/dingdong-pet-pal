@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Calendar, Check, Utensils, Footprints, Home, Sun, Cloud, Moon, Camera } from 'lucide-react-native';
+import { Calendar, Check, Utensils, Footprints, Home, Sun, Cloud, Moon } from 'lucide-react-native';
 import { colors } from '../theme/colors';
 
 interface ScheduleTime {
@@ -114,7 +114,7 @@ export function TodayScheduleChecklist({
           <View style={styles.emptyState}>
             <Calendar color="#D1D5DB" size={64} />
             <Text style={styles.emptyTitle}>No schedule set yet</Text>
-            <Text style={styles.emptyText}>Ask your Fur Boss to set up the daily schedule!</Text>
+            <Text style={styles.emptyText}>Ask your Pet Boss to set up the daily schedule!</Text>
           </View>
         ) : (
           <View style={styles.content}>
@@ -157,12 +157,25 @@ export function TodayScheduleChecklist({
                         ]}
                       >
                         <View style={styles.activityContent}>
-                          <View style={[
-                            styles.iconCircle,
-                            completed && styles.iconCircleCompleted
-                          ]}>
+                          <View
+                            style={[
+                              styles.iconCircle,
+                              completed && styles.iconCircleCompleted,
+                              completed && activity?.photo_url && styles.iconCirclePhoto
+                            ]}
+                          >
                             {completed ? (
-                              <Check color="#10B981" size={20} />
+                              activity?.photo_url ? (
+                                <TouchableOpacity
+                                  onPress={onPressPhoto && activity ? () => onPressPhoto(activity) : undefined}
+                                  activeOpacity={onPressPhoto ? 0.8 : 1}
+                                  style={styles.photoTap}
+                                >
+                                  <Image source={{ uri: activity.photo_url }} style={styles.photoThumb} />
+                                </TouchableOpacity>
+                              ) : (
+                                <Check color="#10B981" size={20} />
+                              )
                             ) : (
                               getActivityIcon(item.activity_type, 20)
                             )}
@@ -191,17 +204,6 @@ export function TodayScheduleChecklist({
                                 <Text style={styles.completedText}>
                                   ✓ by {activity.caretaker?.name || 'Agent'} at {formatTime(activity.created_at)}
                                 </Text>
-                                {activity.photo_url && (
-                                  <TouchableOpacity
-                                    onPress={onPressPhoto ? () => onPressPhoto(activity) : undefined}
-                                    activeOpacity={onPressPhoto ? 0.75 : 1}
-                                  >
-                                    <View style={styles.photoBadge}>
-                                      <Camera color="#10B981" size={12} />
-                                      <Text style={styles.photoBadgeText}>Photo</Text>
-                                    </View>
-                                  </TouchableOpacity>
-                                )}
                               </View>
                             )}
                           </View>
@@ -373,19 +375,22 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#10B981',
   },
-  photoBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    backgroundColor: '#D1FAE5',
-    borderRadius: 8,
+  iconCirclePhoto: {
+    padding: 0,
+    borderWidth: 2,
+    borderColor: '#22C55E',
+    backgroundColor: '#ECFDF5',
   },
-  photoBadgeText: {
-    fontSize: 11,
-    color: '#10B981',
-    fontWeight: '600',
+  photoTap: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  photoThumb: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 20,
   },
   undoButton: {
     paddingHorizontal: 16,

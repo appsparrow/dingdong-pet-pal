@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert, FlatList, Image, Linking } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert, Image, Linking } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -120,7 +120,7 @@ export default function ProfileScreen() {
   const switchRole = async () => {
     const next = activeRole === 'fur_boss' ? 'fur_agent' : 'fur_boss';
     await toggleRole();
-    Alert.alert('Role switched', `Active mode set to ${next === 'fur_boss' ? 'Fur Boss' : 'Fur Agent'}`);
+    Alert.alert('Role switched', `Active mode set to ${next === 'fur_boss' ? 'Pet Boss' : 'Pet Watcher'}`);
   };
 
   const normalizedPhone = profile?.phone ? profile.phone.replace(/[^\d+]/g, '') : '';
@@ -304,7 +304,7 @@ export default function ProfileScreen() {
           <>
             <Text style={styles.name}>{profile.name || 'No name set'}</Text>
             <Text style={styles.role}>
-              {activeRole === 'fur_boss' ? '🐶 Fur Boss (Pet Owner)' : '❤️ Fur Agent (Caretaker)'}
+              {activeRole === 'fur_boss' ? '🐶 Pet Boss' : '❤️ Pet Agent'}
             </Text>
 
             <View style={styles.infoCard}>
@@ -392,7 +392,7 @@ export default function ProfileScreen() {
         {!editing && (
           <TouchableOpacity style={[styles.signOutButton, { borderColor: colors.accent, marginTop: 12 }]} onPress={switchRole}>
             <Shuffle color={colors.accent} size={20} />
-            <Text style={[styles.signOutText, { color: colors.accent }]}>Switch Role</Text>
+            <Text style={[styles.signOutText, { color: colors.accent }]}>Switch to {activeRole === 'fur_boss' ? 'Pet Watcher' : 'Pet Boss'}</Text>
           </TouchableOpacity>
         )}
       </View>

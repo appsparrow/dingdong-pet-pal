@@ -13,11 +13,11 @@
 - Same pull-to-refresh implementation
 - Pull down to reload pets and profile
 
-### 2. Agent Assignments Debug Logging
+### 2. Agent Pet Watches Debug Logging
 **AgentDashboard.tsx**:
 - Added detailed console logging
-- Shows user ID, assignment count, full data
-- Will help diagnose why assignments aren't showing
+- Shows user ID, pet watch count, full data
+- Will help diagnose why pet watches aren't showing
 
 ### 3. Agent Profile Photo Display
 **AgentProfileScreen.tsx**:
@@ -54,20 +54,20 @@ Watch terminal for "Bundled successfully"
 
 ### 3. Test Pull-to-Refresh
 - **Boss Dashboard**: Pull down → see loading spinner → pets refresh
-- **Agent Dashboard**: Pull down → assignments reload
+- **Agent Dashboard**: Pull down → pet watches reload
 
-### 4. Check Agent Assignments
-- As Agent, go to Assignments tab
+### 4. Check Agent Pet Watches
+- As Agent, go to Pet Watches tab
 - **Check terminal/console** for:
 ```
 === AGENT ASSIGNMENTS DEBUG ===
 User ID: [your-id]
-Assignments count: X
-Assignments data: [...]
+Pet Watches count: X
+Pet Watches data: [...]
 ===============================
 ```
 
-### 5. If Assignments Count is 0
+### 5. If Pet Watches Count is 0
 The problem is:
 - Session wasn't created with agents properly
 - Check CreateSessionModal is inserting into `session_agents` table
@@ -86,7 +86,7 @@ If empty, the CreateSessionModal needs fixing.
 
 ---
 
-## Next Steps if Assignments Still Don't Show
+## Next Steps if Pet Watches Still Don't Show
 
 1. **Check console output** - Look for the debug logs
 2. **Verify session creation** - When creating session as Boss:

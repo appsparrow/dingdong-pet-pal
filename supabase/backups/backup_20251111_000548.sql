@@ -597,19 +597,19 @@ CREATE POLICY "Anyone can view care logs for their sessions" ON "public"."care_l
 
 
 
-CREATE POLICY "Fur agents can create care logs" ON "public"."care_logs" FOR INSERT TO "authenticated" WITH CHECK ((("fur_agent_id" = "auth"."uid"()) AND (EXISTS ( SELECT 1
+CREATE POLICY "Pet agents can create care logs" ON "public"."care_logs" FOR INSERT TO "authenticated" WITH CHECK ((("fur_agent_id" = "auth"."uid"()) AND (EXISTS ( SELECT 1
    FROM "public"."session_agents"
   WHERE (("session_agents"."session_id" = "care_logs"."session_id") AND ("session_agents"."fur_agent_id" = "auth"."uid"()))))));
 
 
 
-CREATE POLICY "Fur agents can manage activities for assigned sessions" ON "public"."activities" USING (("session_id" IN ( SELECT "session_agents"."session_id"
+CREATE POLICY "Pet agents can manage activities for assigned sessions" ON "public"."activities" USING (("session_id" IN ( SELECT "session_agents"."session_id"
    FROM "public"."session_agents"
   WHERE ("session_agents"."fur_agent_id" = "auth"."uid"()))));
 
 
 
-CREATE POLICY "Fur agents can view assigned pet schedules" ON "public"."schedules" FOR SELECT USING (("pet_id" IN ( SELECT "p"."id"
+CREATE POLICY "Pet agents can view assigned pet schedules" ON "public"."schedules" FOR SELECT USING (("pet_id" IN ( SELECT "p"."id"
    FROM (("public"."pets" "p"
      JOIN "public"."sessions" "s" ON (("s"."pet_id" = "p"."id")))
      JOIN "public"."session_agents" "sa" ON (("sa"."session_id" = "s"."id")))
@@ -617,11 +617,11 @@ CREATE POLICY "Fur agents can view assigned pet schedules" ON "public"."schedule
 
 
 
-CREATE POLICY "Fur agents can view assigned pets" ON "public"."pets" FOR SELECT TO "authenticated" USING ("public"."is_pet_agent"("id", "auth"."uid"()));
+CREATE POLICY "Pet agents can view assigned pets" ON "public"."pets" FOR SELECT TO "authenticated" USING ("public"."is_pet_agent"("id", "auth"."uid"()));
 
 
 
-CREATE POLICY "Fur agents can view assigned schedule times" ON "public"."schedule_times" FOR SELECT USING (("schedule_id" IN ( SELECT "sc"."id"
+CREATE POLICY "Pet agents can view assigned schedule times" ON "public"."schedule_times" FOR SELECT USING (("schedule_id" IN ( SELECT "sc"."id"
    FROM ((("public"."schedules" "sc"
      JOIN "public"."pets" "p" ON (("p"."id" = "sc"."pet_id")))
      JOIN "public"."sessions" "s" ON (("s"."pet_id" = "p"."id")))
@@ -630,30 +630,30 @@ CREATE POLICY "Fur agents can view assigned schedule times" ON "public"."schedul
 
 
 
-CREATE POLICY "Fur agents can view assigned sessions" ON "public"."sessions" FOR SELECT TO "authenticated" USING ("public"."is_session_agent"("id", "auth"."uid"()));
+CREATE POLICY "Pet agents can view assigned sessions" ON "public"."sessions" FOR SELECT TO "authenticated" USING ("public"."is_session_agent"("id", "auth"."uid"()));
 
 
 
-CREATE POLICY "Fur agents can view care tasks for their sessions" ON "public"."care_tasks" FOR SELECT TO "authenticated" USING ((EXISTS ( SELECT 1
+CREATE POLICY "Pet agents can view care tasks for their sessions" ON "public"."care_tasks" FOR SELECT TO "authenticated" USING ((EXISTS ( SELECT 1
    FROM "public"."session_agents"
   WHERE (("session_agents"."session_id" = "care_tasks"."session_id") AND ("session_agents"."fur_agent_id" = "auth"."uid"())))));
 
 
 
-CREATE POLICY "Fur agents view assigned care plans" ON "public"."pet_care_plans" FOR SELECT TO "authenticated" USING ((EXISTS ( SELECT 1
+CREATE POLICY "Pet agents view assigned care plans" ON "public"."pet_care_plans" FOR SELECT TO "authenticated" USING ((EXISTS ( SELECT 1
    FROM ("public"."sessions" "s"
      JOIN "public"."session_agents" "sa" ON (("sa"."session_id" = "s"."id")))
   WHERE (("s"."pet_id" = "pet_care_plans"."pet_id") AND ("sa"."fur_agent_id" = "auth"."uid"())))));
 
 
 
-CREATE POLICY "Fur bosses can manage care tasks" ON "public"."care_tasks" TO "authenticated" USING ((EXISTS ( SELECT 1
+CREATE POLICY "Pet bosses can manage care tasks" ON "public"."care_tasks" TO "authenticated" USING ((EXISTS ( SELECT 1
    FROM "public"."sessions"
   WHERE (("sessions"."id" = "care_tasks"."session_id") AND ("sessions"."fur_boss_id" = "auth"."uid"())))));
 
 
 
-CREATE POLICY "Fur bosses can manage schedule times" ON "public"."schedule_times" USING (("schedule_id" IN ( SELECT "schedules"."id"
+CREATE POLICY "Pet bosses can manage schedule times" ON "public"."schedule_times" USING (("schedule_id" IN ( SELECT "schedules"."id"
    FROM "public"."schedules"
   WHERE ("schedules"."pet_id" IN ( SELECT "pets"."id"
            FROM "public"."pets"
@@ -661,27 +661,27 @@ CREATE POLICY "Fur bosses can manage schedule times" ON "public"."schedule_times
 
 
 
-CREATE POLICY "Fur bosses can manage their own pets" ON "public"."pets" TO "authenticated" USING (("fur_boss_id" = "auth"."uid"())) WITH CHECK (("fur_boss_id" = "auth"."uid"()));
+CREATE POLICY "Pet bosses can manage their own pets" ON "public"."pets" TO "authenticated" USING (("fur_boss_id" = "auth"."uid"())) WITH CHECK (("fur_boss_id" = "auth"."uid"()));
 
 
 
-CREATE POLICY "Fur bosses can manage their own sessions" ON "public"."sessions" TO "authenticated" USING (("fur_boss_id" = "auth"."uid"())) WITH CHECK (("fur_boss_id" = "auth"."uid"()));
+CREATE POLICY "Pet bosses can manage their own sessions" ON "public"."sessions" TO "authenticated" USING (("fur_boss_id" = "auth"."uid"())) WITH CHECK (("fur_boss_id" = "auth"."uid"()));
 
 
 
-CREATE POLICY "Fur bosses can manage their pet schedules" ON "public"."schedules" USING (("pet_id" IN ( SELECT "pets"."id"
+CREATE POLICY "Pet bosses can manage their pet schedules" ON "public"."schedules" USING (("pet_id" IN ( SELECT "pets"."id"
    FROM "public"."pets"
   WHERE ("pets"."fur_boss_id" = "auth"."uid"()))));
 
 
 
-CREATE POLICY "Fur bosses can view their pet activities" ON "public"."activities" FOR SELECT USING (("pet_id" IN ( SELECT "pets"."id"
+CREATE POLICY "Pet bosses can view their pet activities" ON "public"."activities" FOR SELECT USING (("pet_id" IN ( SELECT "pets"."id"
    FROM "public"."pets"
   WHERE ("pets"."fur_boss_id" = "auth"."uid"()))));
 
 
 
-CREATE POLICY "Fur bosses manage pet care plans" ON "public"."pet_care_plans" TO "authenticated" USING ((EXISTS ( SELECT 1
+CREATE POLICY "Pet bosses manage pet care plans" ON "public"."pet_care_plans" TO "authenticated" USING ((EXISTS ( SELECT 1
    FROM "public"."pets"
   WHERE (("pets"."id" = "pet_care_plans"."pet_id") AND ("pets"."fur_boss_id" = "auth"."uid"()))))) WITH CHECK ((EXISTS ( SELECT 1
    FROM "public"."pets"

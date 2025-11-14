@@ -34,7 +34,7 @@
 
 ## 🎯 User Flow
 
-### As Fur Boss:
+### As Pet Boss:
 
 #### From Boss Dashboard:
 1. **See "Care Sessions" section** with all sessions
@@ -172,7 +172,7 @@ await supabase.from('sessions').delete().eq('id', sessionId);
 
 ## 🎉 Result
 
-**Complete session management for Fur Bosses!**
+**Complete session management for Pet Bosses!**
 
 Bosses can now:
 - View all sessions in one place

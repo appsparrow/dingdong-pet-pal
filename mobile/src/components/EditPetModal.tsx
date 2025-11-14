@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Modal, View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Image, Alert } from 'react-native';
+import { Modal, View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Image, Alert, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '../lib/supabase';
 import { colors } from '../theme/colors';
@@ -104,61 +104,73 @@ export function EditPetModal({ visible, onClose, pet, onSaved }: Props) {
 
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={onClose} transparent>
-      <View style={styles.overlay}>
-        <View style={styles.sheet}>
-          <Text style={styles.title}>Edit Pet</Text>
-          <ScrollView contentContainerStyle={{ paddingBottom: 16 }}>
-            <TouchableOpacity style={styles.photo} onPress={pickPhoto}>
-              {photoUri || pet?.photo_url ? (
-                <Image source={{ uri: photoUri || pet?.photo_url }} style={styles.photoImg} />
-              ) : (
-                <Text style={styles.photoPlaceholder}>📷 Change Photo</Text>
-              )}
-            </TouchableOpacity>
-
-            <Text style={styles.label}>Pet Name</Text>
-            <TextInput placeholder="Eg. Charlie" value={name} onChangeText={setName} style={styles.input} />
-            <Text style={styles.label}>Pet Type</Text>
-            <View style={styles.typeRow}>
-              {PET_TYPES.map((t) => (
-                <TouchableOpacity
-                  key={t}
-                  onPress={() => setPetType(t)}
-                  style={[styles.typeChip, petType === t && styles.typeChipActive]}
-                >
-                  <Text style={[styles.typeText, petType === t && styles.typeTextActive]}>{t}</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.overlay}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            style={styles.sheetWrapper}
+          >
+            <View style={styles.sheet}>
+              <Text style={styles.title}>Edit Pet</Text>
+              <ScrollView
+                contentContainerStyle={{ paddingBottom: 32 }}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+              >
+                <TouchableOpacity style={styles.photo} onPress={pickPhoto}>
+                  {photoUri || pet?.photo_url ? (
+                    <Image source={{ uri: photoUri || pet?.photo_url }} style={styles.photoImg} />
+                  ) : (
+                    <Text style={styles.photoPlaceholder}>📷 Change Photo</Text>
+                  )}
                 </TouchableOpacity>
-              ))}
-            </View>
-            <Text style={styles.label}>Breed</Text>
-            <TextInput placeholder="Eg. Golden Retriever" value={breed} onChangeText={setBreed} style={styles.input} />
-            <Text style={styles.label}>Age (years)</Text>
-            <TextInput placeholder="Eg. 4" value={age} onChangeText={setAge} keyboardType="number-pad" style={styles.input} />
-            <Text style={styles.label}>Food Preferences</Text>
-            <TextInput placeholder="Meal schedule, brands..." value={food} onChangeText={setFood} style={styles.input} />
-            <Text style={styles.label}>Medical Info</Text>
-            <TextInput placeholder="Medications, allergies..." value={medical} onChangeText={setMedical} style={styles.input} />
-            <Text style={styles.label}>Vet Contact</Text>
-            <TextInput placeholder="Clinic name, phone" value={vet} onChangeText={setVet} style={styles.input} />
 
-            <View style={{ flexDirection: 'row', gap: 12 }}>
-              <TouchableOpacity style={[styles.cancelButton, { flex: 1 }]} onPress={onClose}>
-                <Text style={styles.cancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity disabled={saving} style={[styles.primaryButton, { flex: 1 }]} onPress={savePet}>
-                <Text style={styles.primaryButtonText}>{saving ? 'Saving...' : 'Save Changes'}</Text>
-              </TouchableOpacity>
+                <Text style={styles.label}>Pet Name</Text>
+                <TextInput placeholder="Eg. Charlie" value={name} onChangeText={setName} style={styles.input} />
+                <Text style={styles.label}>Pet Type</Text>
+                <View style={styles.typeRow}>
+                  {PET_TYPES.map((t) => (
+                    <TouchableOpacity
+                      key={t}
+                      onPress={() => setPetType(t)}
+                      style={[styles.typeChip, petType === t && styles.typeChipActive]}
+                    >
+                      <Text style={[styles.typeText, petType === t && styles.typeTextActive]}>{t}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                <Text style={styles.label}>Breed</Text>
+                <TextInput placeholder="Eg. Golden Retriever" value={breed} onChangeText={setBreed} style={styles.input} />
+                <Text style={styles.label}>Age (years)</Text>
+                <TextInput placeholder="Eg. 4" value={age} onChangeText={setAge} keyboardType="number-pad" style={styles.input} />
+                <Text style={styles.label}>Food Preferences</Text>
+                <TextInput placeholder="Meal schedule, brands..." value={food} onChangeText={setFood} style={styles.input} />
+                <Text style={styles.label}>Medical Info</Text>
+                <TextInput placeholder="Medications, allergies..." value={medical} onChangeText={setMedical} style={styles.input} />
+                <Text style={styles.label}>Vet Contact</Text>
+                <TextInput placeholder="Clinic name, phone" value={vet} onChangeText={setVet} style={styles.input} />
+
+                <View style={{ flexDirection: 'row', gap: 12 }}>
+                  <TouchableOpacity style={[styles.cancelButton, { flex: 1 }]} onPress={onClose}>
+                    <Text style={styles.cancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity disabled={saving} style={[styles.primaryButton, { flex: 1 }]} onPress={savePet}>
+                    <Text style={styles.primaryButtonText}>{saving ? 'Saving...' : 'Save Changes'}</Text>
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
             </View>
-          </ScrollView>
+          </KeyboardAvoidingView>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
   overlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', justifyContent: 'flex-end' },
-  sheet: { backgroundColor: '#fff', borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 20, maxHeight: '88%' },
+  sheetWrapper: { maxHeight: '88%' },
+  sheet: { backgroundColor: '#fff', borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 20, flex: 1 },
   title: { fontSize: 20, fontWeight: '700', marginBottom: 12, color: colors.text },
   photo: { width: 120, height: 120, borderRadius: 60, backgroundColor: '#f3f4f6', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginBottom: 16 },
   photoImg: { width: 120, height: 120, borderRadius: 60 },

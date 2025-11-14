@@ -2,7 +2,7 @@
 
 ## 🎉 Major Features Implemented
 
-### 1. **Pet Photo Upload for Fur Boss**
+### 1. **Pet Photo Upload for Pet Boss**
 - ✅ Added photo upload capability in `AddPetModal`
 - ✅ Real-time photo preview with remove option
 - ✅ Photos stored in Supabase Storage (`pet-photos` bucket)
@@ -45,7 +45,7 @@
   - 🟠 Orange = Some tasks done (or today pending)
   - 🔴 Red = No activities logged
 - ✅ Progress bar showing completion (e.g., "2/3 tasks complete")
-- ✅ Tabs for "Current" and "Upcoming" assignments
+- ✅ Tabs for "Current" and "Upcoming" pet watches
 - ✅ Click pet card to view detail page
 
 ### 6. **Agent Pet Detail Page**
@@ -56,7 +56,7 @@
 - ✅ "I'll miss you!" message on final day
 - ✅ Photo upload option after marking complete
 
-### 7. **Activity Log for Fur Boss**
+### 7. **Activity Log for Pet Boss**
 - ✅ Beautiful activity timeline on Pet Detail page
 - ✅ Photo thumbnails (clickable to view full size)
 - ✅ Grouped by date
@@ -113,7 +113,7 @@
 ## 🔧 Modified Files
 
 1. `/src/components/AddPetModal.tsx` - Added photo upload & pet type selector
-2. `/src/components/PetAssignmentCard.tsx` - Enhanced with timeline dots
+2. `/src/components/PetPet WatchCard.tsx` - Enhanced with timeline dots
 3. `/src/components/CreateSessionModal.tsx` - Improved date picker
 4. `/src/pages/BossDashboard.tsx` - Added sessions display
 5. `/src/pages/AgentDashboard.tsx` - Multi-pet support with tabs
@@ -132,13 +132,13 @@
    npm run dev
    ```
 
-3. **Test as Fur Boss:**
+3. **Test as Pet Boss:**
    - Add a pet with photo and type
    - Create a session with date range
    - View activity log with photos
 
-4. **Test as Fur Agent:**
-   - View multiple pet assignments
+4. **Test as Pet Agent:**
+   - View multiple pet pet watches
    - Check timeline dots
    - Mark activities complete
    - See happy/sad pet messages

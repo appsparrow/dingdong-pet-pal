@@ -18,7 +18,7 @@
 **Problem**: User doesn't see where/how to switch between Boss and Agent
 **Fix**: Add prominent toggle button in header showing current role
 
-### 4. Agent Dashboard - Upcoming Assignments Missing ✅
+### 4. Agent Dashboard - Upcoming Pet Watches Missing ✅
 **Problem**: Future sessions don't appear in agent dashboard
 **Fix**: 
 - Show "Upcoming" tab/section
@@ -86,15 +86,15 @@ const result = await ImagePicker.launchImageLibraryAsync({
 
 ### Phase 4: Agent Dashboard Upcoming Section
 ```typescript
-const upcomingAssignments = assignments.filter(a => {
+const upcomingPet Watches = pet watches.filter(a => {
   const today = new Date().toISOString().split('T')[0];
   return a.sessions.start_date > today;
 });
 
 // Render in separate section
 <View style={styles.section}>
-  <Text style={styles.sectionTitle}>Upcoming Assignments</Text>
-  {upcomingAssignments.map(renderAssignment)}
+  <Text style={styles.sectionTitle}>Upcoming Pet Watches</Text>
+  {upcomingPet Watches.map(renderPet Watch)}
 </View>
 ```
 
@@ -137,7 +137,7 @@ content: {
    - Same as AddPetModal
 
 4. **mobile/src/screens/AgentDashboard.tsx**
-   - Add upcoming assignments section
+   - Add upcoming pet watches section
    - Filter by start_date
    - Add role switcher in header
 
@@ -159,7 +159,7 @@ content: {
 ✅ Remove photo button after upload  
 ✅ No deprecation warnings  
 ✅ Visible role switcher in header  
-✅ Upcoming assignments show for agents  
+✅ Upcoming pet watches show for agents  
 ✅ Consistent spacing across all screens  
 
 ---
@@ -170,7 +170,7 @@ content: {
 - [ ] Pet modal: same photo upload/remove flow
 - [ ] No console warnings about MediaTypeOptions
 - [ ] Role switcher visible and functional in both dashboards
-- [ ] Agent sees upcoming assignments (future start dates)
+- [ ] Agent sees upcoming pet watches (future start dates)
 - [ ] All screens have consistent padding/margins
 - [ ] Edit mode doesn't overlap headers
 

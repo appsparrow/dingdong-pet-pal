@@ -23,7 +23,7 @@
 
 ### 2. **Unified Profile Page** 👤
 
-Created a single profile page that works for **both Fur Bosses and Fur Agents**!
+Created a single profile page that works for **both Pet Bosses and Pet Agents**!
 
 **Features:**
 - ✅ Profile photo upload with preview
@@ -33,7 +33,7 @@ Created a single profile page that works for **both Fur Bosses and Fur Agents**!
 - ✅ Address (multiline)
 - ✅ Bio / About Me
 - ✅ Paw Points badge (for Agents only)
-- ✅ Role badge (Fur Boss 🐕 / Fur Agent 🐾)
+- ✅ Role badge (Pet Boss 🐕 / Pet Agent 🐾)
 
 **Edit Mode:**
 - Click edit button (pencil icon, top right)
@@ -95,9 +95,9 @@ Added profile buttons to both dashboards!
 
 ### Test Profile Page:
 
-1. **As Fur Boss:**
+1. **As Pet Boss:**
    ```
-   - Login as Fur Boss
+   - Login as Pet Boss
    - Click user icon (top right)
    - Click edit button
    - Upload profile photo
@@ -106,9 +106,9 @@ Added profile buttons to both dashboards!
    - Verify changes persist
    ```
 
-2. **As Fur Agent:**
+2. **As Pet Agent:**
    ```
-   - Login as Fur Agent
+   - Login as Pet Agent
    - Click user icon (top right)
    - See Paw Points badge
    - Edit profile
@@ -118,7 +118,7 @@ Added profile buttons to both dashboards!
 
 ### Test Simplified Activity Dialog:
 
-1. **As Fur Agent:**
+1. **As Pet Agent:**
    ```
    - Go to pet detail page
    - Click "Mark Done" on any activity
@@ -151,12 +151,12 @@ Added profile buttons to both dashboards!
 
 ## 💡 Usage Tips
 
-### For Fur Bosses:
+### For Pet Bosses:
 - Add your contact info so agents can reach you
 - Upload a friendly profile photo
 - Keep your address updated for emergencies
 
-### For Fur Agents:
+### For Pet Agents:
 - Complete your profile to build trust
 - Add phone number for quick contact
 - Upload a professional photo

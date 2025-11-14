@@ -235,10 +235,10 @@ function AuthScreen({ onSignIn }: { onSignIn: () => void }) {
                       onPress={() => setRole('fur_boss')}
                     >
                       <Text style={[styles.roleButtonText, role === 'fur_boss' && styles.roleButtonTextActive]}>
-                        🐶 Pet Owner
+                        🐶 Pet Boss
                       </Text>
                       <Text style={[styles.roleSubtext, role === 'fur_boss' && styles.roleSubtextActive]}>
-                        (Fur Boss)
+                        (Leads care)
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -246,10 +246,10 @@ function AuthScreen({ onSignIn }: { onSignIn: () => void }) {
                       onPress={() => setRole('fur_agent')}
                     >
                       <Text style={[styles.roleButtonText, role === 'fur_agent' && styles.roleButtonTextActive]}>
-                        ❤️ Caretaker
+                        ❤️ Pet Agent
                       </Text>
                       <Text style={[styles.roleSubtext, role === 'fur_agent' && styles.roleSubtextActive]}>
-                        (Fur Agent)
+                        (Provides care)
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -352,10 +352,10 @@ function AgentTabs() {
       }}
     >
       <Tab.Screen 
-        name="Assignments" 
+        name="PetWatch" 
         component={AgentDashboard}
         options={{
-          tabBarLabel: 'Assignments',
+          tabBarLabel: 'Pet Watch',
           tabBarIcon: ({ color, size }) => <Calendar color={color} size={size} />
         }}
       />

@@ -40,7 +40,7 @@ function CarePlanCardComponent({
   onPressAgent,
   onPressEdit,
   onPressDelete,
-  emptyAgentsLabel = 'Assign an agent to this plan',
+  emptyAgentsLabel = 'Assign an person to this pet watch',
 }: Props) {
   const statusStyle = statusStyles[status] ?? statusStyles.active;
   const formattedRange = `${format(parseISO(startDate), 'MMM d, yyyy')} – ${format(parseISO(endDate), 'MMM d, yyyy')}`;
@@ -103,7 +103,7 @@ function CarePlanCardComponent({
           </View>
 
           <View style={styles.agentSection}>
-            <Text style={styles.agentLabel}>Agents</Text>
+            <Text style={styles.agentLabel}>Pet Watchers</Text>
             {agents.length === 0 ? (
               <Text style={styles.emptyAgents}>{emptyAgentsLabel}</Text>
             ) : (

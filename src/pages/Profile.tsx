@@ -193,9 +193,9 @@ const Profile = () => {
   const getRoleLabel = (role: string) => {
     switch (role) {
       case "fur_boss":
-        return "Fur Boss 🐕";
+        return "Pet Boss 🐕";
       case "fur_agent":
-        return "Fur Agent 🐾";
+        return "Pet Agent 🐾";
       case "super_admin":
         return "Super Admin 👑";
       default:

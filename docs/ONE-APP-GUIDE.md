@@ -65,7 +65,7 @@ mobile/
 │   ├── screens/
 │   │   ├── LandingScreen.tsx    # 🆕 Landing page (web only)
 │   │   ├── BossDashboard.tsx    # Pet owner dashboard
-│   │   ├── AgentDashboard.tsx   # Caretaker dashboard
+│   │   ├── AgentDashboard.tsx   # Pet Agent dashboard
 │   │   └── ...
 │   ├── components/              # Shared components
 │   ├── lib/

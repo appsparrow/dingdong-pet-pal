@@ -4,7 +4,7 @@
 
 I completely rebuilt the Agent experience to match the beautiful web app design with proper UX!
 
-### 1. **PetAssignmentCard** Component ✨
+### 1. **PetPet WatchCard** Component ✨
 Beautiful card interface with:
 - **Pet photo** (64x64, rounded)
 - **Pet name** and **status badge** (Active/Planned)
@@ -27,7 +27,7 @@ Beautiful card interface with:
   - Calculates day-by-day status for entire session
   - Uses `date-fns` for proper date handling
 - **Empty state** with friendly message
-- **Pull-to-refresh** to reload assignments
+- **Pull-to-refresh** to reload pet watches
 - **Tap card** → Navigate to pet detail
 
 ### 3. **TodayScheduleChecklist** Component 📅
@@ -64,7 +64,7 @@ Beautiful checklist matching web design:
 ### As Agent:
 
 1. **Open Agent Dashboard**
-   - See beautiful cards for each assignment
+   - See beautiful cards for each pet watch
    - Progress dots show daily completion status
    - Today's progress bar shows current tasks
    - Switch between Current/Upcoming tabs
@@ -116,7 +116,7 @@ Beautiful checklist matching web design:
 
 ## 📊 Data Flow
 
-### Assignment Calculation:
+### Pet Watch Calculation:
 1. Load `session_agents` for current user
 2. For each session:
    - Get pet details
@@ -169,19 +169,19 @@ Beautiful checklist matching web design:
 ## 🧪 Test Now
 
 1. **Reload app**: Press `r` or shake → Reload
-2. **As Agent**: See beautiful assignment cards
+2. **As Agent**: See beautiful pet watch cards
 3. **Check progress dots**: Red/Orange/Green status
 4. **Tap card**: See pet detail with schedule
 5. **Mark activities**: Choose photo or just mark
 6. **Watch progress update**: Dots and bars change
-7. **Pull down**: Refresh assignments
+7. **Pull down**: Refresh pet watches
 
 ---
 
 ## 📝 Files Created/Modified
 
 ### New Files:
-- `mobile/src/components/PetAssignmentCard.tsx` (300 lines)
+- `mobile/src/components/PetPet WatchCard.tsx` (300 lines)
 - `mobile/src/components/TodayScheduleChecklist.tsx` (350 lines)
 
 ### Modified Files:

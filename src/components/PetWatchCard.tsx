@@ -10,7 +10,7 @@ interface DayStatusEntry {
   status: DayStatus;
 }
 
-interface PetAssignment {
+interface PetWatch {
   session_id: string;
   pet_id: string;
   pet_name: string;
@@ -24,8 +24,8 @@ interface PetAssignment {
   isLastDayToday: boolean;
 }
 
-interface PetAssignmentCardProps {
-  assignment: PetAssignment;
+interface PetWatchCardProps {
+  watch: PetWatch;
   onClick: () => void;
 }
 
@@ -43,14 +43,14 @@ const statusLabel: Record<DayStatus, string> = {
   complete: 'All activities completed',
 };
 
-const PetAssignmentCard = ({ assignment, onClick }: PetAssignmentCardProps) => {
-  const startDate = parseISO(assignment.start_date);
-  const endDate = parseISO(assignment.end_date);
+const PetWatchCard = ({ watch, onClick }: PetWatchCardProps) => {
+  const startDate = parseISO(watch.start_date);
+  const endDate = parseISO(watch.end_date);
 
   const completionPercentage =
-    assignment.total_activities_today > 0
-      ? Math.round((assignment.activities_today / assignment.total_activities_today) * 100)
-      : assignment.activities_today > 0
+    watch.total_activities_today > 0
+      ? Math.round((watch.activities_today / watch.total_activities_today) * 100)
+      : watch.activities_today > 0
         ? 100
         : 0;
 
@@ -63,10 +63,10 @@ const PetAssignmentCard = ({ assignment, onClick }: PetAssignmentCardProps) => {
         <div className="flex items-start gap-4">
           {/* Pet Photo */}
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-secondary/20 to-accent/20 flex items-center justify-center overflow-hidden shrink-0">
-            {assignment.pet_photo_url ? (
+            {watch.pet_photo_url ? (
               <img
-                src={assignment.pet_photo_url}
-                alt={assignment.pet_name}
+                src={watch.pet_photo_url}
+                alt={watch.pet_name}
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -78,13 +78,13 @@ const PetAssignmentCard = ({ assignment, onClick }: PetAssignmentCardProps) => {
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2 mb-2">
               <h3 className="text-lg font-bold text-foreground truncate">
-                {assignment.pet_name}
+                {watch.pet_name}
               </h3>
               <Badge 
-                variant={assignment.status === 'active' ? 'default' : 'secondary'}
+                variant={watch.status === 'active' ? 'default' : 'secondary'}
                 className="shrink-0 capitalize"
               >
-                {assignment.status}
+                {watch.status}
               </Badge>
             </div>
 
@@ -99,16 +99,16 @@ const PetAssignmentCard = ({ assignment, onClick }: PetAssignmentCardProps) => {
             {/* Timeline Dots */}
             <div className="mb-3">
               <div className="flex items-center gap-1 flex-wrap">
-                {assignment.day_statuses.slice(0, 14).map((entry, index) => (
+                {watch.day_statuses.slice(0, 14).map((entry, index) => (
                   <div
                     key={index}
                     className={`w-2 h-2 rounded-full ${statusClasses[entry.status]}`}
                     title={`${format(parseISO(entry.date), 'MMM d, yyyy')} • ${statusLabel[entry.status]}`}
                   />
                 ))}
-                {assignment.day_statuses.length > 14 && (
+                {watch.day_statuses.length > 14 && (
                   <span className="text-xs text-muted-foreground ml-1">
-                    +{assignment.day_statuses.length - 14} more
+                    +{watch.day_statuses.length - 14} more
                   </span>
                 )}
               </div>
@@ -118,12 +118,12 @@ const PetAssignmentCard = ({ assignment, onClick }: PetAssignmentCardProps) => {
             </div>
 
             {/* Today's Progress */}
-            {assignment.total_activities_today > 0 && (
+            {watch.total_activities_today > 0 && (
               <div className="space-y-1">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Today's Tasks</span>
                   <span className="font-semibold">
-                    {assignment.activities_today}/{assignment.total_activities_today}
+                    {watch.activities_today}/{watch.total_activities_today}
                   </span>
                 </div>
                 <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
@@ -135,9 +135,9 @@ const PetAssignmentCard = ({ assignment, onClick }: PetAssignmentCardProps) => {
               </div>
             )}
 
-            {assignment.isLastDayToday && (
+            {watch.isLastDayToday && (
               <div className="mt-3 text-sm text-purple-600 font-semibold">
-                🥹 Last day with {assignment.pet_name}! Leave it sparkling clean.
+                🥹 Last day with {watch.pet_name}! Leave it sparkling clean.
               </div>
             )}
           </div>
@@ -147,5 +147,5 @@ const PetAssignmentCard = ({ assignment, onClick }: PetAssignmentCardProps) => {
   );
 };
 
-export default PetAssignmentCard;
+export default PetWatchCard;
 

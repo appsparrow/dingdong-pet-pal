@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { LogOut, Award, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import PetAssignmentCard from "@/components/PetAssignmentCard";
+import PetWatchCard from "@/components/PetWatchCard";
 import { RoleSwitcher } from "@/components/RoleSwitcher";
 import { useRole } from "@/contexts/RoleContext";
 import { eachDayOfInterval, format, parseISO, isAfter } from "date-fns";
@@ -14,7 +14,7 @@ interface Profile {
   paw_points: number;
 }
 
-interface PetAssignment {
+interface PetWatch {
   session_id: string;
   pet_id: string;
   pet_name: string;
@@ -31,7 +31,7 @@ interface PetAssignment {
 
 const AgentDashboard = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [assignments, setAssignments] = useState<PetAssignment[]>([]);
+  const [petWatches, setPetWatches] = useState<PetWatch[]>([]);
   const [activeTab, setActiveTab] = useState<"current" | "upcoming">("current");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const AgentDashboard = () => {
       if (error) throw error;
 
       setProfile(profileData);
-      await loadAssignments(user.id);
+      await loadPetWatches(user.id);
     } catch (error) {
       console.error("Error:", error);
       toast({
@@ -80,7 +80,7 @@ const AgentDashboard = () => {
     }
   }, [activeRole, roleLoading, navigate]);
 
-  const loadAssignments = async (agentId: string) => {
+  const loadPetWatches = async (agentId: string) => {
     try {
       const today = new Date().toISOString().split("T")[0];
 
@@ -108,12 +108,12 @@ const AgentDashboard = () => {
       if (sessionError) throw sessionError;
 
       if (!sessionData) {
-        setAssignments([]);
+        setPetWatches([]);
         return;
       }
 
       // For each session, get schedule times and today's activities
-      const assignmentsWithDetails = await Promise.all(
+      const petWatchesWithDetails = await Promise.all(
         sessionData.map(async (item) => {
           const session = item.sessions;
           const pet = session.pets;
@@ -204,12 +204,12 @@ const AgentDashboard = () => {
         })
       );
 
-      setAssignments(assignmentsWithDetails);
+      setPetWatches(petWatchesWithDetails);
     } catch (error) {
-      console.error("Error loading assignments:", error);
+      console.error("Error loading pet watches:", error);
       toast({
         title: "Error",
-        description: "Failed to load assignments",
+        description: "Failed to load pet watches",
         variant: "destructive",
       });
     }
@@ -224,9 +224,9 @@ const AgentDashboard = () => {
     navigate(`/agent/pet/${sessionId}`);
   };
 
-  const currentAssignments = assignments.filter((assignment) => !assignment.isUpcoming);
-  const upcomingAssignments = assignments.filter((assignment) => assignment.isUpcoming);
-  const visibleAssignments = activeTab === "current" ? currentAssignments : upcomingAssignments;
+  const currentPetWatches = petWatches.filter((watch) => !watch.isUpcoming);
+  const upcomingPetWatches = petWatches.filter((watch) => watch.isUpcoming);
+  const visiblePetWatches = activeTab === "current" ? currentPetWatches : upcomingPetWatches;
 
   if (loading) {
     return (
@@ -288,7 +288,7 @@ const AgentDashboard = () => {
 
         <div className="p-4 space-y-4 mt-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold">My Assignments</h2>
+            <h2 className="text-xl font-bold">My Pet Watches</h2>
             <div className="flex items-center gap-2">
               <Button
                 variant={activeTab === "current" ? "default" : "outline"}
@@ -309,24 +309,24 @@ const AgentDashboard = () => {
             </div>
           </div>
 
-          {(activeTab === "current" && currentAssignments.length === 0) ||
-          (activeTab === "upcoming" && upcomingAssignments.length === 0) ? (
+          {(activeTab === "current" && currentPetWatches.length === 0) ||
+          (activeTab === "upcoming" && upcomingPetWatches.length === 0) ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🐕</div>
               <p className="text-gray-500 mb-2">
-                {activeTab === "current" ? "No active assignments" : "No upcoming assignments yet"}
+                {activeTab === "current" ? "No active pet watches" : "No upcoming pet watches yet"}
               </p>
               <p className="text-sm text-gray-400">
-                You'll see your pet assignments here once a Fur Boss assigns you!
+                You'll see your pet watches here once a Pet Boss schedules you!
               </p>
             </div>
           ) : (
             <div className="space-y-3">
-              {visibleAssignments.map((assignment) => (
-                <PetAssignmentCard
-                  key={assignment.session_id}
-                  assignment={assignment}
-                  onClick={() => handlePetClick(assignment.session_id)}
+              {visiblePetWatches.map((watch) => (
+                <PetWatchCard
+                  key={watch.session_id}
+                  watch={watch}
+                  onClick={() => handlePetClick(watch.session_id)}
                 />
               ))}
             </div>

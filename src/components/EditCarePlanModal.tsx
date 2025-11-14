@@ -121,10 +121,10 @@ export const EditCarePlanModal = ({ petId, petName, open, onOpenChange, onSave }
         resetForm();
       }
     } catch (error) {
-      console.error("Error loading care plan", error);
+      console.error("Error loading pet watch", error);
       toast({
         title: "Error",
-        description: "Could not load the care plan.",
+        description: "Could not load the pet watch.",
         variant: "destructive",
       });
       resetForm();
@@ -222,17 +222,17 @@ export const EditCarePlanModal = ({ petId, petName, open, onOpenChange, onSave }
       if (error) throw error;
 
       toast({
-        title: "Care plan saved",
-        description: `${petName}'s care plan has been updated.`,
+        title: "Pet watch saved",
+        description: `${petName}'s pet watch has been updated.`,
       });
 
       onSave();
       onOpenChange(false);
     } catch (error) {
-      console.error("Error saving care plan", error);
+      console.error("Error saving pet watch", error);
       toast({
         title: "Error",
-        description: "We couldn't save the care plan."
+        description: "We couldn't save the pet watch."
       });
     } finally {
       setLoading(false);
@@ -244,17 +244,17 @@ export const EditCarePlanModal = ({ petId, petName, open, onOpenChange, onSave }
       <DialogContent className="max-w-2xl rounded-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            {`Edit Care Plan for ${petName}`}
+            {`Edit Pet Watch for ${petName}`}
           </DialogTitle>
           <DialogDescription>
-            Define meals, instructions, and habits so every Fur Agent follows the same playbook.
+            Define meals, instructions, and habits so every Pet Agent follows the same playbook.
           </DialogDescription>
         </DialogHeader>
 
         {initialLoading ? (
           <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mb-4"></div>
-            <p>Loading care plan…</p>
+            <p>Loading pet watch…</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -421,7 +421,7 @@ export const EditCarePlanModal = ({ petId, petName, open, onOpenChange, onSave }
                     Saving…
                   </>
                 ) : (
-                  "Save Care Plan"
+                  "Save Pet Watch"
                 )}
               </Button>
             </div>

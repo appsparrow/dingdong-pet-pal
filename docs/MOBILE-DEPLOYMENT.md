@@ -266,7 +266,7 @@ Users get updates automatically on next app launch.
 
 **Description**:
 ```
-DingDongDog makes pet care coordination effortless! Whether you're a pet owner (Fur Boss) or a trusted caretaker (Fur Agent), our app helps you:
+DingDongDog makes pet care coordination effortless! Whether you're a pet owner (Pet Boss) or a trusted caretaker (Pet Agent), our app helps you:
 
 🐶 Manage multiple pets with custom profiles
 📅 Create smart schedules for feeding, walks, and playtime

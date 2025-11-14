@@ -16,8 +16,8 @@ export const RoleSwitcher = () => {
     switchRole(newRole);
     
     toast({
-      title: `Switched to ${newRole === "fur_boss" ? "Boss" : "Agent"} Mode`,
-      description: `Now viewing as ${newRole === "fur_boss" ? "Pet Owner" : "Caretaker"}`,
+      title: `Switched to ${newRole === "fur_boss" ? "Pet Boss" : "Pet Agent"} mode`,
+      description: `Now viewing as ${newRole === "fur_boss" ? "Pet Boss" : "Pet Agent"}`,
     });
 
     navigate(newRole === "fur_boss" ? "/boss-dashboard" : "/agent-dashboard");
@@ -33,12 +33,12 @@ export const RoleSwitcher = () => {
       {activeRole === "fur_boss" ? (
         <>
           <Heart className="h-4 w-4" />
-          <span className="hidden sm:inline text-xs">Agent</span>
+          <span className="hidden sm:inline text-xs">Pet Agent</span>
         </>
       ) : (
         <>
           <Dog className="h-4 w-4" />
-          <span className="hidden sm:inline text-xs">Boss</span>
+          <span className="hidden sm:inline text-xs">Pet Boss</span>
         </>
       )}
     </Button>

@@ -23,15 +23,15 @@ Fixed the accessibility warning by adding a description to the Activity Confirm 
 
 ## How to Test
 
-### As Fur Boss:
-1. Log in as Fur Boss
+### As Pet Boss:
+1. Log in as Pet Boss
 2. Create a pet
 3. **Create a session with start date = today (or earlier) and end date = today (or later)**
-4. Assign a Fur Agent to the session
+4. Assign a Pet Agent to the session
 5. Set up the daily schedule (Feed/Walk/Let Out times)
 
-### As Fur Agent:
-1. Log in as the assigned Fur Agent
+### As Pet Agent:
+1. Log in as the assigned Pet Agent
 2. You should now see the Quick Actions buttons
 3. Click any action (Feed/Walk/Let Out)
 4. Select time period, optionally add photo and notes

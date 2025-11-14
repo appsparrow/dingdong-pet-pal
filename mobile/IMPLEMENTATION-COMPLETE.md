@@ -9,7 +9,7 @@ All 14 outstanding issues have been resolved:
 3. ✅ Pet photo upload with camera/remove icons  
 4. ✅ Deprecated ImagePicker API updated
 5. ✅ Role switcher visible in headers
-6. ✅ Agent upcoming assignments section added
+6. ✅ Agent upcoming pet watches section added
 7. ✅ Activity photo upload for agents
 8. ✅ Activity photos gallery for boss
 9. ✅ Save/Cancel buttons in consistent two-column layout

@@ -6,7 +6,7 @@
 1. **AuthScreen** ✅
    - Gradient background (Primary → Secondary → Accent)
    - Sign In / Sign Up with role selection
-   - Fur Boss vs Fur Agent roles
+   - Pet Boss vs Pet Agent roles
    - Clean, rounded design matching web
 
 2. **BossDashboard** ✅
@@ -19,7 +19,7 @@
 3. **AgentDashboard** ✅
    - Gradient header with Paw Points badge
    - Active/Upcoming stats
-   - Pet assignment cards with timelines
+   - Pet pet watch cards with timelines
    - Visual status indicators (dots)
    - Click to view pet details
 
@@ -27,7 +27,7 @@
    - Gradient header with avatar
    - Edit mode with inline forms
    - Contact info (email, phone, address, bio)
-   - Role display (Fur Boss / Fur Agent)
+   - Role display (Pet Boss / Pet Agent)
    - Paw Points for agents
    - Sign Out button
    - Lucide icons (Mail, Phone, MapPin, Edit, Save, LogOut)
@@ -137,8 +137,8 @@ npx expo start
 
 ### Agent Flow
 1. Sign in → AgentDashboard
-2. View active assignments
-3. Click assignment → AgentPetDetailScreen
+2. View active pet watches
+3. Click pet watch → AgentPetDetailScreen
 4. See today's schedule
 5. Mark activities complete ✅
 6. Unmark if needed
@@ -183,7 +183,7 @@ npx expo start
    - Visual feedback (checkmarks, colors)
    - Grouped by time period
 
-3. **Pet Assignment Cards** ✅
+3. **Pet Pet Watch Cards** ✅
    - Visual timeline dots
    - Status indicators
    - Gradient backgrounds

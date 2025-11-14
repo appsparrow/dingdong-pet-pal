@@ -19,8 +19,8 @@
 - Only visible if user has both roles
 - Persists with AsyncStorage
 
-### 4. ✅ Agent Upcoming Assignments
-- Added "Upcoming Assignments" section
+### 4. ✅ Agent Upcoming Pet Watches
+- Added "Upcoming Pet Watches" section
 - Filters `start_date > today`
 - Shows future sessions distinct from active
 
@@ -71,7 +71,7 @@ All changes have been implemented in the codebase. To see them:
 ✅ No overlaps  
 ✅ Standard photo upload UX  
 ✅ Role switcher visible  
-✅ All assignments visible  
+✅ All pet watches visible  
 ✅ Tailwind-like spacing  
 ✅ No deprecation warnings  
 

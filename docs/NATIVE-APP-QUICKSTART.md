@@ -230,13 +230,13 @@ export default function AuthScreen({ navigation }) {
             mode={role === 'fur_boss' ? 'contained' : 'outlined'}
             onPress={() => setRole('fur_boss')}
           >
-            Fur Boss
+            Pet Boss
           </Button>
           <Button
             mode={role === 'fur_agent' ? 'contained' : 'outlined'}
             onPress={() => setRole('fur_agent')}
           >
-            Fur Agent
+            Pet Agent
           </Button>
         </View>
       )}

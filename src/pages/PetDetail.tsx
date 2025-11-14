@@ -417,8 +417,8 @@ const PetDetail = () => {
                             <span className="text-xs text-muted-foreground">
                               {session.session_agents.length}{" "}
                               {session.session_agents.length === 1
-                                ? "Fur Agent"
-                                : "Fur Agents"}
+                                ? "Pet Agent"
+                                : "Pet Agents"}
                             </span>
                             <span className="text-xs text-muted-foreground">
                               {session.session_agents
@@ -481,8 +481,8 @@ const PetDetail = () => {
                             <span className="text-xs text-muted-foreground">
                               {session.session_agents.length}{" "}
                               {session.session_agents.length === 1
-                                ? "Fur Agent"
-                                : "Fur Agents"}
+                                ? "Pet Agent"
+                                : "Pet Agents"}
                             </span>
                           </div>
                         )}

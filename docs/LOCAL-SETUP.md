@@ -47,10 +47,10 @@ Open http://127.0.0.1:54323 to manage your database visually
 
 ## 🎯 What You Can Do Now
 
-✅ **Sign up** as a Fur Boss (no email confirmation needed locally!)  
+✅ **Sign up** as a Pet Boss (no email confirmation needed locally!)  
 ✅ **Add pets** with all their details  
 ✅ **Create care sessions** with date ranges  
-✅ **Assign Fur Agents** to sessions  
+✅ **Assign Pet Agents** to sessions  
 ✅ **View pet profiles** and session details  
 
 ---
@@ -100,8 +100,8 @@ All components maintain the playful DingDongDog design:
 
 ## 📝 Next Steps After Testing
 
-1. ✅ Test Fur Boss flow (add pet → create session)
-2. 🚧 Build Fur Agent dashboard (next task)
+1. ✅ Test Pet Boss flow (add pet → create session)
+2. 🚧 Build Pet Agent dashboard (next task)
 3. 🚧 Add session detail view with tasks
 4. 🚧 Implement task completion flow
 

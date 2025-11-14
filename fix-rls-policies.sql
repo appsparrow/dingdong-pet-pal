@@ -5,21 +5,21 @@
 -- =====================================================
 
 -- Step 1: Drop existing policies that cause recursion
-DROP POLICY IF EXISTS "Fur bosses can manage their own pets" ON public.pets;
-DROP POLICY IF EXISTS "Fur agents can view pets they're assigned to" ON public.pets;
-DROP POLICY IF EXISTS "Fur bosses can manage their own sessions" ON public.sessions;
-DROP POLICY IF EXISTS "Fur agents can view sessions they're assigned to" ON public.sessions;
-DROP POLICY IF EXISTS "Fur bosses can manage session agents" ON public.session_agents;
-DROP POLICY IF EXISTS "Fur agents can view their assignments" ON public.session_agents;
+DROP POLICY IF EXISTS "Pet bosses can manage their own pets" ON public.pets;
+DROP POLICY IF EXISTS "Pet agents can view pets they're assigned to" ON public.pets;
+DROP POLICY IF EXISTS "Pet bosses can manage their own sessions" ON public.sessions;
+DROP POLICY IF EXISTS "Pet agents can view sessions they're assigned to" ON public.sessions;
+DROP POLICY IF EXISTS "Pet bosses can manage session agents" ON public.session_agents;
+DROP POLICY IF EXISTS "Pet agents can view their assignments" ON public.session_agents;
 
 -- Step 2: Recreate pets policies (simplified to avoid recursion)
-CREATE POLICY "Fur bosses can manage their own pets"
+CREATE POLICY "Pet bosses can manage their own pets"
   ON public.pets FOR ALL
   TO authenticated
   USING (fur_boss_id = auth.uid())
   WITH CHECK (fur_boss_id = auth.uid());
 
-CREATE POLICY "Fur agents can view assigned pets"
+CREATE POLICY "Pet agents can view assigned pets"
   ON public.pets FOR SELECT
   TO authenticated
   USING (
@@ -32,13 +32,13 @@ CREATE POLICY "Fur agents can view assigned pets"
   );
 
 -- Step 3: Recreate sessions policies
-CREATE POLICY "Fur bosses can manage their own sessions"
+CREATE POLICY "Pet bosses can manage their own sessions"
   ON public.sessions FOR ALL
   TO authenticated
   USING (fur_boss_id = auth.uid())
   WITH CHECK (fur_boss_id = auth.uid());
 
-CREATE POLICY "Fur agents can view assigned sessions"
+CREATE POLICY "Pet agents can view assigned sessions"
   ON public.sessions FOR SELECT
   TO authenticated
   USING (

@@ -1,13 +1,13 @@
--- Enable Agent Pet Ownership: Allow any user to own pets and create sessions
+-- Enable Agent Pet Bossship: Allow any user to own pets and create sessions
 -- This migration updates RLS policies to support role-switching between Boss and Agent modes
 
 -- Drop old restrictive policies
-DROP POLICY IF EXISTS "Fur bosses can manage their own pets" ON public.pets;
-DROP POLICY IF EXISTS "Fur bosses can manage their own sessions" ON public.sessions;
-DROP POLICY IF EXISTS "Fur bosses can manage their pet schedules" ON public.schedules;
-DROP POLICY IF EXISTS "Fur bosses can manage schedule times" ON public.schedule_times;
-DROP POLICY IF EXISTS "Fur bosses can view their pet activities" ON public.activities;
-DROP POLICY IF EXISTS "Fur bosses manage pet care plans" ON public.pet_care_plans;
+DROP POLICY IF EXISTS "Pet bosses can manage their own pets" ON public.pets;
+DROP POLICY IF EXISTS "Pet bosses can manage their own sessions" ON public.sessions;
+DROP POLICY IF EXISTS "Pet bosses can manage their pet schedules" ON public.schedules;
+DROP POLICY IF EXISTS "Pet bosses can manage schedule times" ON public.schedule_times;
+DROP POLICY IF EXISTS "Pet bosses can view their pet activities" ON public.activities;
+DROP POLICY IF EXISTS "Pet bosses manage pet care plans" ON public.pet_care_plans;
 
 -- Create new policies allowing ANY user to manage their own pets
 CREATE POLICY "Users can manage their own pets"

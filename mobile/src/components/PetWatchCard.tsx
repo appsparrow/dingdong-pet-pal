@@ -12,7 +12,7 @@ interface DayStatusEntry {
   status: DayStatus;
 }
 
-export interface PetAssignmentCardProps {
+export interface PetWatchCardProps {
   session_id: string;
   pet_id: string;
   pet_name: string;
@@ -29,7 +29,7 @@ export interface PetAssignmentCardProps {
 }
 
 interface Props {
-  assignment: PetAssignmentCardProps;
+  watch: PetWatchCardProps;
   onPress: () => void;
 }
 
@@ -42,20 +42,20 @@ const statusColors: Record<DayStatus, string> = {
 
 const MAX_VISIBLE_DOTS = 30;
 
-export function PetAssignmentCard({ assignment, onPress }: Props) {
+export function PetWatchCard({ watch, onPress }: Props) {
   const [legendVisible, setLegendVisible] = useState(false);
   const completionPercentage =
-    assignment.total_activities_today > 0
-      ? Math.round((assignment.activities_today / assignment.total_activities_today) * 100)
-      : assignment.activities_today > 0
+    watch.total_activities_today > 0
+      ? Math.round((watch.activities_today / watch.total_activities_today) * 100)
+      : watch.activities_today > 0
         ? 100
         : 0;
 
   const { visibleStatuses, remaining } = useMemo(() => {
-    const visible = assignment.day_statuses.slice(0, MAX_VISIBLE_DOTS);
-    const extra = Math.max(assignment.day_statuses.length - visible.length, 0);
+    const visible = watch.day_statuses.slice(0, MAX_VISIBLE_DOTS);
+    const extra = Math.max(watch.day_statuses.length - visible.length, 0);
     return { visibleStatuses: visible, remaining: extra };
-  }, [assignment.day_statuses]);
+  }, [watch.day_statuses]);
 
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.85} style={styles.wrapper}>
@@ -67,12 +67,12 @@ export function PetAssignmentCard({ assignment, onPress }: Props) {
       >
         <View style={styles.topRow}>
           <View style={styles.avatarBadge}>
-            {assignment.pet_photo_url ? (
-              <Image source={{ uri: assignment.pet_photo_url }} style={styles.avatarImage} />
+            {watch.pet_photo_url ? (
+              <Image source={{ uri: watch.pet_photo_url }} style={styles.avatarImage} />
             ) : (
               <View style={styles.iconFallback}>
-                {assignment.pet_type ? (
-                  <PetIcon type={assignment.pet_type} size={24} color="#F97316" />
+                {watch.pet_type ? (
+                  <PetIcon type={watch.pet_type} size={24} color="#F97316" />
                 ) : (
                   <Bone color="#F97316" size={22} />
                 )}
@@ -80,10 +80,10 @@ export function PetAssignmentCard({ assignment, onPress }: Props) {
             )}
           </View>
           <View style={styles.titleBlock}>
-            <Text style={styles.petName} numberOfLines={1}>{assignment.pet_name}</Text>
-            <View style={[styles.statusPill, assignment.status === 'active' ? styles.statusActive : styles.statusInactive]}>
-              <Text style={[styles.statusText, assignment.status !== 'active' && styles.statusTextMuted]}>
-                {assignment.status}
+            <Text style={styles.petName} numberOfLines={1}>{watch.pet_name}</Text>
+            <View style={[styles.statusPill, watch.status === 'active' ? styles.statusActive : styles.statusInactive]}>
+              <Text style={[styles.statusText, watch.status !== 'active' && styles.statusTextMuted]}>
+                {watch.status}
               </Text>
             </View>
           </View>
@@ -92,7 +92,7 @@ export function PetAssignmentCard({ assignment, onPress }: Props) {
         <View style={styles.dateRow}>
           <Calendar color="#64748B" size={14} />
           <Text style={styles.dateText}>
-            {format(parseISO(assignment.start_date), 'MMM d')} – {format(parseISO(assignment.end_date), 'MMM d, yyyy')}
+            {format(parseISO(watch.start_date), 'MMM d')} – {format(parseISO(watch.end_date), 'MMM d, yyyy')}
           </Text>
         </View>
 
@@ -122,12 +122,12 @@ export function PetAssignmentCard({ assignment, onPress }: Props) {
           )}
         </View>
 
-        {assignment.total_activities_today > 0 && !assignment.isUpcoming && (
+        {watch.total_activities_today > 0 && !watch.isUpcoming && (
           <View style={styles.progressSection}>
             <View style={styles.progressHeader}>
               <Text style={styles.progressLabel}>Today's Tasks</Text>
               <Text style={styles.progressLabel}>
-                {assignment.activities_today}/{assignment.total_activities_today}
+                {watch.activities_today}/{watch.total_activities_today}
               </Text>
             </View>
             <View style={styles.progressTrack}>
@@ -141,15 +141,17 @@ export function PetAssignmentCard({ assignment, onPress }: Props) {
           </View>
         )}
 
-        {assignment.isLastDayToday && (
+        {watch.isLastDayToday && (
           <LinearGradient colors={['#FFFBEB', '#FEF3C7']} style={styles.lastDayBanner}>
-            <Text style={styles.lastDayText}>🥹 Last day with {assignment.pet_name}! Leave it sparkling clean.</Text>
+            <Text style={styles.lastDayText}>🥹 Last day with {watch.pet_name}! Leave it sparkling clean.</Text>
           </LinearGradient>
         )}
       </LinearGradient>
     </TouchableOpacity>
   );
 }
+
+export default PetWatchCard;
 
 const styles = StyleSheet.create({
   wrapper: { marginBottom: 18 },

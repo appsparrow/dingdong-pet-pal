@@ -70,7 +70,7 @@ export default function AgentProfileScreen({ route, navigation }: any) {
             </View>
           </View>
           <Text style={styles.name}>{profile.name || 'Agent'}</Text>
-          {profile.role && <Text style={styles.roleTag}>{profile.role === 'fur_agent' ? 'Fur Agent' : 'Team Member'}</Text>}
+          {profile.role && <Text style={styles.roleTag}>{profile.role === 'fur_agent' ? 'Pet Agent' : 'Team Member'}</Text>}
         </View>
 
         <View style={styles.card}>

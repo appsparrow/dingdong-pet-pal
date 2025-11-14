@@ -13,7 +13,7 @@
 ## 1. Product Overview
 
 ### Vision
-A native mobile app for pet care coordination that allows pet owners (Fur Bosses) to schedule care sessions and caretakers (Fur Agents) to manage daily pet care tasks with photo updates and real-time check-ins.
+A native mobile app for pet care coordination that allows pet owners (Pet Bosses) to schedule care sessions and caretakers (Pet Agents) to manage daily pet care tasks with photo updates and real-time check-ins.
 
 ### Goals
 1. **Parity with Web App**: All features from web version
@@ -93,25 +93,25 @@ A native mobile app for pet care coordination that allows pet owners (Fur Bosses
 
 ## 3. User Roles & Permissions
 
-### Fur Boss (Pet Owner)
+### Pet Boss
 **Primary Goal**: Manage pets and coordinate care
 
 **Capabilities**:
-- ✅ Register as Fur Boss
+- ✅ Register as Pet Boss
 - ✅ Add/edit/delete pets with photos
 - ✅ Create care sessions with date ranges
 - ✅ Set daily schedules (feed, walk, let out)
 - ✅ Define pet care plans (meals, habits)
-- ✅ Search and assign Fur Agents
+- ✅ Search and assign Pet Agents
 - ✅ View activity logs with photos
 - ✅ Delete sessions
 - ✅ Switch to Agent mode (if owns pets AND is assigned as agent)
 
-### Fur Agent (Caretaker)
+### Pet Agent
 **Primary Goal**: Care for assigned pets and log activities
 
 **Capabilities**:
-- ✅ Register as Fur Agent
+- ✅ Register as Pet Agent
 - ✅ View assigned sessions
 - ✅ See today's schedule checklist
 - ✅ Mark activities complete with photos
@@ -123,7 +123,7 @@ A native mobile app for pet care coordination that allows pet owners (Fur Bosses
 
 ### Dual-Role Users
 **Capability**: Switch between Boss and Agent modes
-- View assignments as Agent
+- View pet watches as Agent
 - Manage own pets as Boss
 - Clear mode indication
 
@@ -139,7 +139,7 @@ A native mobile app for pet care coordination that allows pet owners (Fur Bosses
    - "Sign Up" and "Sign In" buttons
    
 2. **Role Selection** (Sign Up)
-   - Choose role: Fur Boss or Fur Agent
+   - Choose role: Pet Boss or Pet Agent
    - Description of each role
    - Visual icons
 
@@ -221,7 +221,7 @@ A native mobile app for pet care coordination that allows pet owners (Fur Bosses
 - Real-time activity updates
 - Visual timeline (grey=planned, green=done, orange=missed)
 - Quick mark complete
-- Push notification on new assignments
+- Push notification on new pet watches
 
 ### 4.4 Pet Detail (Boss View)
 
@@ -523,7 +523,7 @@ See `API-DOCUMENTATION.md` for complete API reference.
 1. **Profile**: User account and preferences
 2. **Pet**: Pet information and photos
 3. **Session**: Care period with dates
-4. **SessionAgent**: Assignment junction table
+4. **SessionAgent**: Pet Watch junction table
 5. **Schedule**: Daily routine for a pet
 6. **ScheduleTime**: Individual schedule items
 7. **Activity**: Completed tasks with photos

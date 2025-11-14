@@ -63,7 +63,7 @@ const Index = () => {
               <Calendar className="h-12 w-12 text-primary mb-4" />
               <CardTitle>Care Sessions</CardTitle>
               <CardDescription>
-                Schedule care periods with start/end dates and assign trusted Fur Agents
+                Schedule care periods with start/end dates and assign trusted Pet Agents
               </CardDescription>
             </CardHeader>
           </Card>

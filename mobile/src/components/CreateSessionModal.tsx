@@ -8,7 +8,6 @@ import {
   Platform,
   TextInput,
   Alert,
-  FlatList,
   KeyboardAvoidingView,
   ScrollView,
   TouchableWithoutFeedback,
@@ -38,6 +37,10 @@ export function CreateSessionModal({ visible, onClose, petId, onCreated, session
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [activePicker, setActivePicker] = useState<'start' | 'end' | null>(null);
   const scrollRef = useRef<ScrollView>(null);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const isUpcomingSession = !!session && new Date(session.start_date) > today && session.status !== 'active';
 
   useEffect(() => {
     if (!visible) return;
@@ -72,9 +75,10 @@ export function CreateSessionModal({ visible, onClose, petId, onCreated, session
   };
 
   useEffect(() => {
+    if (isUpcomingSession) return;
     const t = setTimeout(() => { void searchAgents(); }, 300);
     return () => clearTimeout(t);
-  }, [search, visible]);
+  }, [search, visible, isUpcomingSession]);
 
   const searchAgents = async () => {
     if (!visible) return;
@@ -100,14 +104,26 @@ export function CreateSessionModal({ visible, onClose, petId, onCreated, session
   };
 
   const toggleAgent = (agent: any) => {
+    if (isUpcomingSession) return;
     setSelectedAgents((prev) => {
       const exists = prev.find((a) => a.id === agent.id);
       if (exists) return prev.filter((a) => a.id !== agent.id);
       return [...prev, agent];
     });
+    setSearch('');
+    setOptions([]);
+  };
+
+  const removeAgent = (id: string) => {
+    if (isUpcomingSession) return;
+    setSelectedAgents((prev) => prev.filter((a) => a.id !== id));
   };
 
   const createSession = async () => {
+    if (isUpcomingSession) {
+      onClose();
+      return;
+    }
     setSaving(true);
     try {
       console.log('=== CREATE SESSION DEBUG ===');
@@ -131,7 +147,7 @@ export function CreateSessionModal({ visible, onClose, petId, onCreated, session
           })
           .eq('id', session.id);
         if (error) throw error;
-        // reset assignments
+        // reset agent watch links
         await supabase.from('session_agents').delete().eq('session_id', session.id);
         if (selectedAgents.length > 0) {
           const insertPayload = selectedAgents.map((a) => ({ session_id: session.id, fur_agent_id: a.id }));
@@ -222,13 +238,29 @@ export function CreateSessionModal({ visible, onClose, petId, onCreated, session
                 keyboardShouldPersistTaps="handled"
                 contentContainerStyle={styles.content}
               >
-                <Text style={styles.title}>{session ? 'Edit Session' : 'Create Session'}</Text>
+                <Text style={styles.title}>
+                  {session
+                    ? isUpcomingSession
+                      ? 'View Watch Details'
+                      : 'Edit Watch Details'
+                    : 'Create Watch Details'}
+                </Text>
+                {isUpcomingSession && (
+                  <View style={styles.readOnlyBanner}>
+                    <Text style={styles.readOnlyTitle}>Upcoming watch</Text>
+                    <Text style={styles.readOnlyCopy}>
+                      This Pet Watch starts in the future. You can review the details now and make
+                      changes once it becomes active.
+                    </Text>
+                  </View>
+                )}
                 <View style={styles.row}>
                   <Text style={styles.label}>Start</Text>
                   <TouchableOpacity
-                    style={styles.dateButton}
-                    onPress={() => setActivePicker((prev) => (prev === 'start' ? null : 'start'))}
-                    activeOpacity={0.85}
+                    style={[styles.dateButton, isUpcomingSession && styles.dateButtonDisabled]}
+                    onPress={isUpcomingSession ? undefined : () => setActivePicker((prev) => (prev === 'start' ? null : 'start'))}
+                    activeOpacity={isUpcomingSession ? 1 : 0.85}
+                    disabled={isUpcomingSession}
                   >
                     <Text style={styles.dateButtonText}>{formattedDate(startDate)}</Text>
                   </TouchableOpacity>
@@ -236,14 +268,15 @@ export function CreateSessionModal({ visible, onClose, petId, onCreated, session
                 <View style={styles.row}>
                   <Text style={styles.label}>End</Text>
                   <TouchableOpacity
-                    style={styles.dateButton}
-                    onPress={() => setActivePicker((prev) => (prev === 'end' ? null : 'end'))}
-                    activeOpacity={0.85}
+                    style={[styles.dateButton, isUpcomingSession && styles.dateButtonDisabled]}
+                    onPress={isUpcomingSession ? undefined : () => setActivePicker((prev) => (prev === 'end' ? null : 'end'))}
+                    activeOpacity={isUpcomingSession ? 1 : 0.85}
+                    disabled={isUpcomingSession}
                   >
                     <Text style={styles.dateButtonText}>{formattedDate(endDate)}</Text>
                   </TouchableOpacity>
                 </View>
-                {activePicker && (
+                {activePicker && !isUpcomingSession && (
                   <View style={styles.pickerContainer}>
                     <DateTimePicker
                       value={activePicker === 'start' ? startDate : endDate}
@@ -262,35 +295,26 @@ export function CreateSessionModal({ visible, onClose, petId, onCreated, session
                     )}
                   </View>
                 )}
-                <Text style={[styles.label, { marginTop: 12 }]}>Notes</Text>
-                <TextInput
-                  value={notes}
-                  onChangeText={setNotes}
-                  placeholder="Special instructions"
-                  style={[styles.input, styles.multiline]}
-                  multiline
-                  numberOfLines={3}
-                  onFocus={scrollToEnd}
-                />
                 <Text style={[styles.label, { marginTop: 16 }]}>Assign Agents</Text>
                 <TextInput
                   value={search}
-                  onChangeText={setSearch}
+                  editable={!isUpcomingSession}
+                  onChangeText={(value) => {
+                    if (isUpcomingSession) return;
+                    setSearch(value);
+                  }}
                   placeholder="Search by email"
                   style={styles.input}
                   onFocus={scrollToEnd}
                   returnKeyType="search"
                 />
-                {options.length > 0 && (
-                  <FlatList
-                    data={options}
-                    keyExtractor={(item) => item.id}
-                    style={styles.agentList}
-                    keyboardShouldPersistTaps="handled"
-                    renderItem={({ item }) => {
+                {!isUpcomingSession && options.length > 0 && (
+                  <View style={styles.agentList}>
+                    {options.map((item) => {
                       const active = selectedAgents.some((a) => a.id === item.id);
                       return (
                         <TouchableOpacity
+                          key={item.id}
                           onPress={() => toggleAgent(item)}
                           style={[styles.agentItem, active && styles.agentItemActive]}
                         >
@@ -299,28 +323,62 @@ export function CreateSessionModal({ visible, onClose, petId, onCreated, session
                           </Text>
                         </TouchableOpacity>
                       );
-                    }}
-                  />
+                    })}
+                  </View>
                 )}
                 {selectedAgents.length > 0 && (
                   <View style={styles.chipRow}>
                     {selectedAgents.map((a) => (
-                      <View key={a.id} style={styles.agentChip}>
+                      <TouchableOpacity
+                        key={a.id}
+                        style={styles.agentChip}
+                        onPress={isUpcomingSession ? undefined : () => removeAgent(a.id)}
+                        accessibilityRole={isUpcomingSession ? undefined : 'button'}
+                        accessibilityLabel={isUpcomingSession ? undefined : `Remove ${a.name || a.email}`}
+                        activeOpacity={isUpcomingSession ? 1 : 0.7}
+                      >
                         <Text style={styles.agentChipText}>{a.name || a.email}</Text>
-                      </View>
+                        {!isUpcomingSession && <Text style={styles.agentChipRemove}>×</Text>}
+                      </TouchableOpacity>
                     ))}
                   </View>
                 )}
-                <View style={styles.buttonRow}>
-                  <TouchableOpacity style={[styles.cancelButton, { flex: 1 }]} onPress={onClose}>
-                    <Text style={styles.cancelButtonText}>Cancel</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity disabled={saving} style={[styles.primaryButton, { flex: 1 }]} onPress={createSession}>
-                    <Text style={styles.primaryButtonText}>
-                      {saving ? 'Saving...' : session ? 'Save Changes' : 'Create Session'}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <Text style={[styles.label, { marginTop: 20 }]}>Notes</Text>
+                <TextInput
+                  value={notes}
+                  editable={!isUpcomingSession}
+                  onChangeText={(value) => {
+                    if (isUpcomingSession) return;
+                    setNotes(value);
+                  }}
+                  placeholder="Special instructions"
+                  style={[styles.input, styles.multiline]}
+                  multiline
+                  numberOfLines={3}
+                  onFocus={scrollToEnd}
+                />
+                {isUpcomingSession ? (
+                  <View style={styles.buttonRow}>
+                    <TouchableOpacity style={[styles.primaryButton, { flex: 1 }]} onPress={onClose}>
+                      <Text style={styles.primaryButtonText}>Close</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <View style={styles.buttonRow}>
+                    <TouchableOpacity style={[styles.cancelButton, { flex: 1 }]} onPress={onClose}>
+                      <Text style={styles.cancelButtonText}>Cancel</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity disabled={saving} style={[styles.primaryButton, { flex: 1 }]} onPress={createSession}>
+                      <Text style={styles.primaryButtonText}>
+                        {saving
+                          ? 'Saving...'
+                          : session
+                            ? 'Save Watch Details'
+                            : 'Create Watch Details'}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
               </ScrollView>
             </View>
           </KeyboardAvoidingView>
@@ -363,6 +421,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#1E3A8A',
   },
+  dateButtonDisabled: {
+    opacity: 0.6,
+    borderColor: '#CBD5F5',
+  },
   dateButtonText: { color: '#1E3A8A', fontSize: 15, fontWeight: '700' },
   pickerContainer: {
     marginTop: 4,
@@ -386,13 +448,24 @@ const styles = StyleSheet.create({
   primaryButton: { height: 52, backgroundColor: colors.primary, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
   primaryButtonText: { color: '#fff', fontWeight: '700' },
   cancelButton: { height: 52, backgroundColor: '#F3F4F6', borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
-  cancelButtonText: { color: colors.textMuted, fontWeight: '600' },
+  cancelButtonText: { color: colors.textMuted, fontWeight: '700' },
   agentItem: { paddingVertical: 10, paddingHorizontal: 12, borderWidth: 2, borderColor: colors.border, borderRadius: 12, marginBottom: 6 },
   agentItemActive: { borderColor: '#1D4ED8', backgroundColor: '#DBEAFE' },
   agentText: { color: colors.text },
   agentTextActive: { color: colors.primary, fontWeight: '700' },
-  agentChip: { backgroundColor: '#DBEAFE', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16 },
-  agentChipText: { color: '#1D4ED8', fontWeight: '700' },
+  agentChip: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 6, borderRadius: 14, backgroundColor: '#F1F5F9' },
+  agentChipText: { color: colors.primary, fontWeight: '700' },
+  agentChipRemove: { color: '#1D4ED8', fontWeight: '900', fontSize: 18, marginTop: -1 },
+  readOnlyBanner: {
+    padding: 12,
+    borderRadius: 18,
+    backgroundColor: 'rgba(59,130,246,0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(59,130,246,0.25)',
+    marginBottom: 12,
+  },
+  readOnlyTitle: { fontSize: 14, fontWeight: '700', color: '#1D4ED8', marginBottom: 4 },
+  readOnlyCopy: { fontSize: 12, color: '#1D4ED8', lineHeight: 16 },
 });
 
 

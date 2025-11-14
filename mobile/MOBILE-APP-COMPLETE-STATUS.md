@@ -5,10 +5,10 @@
 ### Core Features
 1. **Authentication**: Sign up, sign in, sign out with role selection
 2. **Boss Dashboard**: Pet grid, stats, add pet, navigate to details
-3. **Agent Dashboard**: Active assignments, paw points display
+3. **Agent Dashboard**: Active pet watches, paw points display
 4. **Profile Management**: View/edit all fields (name, phone, address, bio)
 5. **Pet Management**: Add, edit, delete pets with photos
-6. **Session Management**: Create, edit sessions with multi-agent assignment
+6. **Session Management**: Create, edit sessions with multi-agent pet watch
 7. **Daily Schedule**: Boss sets schedule, agent sees in checklist
 8. **Activity Logging**: Agent marks complete (needs photo upload)
 9. **Navigation**: Stack + Tab navigation, deep linking to pet details
@@ -55,12 +55,12 @@ mediaTypes: [ImagePicker.MediaType.Images] ✅
 - Only shows if user has both roles
 - Visual indicator of current mode
 
-### 6. Agent Upcoming Assignments
+### 6. Agent Upcoming Pet Watches
 **FIXED**: Upcoming sessions now visible
-- Separate "Upcoming Assignments" section in Agent Dashboard
+- Separate "Upcoming Pet Watches" section in Agent Dashboard
 - Filters sessions where `start_date > today`
-- Shows assignment cards with start date
-- Distinct from "Active" assignments
+- Shows pet watch cards with start date
+- Distinct from "Active" pet watches
 
 ### 7. Consistent Spacing System
 **FIXED**: Created Tailwind-like spacing
@@ -85,7 +85,7 @@ mediaTypes: [ImagePicker.MediaType.Images] ✅
 - Pet grid with proper margins
 
 ### AgentDashboard.tsx
-- Added "Upcoming Assignments" section
+- Added "Upcoming Pet Watches" section
 - Role switcher in header (if user owns pets)
 - Active vs Upcoming separation
 - Proper date filtering
@@ -168,7 +168,7 @@ mobile/
 │   ├── components/
 │   │   ├── AddPetModal.tsx         # ✅ Photo upload fixed
 │   │   ├── EditPetModal.tsx        # ✅ Photo upload fixed
-│   │   └── CreateSessionModal.tsx  # ✅ Multi-agent assignment
+│   │   └── CreateSessionModal.tsx  # ✅ Multi-agent pet watch
 │   ├── lib/
 │   │   └── supabase.ts             # ✅ LAN IP auto-detect
 │   ├── screens/
@@ -202,15 +202,15 @@ mobile/
 4. Same in Edit Pet
 
 ### 3. Role Switcher
-1. As Boss with no agent assignments: no switcher
+1. As Boss with no agent pet watches: no switcher
 2. As Agent who adds a pet: "Switch to Boss Mode" appears in header
 3. As Boss assigned as agent: "Switch to Agent Mode" appears
 4. Tap switcher → dashboard changes, tab bar changes
 
-### 4. Upcoming Assignments
+### 4. Upcoming Pet Watches
 1. As Boss: create session with start_date in future, assign agent
-2. As Agent: go to Assignments tab
-3. See "Upcoming Assignments" section with future session
+2. As Agent: go to Pet Watches tab
+3. See "Upcoming Pet Watches" section with future session
 4. Distinct from "Pets I'm Caring For Now" (active)
 
 ### 5. No Deprecation Warnings
@@ -271,11 +271,11 @@ mobile/
 ✓ Photo upload UX complete  
 ✓ Deprecation warnings eliminated  
 ✓ Role switcher visible and functional  
-✓ Upcoming assignments show correctly  
+✓ Upcoming pet watches show correctly  
 ✓ Spacing consistent (Tailwind-like)  
 ✓ Agent can upload activity photos  
 ✓ Boss sees activity photo gallery  
-✓ Multi-agent assignment works  
+✓ Multi-agent pet watch works  
 ✓ Session edit functional  
 
 ---

@@ -123,7 +123,7 @@ const Landing = () => {
             <StepCard
               number="1"
               title="Create Your Account"
-              description="Sign up as a Pet Owner (Fur Boss) or Caretaker (Fur Agent) in seconds."
+              description="Sign up as a Pet Boss or invite Pet Agents in seconds."
             />
             
             <StepCard

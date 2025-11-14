@@ -6,7 +6,7 @@ Replaced the "Quick Actions" buttons with a **visual checklist** showing today's
 
 ## New User Experience
 
-### For Fur Agents:
+### For Pet Agents:
 
 #### **Before** (Quick Actions):
 - Just 3 big buttons: Feed, Walk, Let Out
@@ -56,7 +56,7 @@ Replaced the "Quick Actions" buttons with a **visual checklist** showing today's
 
 ### 4. **Real-Time Updates**
 - When one agent marks something complete, all agents see it
-- Fur Boss can also see what's been completed
+- Pet Boss can also see what's been completed
 
 ## Files Created/Modified
 
@@ -83,7 +83,7 @@ Replaced the "Quick Actions" buttons with a **visual checklist** showing today's
 
 ### Data Flow:
 
-1. **Fur Boss sets schedule** → Creates `schedule` and `schedule_times` records
+1. **Pet Boss sets schedule** → Creates `schedule` and `schedule_times` records
 2. **Agent loads dashboard** → Fetches schedule_times for the pet
 3. **Checklist displays** → Shows all scheduled activities for today
 4. **Agent clicks "Mark Done"** → Opens dialog with time period pre-selected
@@ -114,7 +114,7 @@ WHERE session_id = 'xxx'
 - ✅ No confusion about timing
 - ✅ Accountability (see who did what)
 
-### For Fur Boss:
+### For Pet Boss:
 - ✅ See completion status in real-time
 - ✅ Know which agent completed each task
 - ✅ See photos of completed activities
@@ -122,11 +122,11 @@ WHERE session_id = 'xxx'
 
 ## Testing
 
-1. **As Fur Boss:**
+1. **As Pet Boss:**
    - Set up daily schedule with multiple time periods
    - Create active session with agent
 
-2. **As Fur Agent:**
+2. **As Pet Agent:**
    - See checklist with all scheduled activities
    - Click "Mark Done" on an activity
    - Add photo and notes

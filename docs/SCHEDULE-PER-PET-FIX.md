@@ -8,7 +8,7 @@
 
 ### 1. Schedule is Now Pet-Level
 - Schedules are stored with `session_id = null` (applies to all sessions for that pet)
-- When Fur Boss sets up a schedule, it applies to the pet across all sessions
+- When Pet Boss sets up a schedule, it applies to the pet across all sessions
 - Agents see the same schedule regardless of which session they're working on
 
 ### 2. Fixed Activity Logging
@@ -35,7 +35,7 @@
 
 ## How It Works Now
 
-### Fur Boss:
+### Pet Boss:
 1. Creates a pet
 2. Sets up the **Daily Schedule** (one time per pet)
    - Morning/Afternoon/Evening toggles
@@ -43,7 +43,7 @@
 3. Creates sessions and assigns agents
 4. Schedule applies to ALL sessions for that pet
 
-### Fur Agent:
+### Pet Agent:
 1. Logs in and sees active session
 2. Sees the pet's schedule (same for all sessions)
 3. Clicks Quick Action button
@@ -53,14 +53,14 @@
 
 ## Testing Steps
 
-1. **As Fur Boss:**
+1. **As Pet Boss:**
    - Go to pet detail page
    - Set up Daily Schedule
    - Save it
    - Create a session (start date = today, end date = tomorrow)
-   - Assign a Fur Agent
+   - Assign a Pet Agent
 
-2. **As Fur Agent:**
+2. **As Pet Agent:**
    - Log in
    - See Quick Actions
    - Click "Feed" (or Walk/Let Out)

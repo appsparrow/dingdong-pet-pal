@@ -2,7 +2,7 @@
 
 ## Backup Created: November 11, 2025
 
-This backup was created before implementing the Role-Switching System with Agent Pet Ownership feature.
+This backup was created before implementing the Role-Switching System with Agent Pet Bossship feature.
 
 ### Backup Files
 
@@ -52,13 +52,13 @@ The Role-Switching System implementation includes:
 - RoleContext provider for managing active role
 - RoleSwitcher component in dashboards
 - Updated RLS policies to allow agents to own pets
-- Self-assignment prevention trigger
+- Self-pet watch prevention trigger
 - Profile page pets section for Boss mode
 - Role guards on dashboards
 
 ### Database Changes
 - Modified RLS policies on: pets, sessions, schedules, schedule_times, activities, pet_care_plans
-- Added trigger: `prevent_self_assignment` on `session_agents`
+- Added trigger: `prevent_self_pet watch` on `session_agents`
 - No schema changes (tables remain the same)
 
 ### Rollback Instructions

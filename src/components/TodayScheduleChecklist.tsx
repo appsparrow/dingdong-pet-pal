@@ -116,7 +116,7 @@ const TodayScheduleChecklist = ({
           <div className="text-center py-8">
             <Calendar className="h-16 w-16 mx-auto mb-4 text-gray-300" />
             <p className="text-gray-500">No schedule set yet</p>
-            <p className="text-sm text-gray-400 mt-1">Ask your Fur Boss to set up the daily schedule!</p>
+            <p className="text-sm text-gray-400 mt-1">Ask your Pet Boss to set up the daily schedule!</p>
           </div>
         ) : (
           <div className="space-y-4">

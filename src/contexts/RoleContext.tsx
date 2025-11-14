@@ -3,6 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 
 type Role = "fur_boss" | "fur_agent";
 
+const isAppRole = (role: string | null | undefined): role is Role =>
+  role === "fur_boss" || role === "fur_agent";
+
 interface RoleContextType {
   primaryRole: Role | null;
   activeRole: Role | null;
@@ -40,10 +43,11 @@ export const RoleProvider = ({ children }: { children: ReactNode }) => {
 
       if (!profile) return;
 
-      setPrimaryRole(profile.role);
+      const primary = isAppRole(profile.role) ? profile.role : "fur_boss";
+      setPrimaryRole(primary);
 
       // Check if user can switch roles
-      if (profile.role === "fur_agent") {
+      if (primary === "fur_agent") {
         // Check if agent owns any pets
         const { data: pets } = await supabase
           .from("pets")
@@ -54,18 +58,19 @@ export const RoleProvider = ({ children }: { children: ReactNode }) => {
         setCanSwitchRoles((pets?.length || 0) > 0);
       } else {
         // Check if boss is assigned as agent to any session
-        const { data: assignments } = await supabase
+        const { data: petWatches } = await supabase
           .from("session_agents")
           .select("id")
           .eq("fur_agent_id", user.id)
           .limit(1);
         
-        setCanSwitchRoles((assignments?.length || 0) > 0);
+        setCanSwitchRoles((petWatches?.length || 0) > 0);
       }
 
       // Get active role from localStorage or use primary
-      const stored = localStorage.getItem("activeRole") as Role;
-      setActiveRole(stored || profile.role);
+      const stored = localStorage.getItem("activeRole");
+      const storedRole = isAppRole(stored) ? stored : primary;
+      setActiveRole(storedRole);
     } catch (error) {
       console.error("Error loading role data:", error);
     } finally {

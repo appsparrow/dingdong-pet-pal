@@ -48,7 +48,7 @@
 
 ## 🎨 UI Improvements
 
-### Pet Detail Page (Fur Boss):
+### Pet Detail Page (Pet Boss):
 - Edit button (pencil icon) - top right
 - Delete button (trash icon) - top right, red background
 - Correct pet type icon in header
@@ -85,7 +85,7 @@
 
 ## 🚀 How to Test
 
-### As Fur Boss:
+### As Pet Boss:
 1. **Edit Pet**:
    - Go to any pet detail page
    - Click edit button (pencil icon, top right)
@@ -110,7 +110,7 @@
    - Verify correct icons show on cards
    - Verify correct icons in detail pages
 
-### As Fur Agent:
+### As Pet Agent:
 1. **Unmark Activity**:
    - Go to pet detail page
    - Mark an activity complete

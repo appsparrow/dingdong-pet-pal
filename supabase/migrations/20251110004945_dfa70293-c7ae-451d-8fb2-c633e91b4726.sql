@@ -168,25 +168,25 @@ AS $$
 $$;
 
 -- RLS Policies for pets (fixed to avoid recursion)
-CREATE POLICY "Fur bosses can manage their own pets"
+CREATE POLICY "Pet bosses can manage their own pets"
   ON public.pets FOR ALL
   TO authenticated
   USING (fur_boss_id = auth.uid())
   WITH CHECK (fur_boss_id = auth.uid());
 
-CREATE POLICY "Fur agents can view assigned pets"
+CREATE POLICY "Pet agents can view assigned pets"
   ON public.pets FOR SELECT
   TO authenticated
   USING (public.is_pet_agent(pets.id, auth.uid()));
 
 -- RLS Policies for sessions
-CREATE POLICY "Fur bosses can manage their own sessions"
+CREATE POLICY "Pet bosses can manage their own sessions"
   ON public.sessions FOR ALL
   TO authenticated
   USING (fur_boss_id = auth.uid())
   WITH CHECK (fur_boss_id = auth.uid());
 
-CREATE POLICY "Fur agents can view assigned sessions"
+CREATE POLICY "Pet agents can view assigned sessions"
   ON public.sessions FOR SELECT
   TO authenticated
   USING (public.is_session_agent(sessions.id, auth.uid()));
@@ -219,7 +219,7 @@ CREATE POLICY "Session agents: fur boss can delete"
   USING (public.is_session_owner(session_id, auth.uid()));
 
 -- RLS Policies for care_tasks
-CREATE POLICY "Fur bosses can manage care tasks"
+CREATE POLICY "Pet bosses can manage care tasks"
   ON public.care_tasks FOR ALL
   TO authenticated
   USING (
@@ -229,7 +229,7 @@ CREATE POLICY "Fur bosses can manage care tasks"
     )
   );
 
-CREATE POLICY "Fur agents can view care tasks for their sessions"
+CREATE POLICY "Pet agents can view care tasks for their sessions"
   ON public.care_tasks FOR SELECT
   TO authenticated
   USING (
@@ -254,7 +254,7 @@ CREATE POLICY "Anyone can view care logs for their sessions"
     )
   );
 
-CREATE POLICY "Fur agents can create care logs"
+CREATE POLICY "Pet agents can create care logs"
   ON public.care_logs FOR INSERT
   TO authenticated
   WITH CHECK (

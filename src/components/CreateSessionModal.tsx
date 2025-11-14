@@ -155,7 +155,7 @@ export const CreateSessionModal = ({
   }, [searchEmail]);
 
   const addAgent = async (agent: AgentOption) => {
-    // Prevent self-assignment
+    // Prevent self-pet-watch assignment
     const { data: { user } } = await supabase.auth.getUser();
     if (agent.id === user?.id) {
       toast({
@@ -258,7 +258,7 @@ export const CreateSessionModal = ({
           .eq("id", sessionId);
         if (updateError) throw updateError;
 
-        // reset agent assignments before inserting new ones
+        // reset agent watch links before inserting new ones
         const { error: deleteError } = await supabase
           .from("session_agents")
           .delete()
@@ -281,14 +281,14 @@ export const CreateSessionModal = ({
       if (!sessionId) throw new Error("Missing session id");
 
       if (selectedAgents.length > 0) {
-        const agentAssignments = selectedAgents.map((agent) => ({
+        const agentPet Watches = selectedAgents.map((agent) => ({
           session_id: sessionId,
           fur_agent_id: agent.id,
         }));
 
         const { error: agentError } = await supabase
           .from("session_agents")
-          .insert(agentAssignments);
+          .insert(agentPet Watches);
 
         if (agentError) throw agentError;
       }
@@ -327,7 +327,7 @@ export const CreateSessionModal = ({
               ? "Select a pet and schedule care dates"
               : isEditMode
               ? `Adjust timing or agents for ${initialPetName}'s care session.`
-              : `Schedule care dates for ${initialPetName} and assign Fur Agents`}
+              : `Schedule care dates for ${initialPetName} and assign Pet Agents`}
           </DialogDescription>
         </DialogHeader>
 
@@ -457,9 +457,9 @@ export const CreateSessionModal = ({
             />
           </div>
 
-          {/* Assign Fur Agents */}
+          {/* Assign Pet Agents */}
           <div className="space-y-2">
-            <Label className="text-sm font-semibold">Assign Fur Agents</Label>
+            <Label className="text-sm font-semibold">Assign Pet Agents</Label>
             <div className="relative">
               <Input
                 placeholder="Search by email..."

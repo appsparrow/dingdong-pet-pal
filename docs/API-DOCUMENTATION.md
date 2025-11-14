@@ -312,7 +312,7 @@ Response: 204 No Content
 
 ---
 
-## 4. Session Agents (Assignments)
+## 4. Session Agents (Pet Watches)
 
 ### Assign Agents to Session
 ```http
@@ -325,7 +325,7 @@ Content-Type: application/json
   "fur_agent_id": "uuid"
 }
 
-Response: Created assignment
+Response: Created pet watch
 ```
 
 ### Remove Agent from Session
@@ -602,7 +602,7 @@ All tables have RLS enabled. Policies ensure:
 - Users can view all profiles
 - Users can only update their own profile
 
-### Self-Assignment Prevention
+### Self-Pet Watch Prevention
 
 Database trigger prevents agents from being assigned to sessions for their own pets.
 
@@ -729,7 +729,7 @@ See `supabase/migrations/` for complete schema.
 1. **profiles** - User profiles
 2. **pets** - Pet information
 3. **sessions** - Care sessions
-4. **session_agents** - Agent assignments
+4. **session_agents** - Agent pet watches
 5. **schedules** - Daily schedules
 6. **schedule_times** - Schedule items
 7. **activities** - Completed tasks

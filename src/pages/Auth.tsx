@@ -257,14 +257,14 @@ const Auth = () => {
                     <div className="flex items-center space-x-2 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                       <RadioGroupItem value="fur_boss" id="fur_boss" />
                       <Label htmlFor="fur_boss" className="flex-1 cursor-pointer">
-                        <div className="font-semibold">🐕 Fur Boss</div>
+                        <div className="font-semibold">🐕 Pet Boss</div>
                         <div className="text-sm text-muted-foreground">Looking for people to take care of your pets</div>
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                       <RadioGroupItem value="fur_agent" id="fur_agent" />
                       <Label htmlFor="fur_agent" className="flex-1 cursor-pointer">
-                        <div className="font-semibold">🐾 Fur Agent</div>
+                        <div className="font-semibold">🐾 Pet Agent</div>
                         <div className="text-sm text-muted-foreground">Love to take care of others' pets</div>
                       </Label>
                     </div>

@@ -1,8 +1,8 @@
-# Session Assignment Fix - CRITICAL
+# Session Pet Watch Fix - CRITICAL
 
 ## 🔴 Problem Found
 
-**Assignments count: 0** - Sessions exist in database but agents aren't being assigned!
+**Pet Watches count: 0** - Sessions exist in database but agents aren't being assigned!
 
 ## ✅ Fixes Applied
 
@@ -22,13 +22,13 @@
 - Added console logs to see:
   - How many agents are selected when creating
   - What data is being inserted into `session_agents` table
-  - Any errors during agent assignment
+  - Any errors during agent pet watch
 
 ### 3. Agent Dashboard - Already Has Debug Logging
 **AgentDashboard.tsx**:
 - Shows user ID
-- Shows assignment count (currently 0)
-- Shows full assignment data
+- Shows pet watch count (currently 0)
+- Shows full pet watch data
 
 ---
 
@@ -67,7 +67,7 @@ Agent insert result: ... Error: null
 ### Step 5: Switch to Agent
 - Tap "Switch Role" → Agent
 - Pull down to refresh
-- **Should now see assignment** in "Current Assignments"
+- **Should now see pet watch** in "Current Pet Watches"
 
 ---
 
@@ -84,7 +84,7 @@ Check console:
 - **"Boss sessions: []"** = No sessions in database for this boss
 - **"Boss sessions: [...]"** = Sessions exist, check if they render
 
-### If Agent Still Can't See Assignment:
+### If Agent Still Can't See Pet Watch:
 - Check if `session_agents` table has row with their `fur_agent_id`
 - Check RLS policies on `session_agents` table
 
@@ -98,8 +98,8 @@ Check console:
 - Each session shows assigned agents
 
 **Agent Dashboard**:
-- Shows assignments in "Current Assignments"
-- Shows upcoming assignments in "Upcoming Assignments"
+- Shows pet watches in "Current Pet Watches"
+- Shows upcoming pet watches in "Upcoming Pet Watches"
 - Can tap agent chip to see profile
 
 **Create Session Modal**:
@@ -124,7 +124,7 @@ SELECT * FROM session_agents WHERE session_id = '[session-id]';
 ```sql
 -- session_agents should allow:
 -- - Boss to insert when creating session
--- - Agent to read their own assignments
+-- - Agent to read their own pet watches
 ```
 
 3. **UI Issue**: If agents aren't being selected in the modal, the search/select UI needs fixing

@@ -34,7 +34,7 @@ export default function BossDashboard({ navigation }: any) {
   const [sessionPetId, setSessionPetId] = useState<string | null>(null);
   const [sessionToEdit, setSessionToEdit] = useState<any | null>(null);
   const [petPickerVisible, setPetPickerVisible] = useState(false);
-  const { activeRole } = useRole();
+  const { activeRole, switchRole, canSwitchRoles } = useRole();
 
   useEffect(() => {
     if (activeRole === 'fur_boss') {
@@ -115,7 +115,7 @@ export default function BossDashboard({ navigation }: any) {
 
   const handleNewPlan = () => {
     if (pets.length === 0) {
-      Alert.alert('Add a pet first', 'You need at least one pet before creating a care plan.');
+      Alert.alert('Add a pet first', 'You need at least one pet before creating a pet watch.');
       return;
     }
     if (pets.length === 1) {
@@ -143,8 +143,25 @@ export default function BossDashboard({ navigation }: any) {
           end={{ x: 1, y: 1 }}
           style={styles.header}
         >
-          <Text style={styles.greeting}>Welcome back!</Text>
-          <Text style={styles.name}>{profile?.name || 'Boss'}</Text>
+          <View style={styles.headerTopRow}>
+            <Text style={styles.greeting}>Welcome back!</Text>
+            {canSwitchRoles && (
+              <TouchableOpacity
+                style={styles.modePill}
+                activeOpacity={0.8}
+                onPress={() => switchRole(activeRole === 'fur_boss' ? 'fur_agent' : 'fur_boss')}
+              >
+                <View
+                  style={[
+                    styles.modeIndicator,
+                    activeRole === 'fur_boss' ? styles.modeIndicatorBoss : styles.modeIndicatorWatcher,
+                  ]}
+                />
+                <Text style={styles.modeText}>{activeRole === 'fur_boss' ? 'Pet Boss' : 'Pet Watcher'}</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          <Text style={styles.name}>{profile?.name || (activeRole === 'fur_boss' ? 'Pet Boss' : 'Pet Watcher')}</Text>
           <View style={styles.badgeRow}>
             <View style={styles.badge}>
               <PawPrint color="#fff" size={18} />
@@ -152,7 +169,7 @@ export default function BossDashboard({ navigation }: any) {
             </View>
             <View style={styles.badge}>
               <CalendarDays color="#fff" size={18} />
-              <Text style={styles.badgeText}>{activePlans.length} Active Plans</Text>
+              <Text style={styles.badgeText}>{activePlans.length} Active Pet Watches</Text>
             </View>
           </View>
         </LinearGradient>
@@ -171,7 +188,7 @@ export default function BossDashboard({ navigation }: any) {
                 <View style={styles.quickIcon}>
                   <CalendarDays color="#fff" size={20} />
                 </View>
-                <Text style={styles.quickLabel}>New Care Plan</Text>
+                <Text style={styles.quickLabel}>New Pet Watch</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -203,7 +220,7 @@ export default function BossDashboard({ navigation }: any) {
                     )}
                   </View>
                   <Text style={styles.petName}>{pet.name}</Text>
-                  <Text style={styles.petPlans}>{petSessionCounts[pet.id] || 0} care plans</Text>
+                  <Text style={styles.petPlans}>{petSessionCounts[pet.id] || 0} pet watches</Text>
                 </LinearGradient>
               </TouchableOpacity>
             ))}
@@ -213,13 +230,13 @@ export default function BossDashboard({ navigation }: any) {
 
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Care Plans</Text>
+              <Text style={styles.sectionTitle}>Pet Watches</Text>
               <Text style={styles.sectionSubtitle}>{sessions.length} total</Text>
             </View>
             {sessions.length === 0 ? (
               <View style={styles.emptyState}>
                 <Text style={styles.emptyIcon}>🗓️</Text>
-                <Text style={styles.emptyText}>No care plans yet. Tap “New Care Plan” to get started.</Text>
+                <Text style={styles.emptyText}>No pet watches yet. Tap “New Pet Watch” to get started.</Text>
               </View>
             ) : (
               sessions.map((session) => (
@@ -237,7 +254,7 @@ export default function BossDashboard({ navigation }: any) {
                   onPressAgent={(agentId) => navigation.navigate('AgentProfile', { agentId })}
                   onPressEdit={() => openEditSession(session)}
                   onPressDelete={() => {
-                    Alert.alert('Delete Care Plan', 'This will remove the care plan permanently.', [
+                    Alert.alert('Delete Pet Watch', 'This will remove the pet watch permanently.', [
                       { text: 'Cancel', style: 'cancel' },
                       {
                         text: 'Delete',
@@ -248,7 +265,7 @@ export default function BossDashboard({ navigation }: any) {
                             .delete()
                             .eq('id', session.id);
                           if (error) {
-                            Alert.alert('Error', 'Unable to delete care plan right now.');
+                            Alert.alert('Error', 'Unable to delete pet watch right now.');
                           } else if (user?.id) {
                             await loadSessions(user.id);
                           }
@@ -311,17 +328,54 @@ export default function BossDashboard({ navigation }: any) {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#F6F8FF' },
-  scrollContent: { paddingBottom: 48 },
+  scrollContent: { paddingBottom: 48, paddingHorizontal: 0 },
   header: {
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
     paddingTop: 64,
     paddingBottom: 48,
     paddingHorizontal: 24,
-    borderBottomLeftRadius: 36,
-    borderBottomRightRadius: 36,
   },
-  greeting: { fontSize: 16, color: 'rgba(255,255,255,0.85)', marginBottom: 6 },
-  name: { fontSize: 34, fontWeight: '700', color: '#fff', marginBottom: 20 },
-  badgeRow: { flexDirection: 'row', gap: 12 },
+  headerTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  greeting: { fontSize: 16, color: 'rgba(255,255,255,0.85)', marginBottom: 4 },
+  name: { fontSize: 32, fontWeight: '700', color: '#fff' },
+  modePill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 999,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.35)',
+  },
+  modeIndicator: {
+    width: 20,
+    height: 20,
+    borderRadius: 12,
+  },
+  modeIndicatorBoss: {
+    backgroundColor: '#FBBF24',
+  },
+  modeIndicatorWatcher: {
+    backgroundColor: '#34D399',
+  },
+  modeText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: '600',
+    letterSpacing: 0.3,
+  },
+  badgeRow: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 18,
+  },
   badge: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -340,8 +394,9 @@ const styles = StyleSheet.create({
   quickRow: { flexDirection: 'row', gap: 16 },
   quickCard: {
     flex: 1,
-    borderRadius: 24,
-    padding: 20,
+    height: 120,
+    borderRadius: 28,
+    padding: 18,
     gap: 16,
     shadowColor: '#000',
     shadowOpacity: 0.08,

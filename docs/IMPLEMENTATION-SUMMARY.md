@@ -14,9 +14,9 @@
 - ✅ RoleSwitcher button in dashboards
 - ✅ localStorage persistence
 - ✅ Database policies updated for agent pet ownership
-- ✅ Self-assignment prevention (UI + database trigger)
+- ✅ Self-pet watch prevention (UI + database trigger)
 
-### 2. **Boss (Pet Owner) Features**
+### 2. **Boss (Pet Boss) Features**
 - ✅ Add/edit/delete pets with photos and type selection
 - ✅ Create care sessions with date ranges
 - ✅ Assign multiple agents to sessions
@@ -27,7 +27,7 @@
 - ✅ Profile management (photo, contact info, bio)
 - ✅ Pet selection in Create Session modal (with icons!)
 
-### 3. **Agent (Caretaker) Features**
+### 3. **Agent (Pet Agent) Features**
 - ✅ View assigned sessions with visual timelines
 - ✅ Today's schedule checklist
 - ✅ Mark activities complete with photos
@@ -36,7 +36,7 @@
 - ✅ Paw points system
 - ✅ Can add own pets (enables Boss mode)
 - ✅ Profile management
-- ✅ Multiple pet assignments support
+- ✅ Multiple pet pet watches support
 
 ### 4. **UI/UX Enhancements**
 - ✅ Lucide icons throughout (replaced emojis)
@@ -52,7 +52,7 @@
 - ✅ Supabase PostgreSQL with RLS
 - ✅ Row Level Security policies for all tables
 - ✅ Helper functions for complex permissions
-- ✅ Self-assignment prevention trigger
+- ✅ Self-pet watch prevention trigger
 - ✅ Storage buckets for photos (pets, activities, profiles)
 - ✅ Auto-generated REST API
 - ✅ Real-time WebSocket support
@@ -107,7 +107,7 @@ dingdong-pet-pal/
 │   │   ├── CreateSessionModal.tsx ✅ (with pet selection!)
 │   │   ├── ActivityConfirmDialog.tsx ✅
 │   │   ├── TodayScheduleChecklist.tsx ✅ (Lucide icons!)
-│   │   ├── PetAssignmentCard.tsx ✅
+│   │   ├── PetPet WatchCard.tsx ✅
 │   │   ├── RoleSwitcher.tsx ✅
 │   │   └── ...
 │   ├── pages/
@@ -239,7 +239,7 @@ flutter pub add supabase_flutter
 1. **profiles** - Users (fur_boss, fur_agent, super_admin)
 2. **pets** - Pet info (fur_boss_id references any user!)
 3. **sessions** - Care periods
-4. **session_agents** - Assignments (with self-assignment prevention)
+4. **session_agents** - Pet Watches (with self-pet watch prevention)
 5. **schedules** - Daily routines (pet-level)
 6. **schedule_times** - Schedule items
 7. **activities** - Completed tasks with photos
@@ -258,7 +258,7 @@ flutter pub add supabase_flutter
 - ✅ Users can only access their own data
 - ✅ Agents can view assigned pets/sessions
 - ✅ Bosses can manage their pets/sessions
-- ✅ Self-assignment blocked by trigger
+- ✅ Self-pet watch blocked by trigger
 
 ### Authentication
 - ✅ Supabase Auth (JWT tokens)

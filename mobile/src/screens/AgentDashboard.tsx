@@ -5,17 +5,17 @@ import { Calendar, Star } from 'lucide-react-native';
 import { supabase } from '../lib/supabase';
 import { colors } from '../theme/colors';
 import { useFocusEffect } from '@react-navigation/native';
-import { PetAssignmentCard, PetAssignmentCardProps } from '../components/PetAssignmentCard';
+import PetWatchCard, { PetWatchCardProps } from '../components/PetWatchCard';
 import type { PetType } from '../components/PetIcon';
 import { eachDayOfInterval, format, parseISO, isAfter } from 'date-fns';
 import { useRole } from '../context/RoleContext';
 
 type DayStatus = 'future' | 'none' | 'partial' | 'complete';
 
-type PetAssignment = PetAssignmentCardProps;
+type PetWatch = PetWatchCardProps;
 
 export default function AgentDashboard({ navigation }: any) {
-  const [assignments, setAssignments] = useState<PetAssignment[]>([]);
+  const [petWatches, setPetWatches] = useState<PetWatch[]>([]);
   const [profile, setProfile] = useState<any>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [activeTab, setActiveTab] = useState<'current' | 'upcoming'>('current');
@@ -46,7 +46,7 @@ export default function AgentDashboard({ navigation }: any) {
     if (activeRole !== 'fur_agent') return;
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
-    console.log('Loading assignments for user:', user.id);
+    console.log('Loading pet watches for user:', user.id);
 
     // Load profile
     const { data: profileData } = await supabase
@@ -56,7 +56,7 @@ export default function AgentDashboard({ navigation }: any) {
       .single();
     setProfile(profileData);
 
-    // Load assignments
+    // Load petWatches
     const today = new Date().toISOString().split('T')[0];
     const { data, error } = await supabase
       .from('session_agents')
@@ -69,18 +69,18 @@ export default function AgentDashboard({ navigation }: any) {
       `)
       .eq('fur_agent_id', user.id);
     
-    console.log('=== AGENT ASSIGNMENTS DEBUG ===');
+    console.log('=== PET WATCH DEBUG ===');
     console.log('User ID:', user.id);
-    console.log('Assignments count:', data?.length || 0);
+    console.log('Pet watch count:', data?.length || 0);
     console.log('===============================');
 
     if (!data || data.length === 0) {
-      setAssignments([]);
+      setPetWatches([]);
       return;
     }
 
-    // For each assignment, calculate day statuses and today's progress
-    const assignmentsWithDetails = await Promise.all(
+    // For each pet watch, calculate day statuses and today's progress
+    const petWatchesWithDetails = await Promise.all(
       data.map(async (item) => {
         const session = item.sessions;
         const pet = session.pets;
@@ -175,12 +175,12 @@ export default function AgentDashboard({ navigation }: any) {
       })
     );
 
-    setAssignments(assignmentsWithDetails);
+    setPetWatches(petWatchesWithDetails);
   };
 
-  const currentAssignments = assignments.filter((a) => !a.isUpcoming);
-  const upcomingAssignments = assignments.filter((a) => a.isUpcoming);
-  const visibleAssignments = activeTab === 'current' ? currentAssignments : upcomingAssignments;
+  const currentPetWatches = petWatches.filter((watch) => !watch.isUpcoming);
+  const upcomingPetWatches = petWatches.filter((watch) => watch.isUpcoming);
+  const visiblePetWatches = activeTab === 'current' ? currentPetWatches : upcomingPetWatches;
 
   return (
     <View style={styles.screen}>
@@ -211,7 +211,7 @@ export default function AgentDashboard({ navigation }: any) {
           </View>
         </LinearGradient>
 
-        <View style={styles.assignmentsSection}>
+        <View style={styles.petWatchSection}>
           {refreshing && (
             <View style={styles.refreshBanner}>
               <ActivityIndicator size="small" color={colors.primary} />
@@ -219,7 +219,7 @@ export default function AgentDashboard({ navigation }: any) {
             </View>
           )}
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>My Assignments</Text>
+            <Text style={styles.sectionTitle}>My Pet Watches</Text>
             <View style={styles.tabGroup}>
               <TouchableOpacity
                 style={[styles.tabButton, activeTab === 'current' && styles.tabButtonActive]}
@@ -236,22 +236,22 @@ export default function AgentDashboard({ navigation }: any) {
             </View>
           </View>
 
-          {visibleAssignments.length === 0 ? (
+          {visiblePetWatches.length === 0 ? (
             <View style={styles.emptyState}>
               <Text style={styles.emptyIcon}>🐾</Text>
               <Text style={styles.emptyTitle}>
-                {activeTab === 'current' ? 'No active assignments' : 'No upcoming assignments yet'}
+                {activeTab === 'current' ? 'No active pet watches' : 'No upcoming pet watches yet'}
               </Text>
               <Text style={styles.emptyText}>
-                You’ll see your pet assignments here once a Fur Boss assigns you!
+                You’ll see your pet watches here once a Pet Boss schedules you!
               </Text>
             </View>
           ) : (
-            visibleAssignments.map((assignment) => (
-              <PetAssignmentCard
-                key={assignment.session_id}
-                assignment={assignment}
-                onPress={() => navigation.navigate('AgentPetDetail', { sessionId: assignment.session_id })}
+            visiblePetWatches.map((watch) => (
+              <PetWatchCard
+                key={watch.session_id}
+                watch={watch}
+                onPress={() => navigation.navigate('AgentPetDetail', { sessionId: watch.session_id })}
               />
             ))
           )}
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
   },
   pointsLabel: { fontSize: 12, color: '#fff', opacity: 0.85 },
   pointsValue: { fontSize: 20, fontWeight: '700', color: '#fff' },
-  assignmentsSection: { paddingHorizontal: 24, paddingTop: 24 },
+  petWatchSection: { paddingHorizontal: 24, paddingTop: 24 },
   refreshBanner: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -363,4 +363,16 @@ const styles = StyleSheet.create({
   emptyIcon: { fontSize: 48, marginBottom: 16 },
   emptyTitle: { fontSize: 16, fontWeight: '600', color: '#1f2233', marginBottom: 8 },
   emptyText: { fontSize: 14, color: '#7b7f9e', textAlign: 'center', paddingHorizontal: 32 },
+  petWatchCard: {
+    backgroundColor: '#FFF6FF',
+    borderRadius: 24,
+    padding: 20,
+    marginBottom: 16,
+    shadowColor: '#FFC7F1',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.35,
+    shadowRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 170, 246, 0.35)',
+  },
 });

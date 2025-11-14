@@ -60,6 +60,6 @@ If you still see errors, try:
 **Next Steps After Fix:**
 ✅ Add your first pet  
 ✅ Create care sessions  
-✅ Assign Fur Agents  
+✅ Assign Pet Agents  
 ✅ Track pet care like a boss! 🐾
 

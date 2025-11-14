@@ -17,7 +17,7 @@ ALTER TABLE public.pet_care_plans ENABLE ROW LEVEL SECURITY;
 
 -- Helper function reuse note: previous migrations define is_session_owner/is_pet_agent
 -- Allow fur bosses to manage care plans for their pets
-CREATE POLICY "Fur bosses manage pet care plans"
+CREATE POLICY "Pet bosses manage pet care plans"
   ON public.pet_care_plans FOR ALL
   TO authenticated
   USING (
@@ -36,7 +36,7 @@ CREATE POLICY "Fur bosses manage pet care plans"
   );
 
 -- Allow assigned agents to view care plans for their sessions
-CREATE POLICY "Fur agents view assigned care plans"
+CREATE POLICY "Pet agents view assigned care plans"
   ON public.pet_care_plans FOR SELECT
   TO authenticated
   USING (

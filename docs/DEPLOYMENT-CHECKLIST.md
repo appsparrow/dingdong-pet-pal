@@ -204,7 +204,7 @@ Complete checklist for deploying DingDongDog to production.
 
 - [ ] **Role switching works**
   - Boss dashboard shows correct data
-  - Agent dashboard shows assignments
+  - Agent dashboard shows pet watches
   - Profile page displays correctly
 
 - [ ] **Mobile app works**

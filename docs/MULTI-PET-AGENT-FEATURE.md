@@ -2,16 +2,16 @@
 
 ## Overview
 
-Redesigned the Agent Dashboard to support **multiple pet assignments** with visual timeline tracking and individual pet detail views.
+Redesigned the Agent Dashboard to support **multiple pet pet watches** with visual timeline tracking and individual pet detail views.
 
 ## New Agent Experience
 
-### 1. **Dashboard: All Assignments**
+### 1. **Dashboard: All Pet Watches**
 
 When an agent logs in, they see a list of **all pets** they're currently taking care of:
 
 ```
-My Assignments
+My Pet Watches
 
 ┌─────────────────────────────────────┐
 │ 🐕 Max                    [Active]  │
@@ -50,12 +50,12 @@ Click on any pet card → Opens dedicated pet page with:
 
 ### ✅ Agent Dashboard (`/agent-dashboard`)
 - Shows all assigned pets as cards
-- Visual timeline for each assignment
+- Visual timeline for each pet watch
 - Today's progress (X/Y tasks complete)
 - Progress bar per pet
 - Click to open pet detail
 
-### ✅ Pet Assignment Card Component
+### ✅ Pet Pet Watch Card Component
 - Pet photo/avatar
 - Pet name and session status badge
 - Date range (e.g., "Nov 10 - Nov 13, 2025")
@@ -94,7 +94,7 @@ Pet Detail (when clicked)
 
 ## Database Queries
 
-### Get All Assignments:
+### Get All Pet Watches:
 ```sql
 SELECT 
   sa.session_id,
@@ -125,7 +125,7 @@ WHERE session_id = 'session-id'
 
 ## Files Created
 
-1. **`src/components/PetAssignmentCard.tsx`**
+1. **`src/components/PetPet WatchCard.tsx`**
    - Beautiful card component
    - Timeline visualization
    - Progress tracking
@@ -139,7 +139,7 @@ WHERE session_id = 'session-id'
 
 3. **`src/pages/AgentDashboard.tsx`** (rewritten)
    - Multi-pet support
-   - Assignment cards
+   - Pet Watch cards
    - Simplified state management
 
 ## Files Modified
@@ -150,31 +150,31 @@ WHERE session_id = 'session-id'
 ## Benefits
 
 ### For Agents:
-- ✅ See all assignments in one place
+- ✅ See all pet watches in one place
 - ✅ Visual timeline shows session duration
 - ✅ Quick progress overview per pet
 - ✅ Easy navigation to each pet's tasks
 - ✅ Clear completion status
 
-### For Fur Boss:
+### For Pet Boss:
 - ✅ Can assign same agent to multiple pets
 - ✅ Agent sees everything they need
 - ✅ Better coordination for multi-pet care
 
 ## Next Steps (Remaining TODOs)
 
-1. **Activity Log for Fur Boss** - Show all activities with photo thumbnails
-2. **Pet Detail for Fur Boss** - Enhanced view with all agent activities and photos
+1. **Activity Log for Pet Boss** - Show all activities with photo thumbnails
+2. **Pet Detail for Pet Boss** - Enhanced view with all agent activities and photos
 
 ## Testing
 
-1. **As Fur Boss:**
+1. **As Pet Boss:**
    - Create 2-3 pets
    - Create sessions for each pet
-   - Assign the same Fur Agent to all sessions
+   - Assign the same Pet Agent to all sessions
    - Set up daily schedules
 
-2. **As Fur Agent:**
+2. **As Pet Agent:**
    - Log in
    - ✅ See all assigned pets as cards
    - ✅ See timeline dots for each pet

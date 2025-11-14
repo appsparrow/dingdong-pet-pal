@@ -2,7 +2,7 @@
 
 ## Overview
 
-Successfully implemented a role-switching system that allows users to toggle between Fur Boss and Fur Agent modes, with registration-time default role selection and localStorage-based active role management.
+Successfully implemented a role-switching system that allows users to toggle between Pet Boss and Pet Agent modes, with registration-time default role selection and localStorage-based active role management.
 
 ## What Was Implemented
 
@@ -37,8 +37,8 @@ Successfully implemented a role-switching system that allows users to toggle bet
 
 #### Updated Auth.tsx
 - Registration copy clarifies role purpose:
-  - Fur Boss: "Looking for people to take care of your pets"
-  - Fur Agent: "Love to take care of others' pets"
+  - Pet Boss: "Looking for people to take care of your pets"
+  - Pet Agent: "Love to take care of others' pets"
 - Sign-in respects stored active role from localStorage
 - Falls back to primary role on first login
 
@@ -46,8 +46,8 @@ Successfully implemented a role-switching system that allows users to toggle bet
 
 #### Migration: `20251111150000_enable_agent_pet_ownership.sql`
 - Updated RLS policies to allow ANY user to own pets
-- Changed "Fur bosses" policies to "Pet owners" / "Users"
-- Added self-assignment prevention trigger
+- Changed "Pet bosses" policies to "Pet owners" / "Users"
+- Added self-pet watch prevention trigger
 - Prevents agents from being assigned to their own pets
 
 ### 5. Profile Page Enhancements
@@ -62,7 +62,7 @@ Successfully implemented a role-switching system that allows users to toggle bet
 
 #### CreateSessionModal Updates
 - Filters out current user from agent search
-- Validates against self-assignment in UI
+- Validates against self-pet watch in UI
 - Database trigger provides additional safety
 
 ## How It Works
@@ -70,7 +70,7 @@ Successfully implemented a role-switching system that allows users to toggle bet
 ### User Flow
 
 1. **Registration**
-   - User selects primary role (Fur Boss or Fur Agent)
+   - User selects primary role (Pet Boss or Pet Agent)
    - Role stored in database
 
 2. **First Login**
@@ -101,7 +101,7 @@ RoleProvider loads
     ↓
 Check primary role (database)
     ↓
-Check if can switch (pets owned / agent assignments)
+Check if can switch (pets owned / agent pet watches)
     ↓
 Load active role (localStorage or default to primary)
     ↓
@@ -114,9 +114,9 @@ If wrong role → redirect
 
 ### Role Separation
 - **Boss Mode**: Manage my pets, create sessions, assign agents
-- **Agent Mode**: View assignments, log activities, earn paw points
+- **Agent Mode**: View pet watches, log activities, earn paw points
 
-### Self-Assignment Prevention
+### Self-Pet Watch Prevention
 - **UI Level**: Current user filtered from agent search
 - **Validation**: Toast error if somehow selected
 - **Database Level**: Trigger prevents insertion
@@ -142,24 +142,24 @@ If wrong role → redirect
 3. `src/pages/BossDashboard.tsx` - Added switcher and role guard
 4. `src/pages/AgentDashboard.tsx` - Added switcher and role guard
 5. `src/pages/Profile.tsx` - Added pets section
-6. `src/components/CreateSessionModal.tsx` - Prevent self-assignment
+6. `src/components/CreateSessionModal.tsx` - Prevent self-pet watch
 
 ## Testing Checklist
 
 ### Basic Flows
-- [x] Register as Fur Boss → goes to Boss Dashboard
-- [x] Register as Fur Agent → goes to Agent Dashboard
+- [x] Register as Pet Boss → goes to Boss Dashboard
+- [x] Register as Pet Agent → goes to Agent Dashboard
 - [ ] Agent adds pet via Profile → switcher appears
 - [ ] Agent switches to Boss mode → sees Boss Dashboard with their pets
 - [ ] Agent creates session for their pet → cannot assign themselves
 - [ ] Boss gets assigned as agent → switcher appears
-- [ ] Boss switches to Agent mode → sees Agent Dashboard with assignments
+- [ ] Boss switches to Agent mode → sees Agent Dashboard with pet watches
 - [ ] Role persists after logout/login
 - [ ] Single-role users don't see switcher
 
 ### Edge Cases
 - [ ] Agent tries to assign self (UI prevents)
-- [ ] Database trigger blocks self-assignment
+- [ ] Database trigger blocks self-pet watch
 - [ ] Switching roles updates canSwitchRoles dynamically
 - [ ] Profile pets section only shows in appropriate contexts
 
@@ -171,13 +171,13 @@ If wrong role → redirect
 - Only RLS policies changed, not table structure
 
 ### RLS Policy Changes
-- **Before**: "Fur bosses can manage..."
+- **Before**: "Pet bosses can manage..."
 - **After**: "Pet owners can manage..." / "Users can manage..."
 - Semantic change, same security model
 
-### Self-Assignment Trigger
+### Self-Pet Watch Trigger
 ```sql
-CREATE OR REPLACE FUNCTION prevent_self_assignment()
+CREATE OR REPLACE FUNCTION prevent_self_pet watch()
 RETURNS TRIGGER AS $$
 BEGIN
   IF EXISTS (
@@ -218,7 +218,7 @@ git checkout HEAD~1  # or specific commit
 
 1. **Clear Mental Models**: Boss mode vs Agent mode
 2. **Flexible**: Users can be both without confusion
-3. **Safe**: Multiple layers prevent self-assignment
+3. **Safe**: Multiple layers prevent self-pet watch
 4. **Persistent**: Role choice remembered
 5. **Scalable**: Easy to add more role-specific features
 
@@ -228,7 +228,7 @@ git checkout HEAD~1  # or specific commit
 - Boss earnings tracking
 - Agent performance metrics
 - Bulk session management for agents with many pets
-- Calendar view of assignments
+- Calendar view of pet watches
 
 ## Notes
 

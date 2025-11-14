@@ -223,7 +223,7 @@ const AgentPetDetail = () => {
 
       toast({
         title: "Thank you! 😄",
-        description: "Happy tail wiggles! Add a quick photo so Fur Boss can smile.",
+        description: "Happy tail wiggles! Add a quick photo so Pet Boss can smile.",
       });
 
       const todayStr = format(new Date(), "yyyy-MM-dd");

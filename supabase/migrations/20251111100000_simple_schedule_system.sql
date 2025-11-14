@@ -51,11 +51,11 @@ CREATE TABLE public.activities (
 ALTER TABLE public.activities ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for schedules
-CREATE POLICY "Fur bosses can manage their pet schedules"
+CREATE POLICY "Pet bosses can manage their pet schedules"
   ON public.schedules FOR ALL
   USING (pet_id IN (SELECT id FROM public.pets WHERE fur_boss_id = auth.uid()));
 
-CREATE POLICY "Fur agents can view assigned pet schedules"
+CREATE POLICY "Pet agents can view assigned pet schedules"
   ON public.schedules FOR SELECT
   USING (pet_id IN (
     SELECT p.id FROM public.pets p
@@ -65,14 +65,14 @@ CREATE POLICY "Fur agents can view assigned pet schedules"
   ));
 
 -- RLS Policies for schedule_times
-CREATE POLICY "Fur bosses can manage schedule times"
+CREATE POLICY "Pet bosses can manage schedule times"
   ON public.schedule_times FOR ALL
   USING (schedule_id IN (
     SELECT id FROM public.schedules 
     WHERE pet_id IN (SELECT id FROM public.pets WHERE fur_boss_id = auth.uid())
   ));
 
-CREATE POLICY "Fur agents can view assigned schedule times"
+CREATE POLICY "Pet agents can view assigned schedule times"
   ON public.schedule_times FOR SELECT
   USING (schedule_id IN (
     SELECT sc.id FROM public.schedules sc
@@ -83,11 +83,11 @@ CREATE POLICY "Fur agents can view assigned schedule times"
   ));
 
 -- RLS Policies for activities
-CREATE POLICY "Fur bosses can view their pet activities"
+CREATE POLICY "Pet bosses can view their pet activities"
   ON public.activities FOR SELECT
   USING (pet_id IN (SELECT id FROM public.pets WHERE fur_boss_id = auth.uid()));
 
-CREATE POLICY "Fur agents can manage activities for assigned sessions"
+CREATE POLICY "Pet agents can manage activities for assigned sessions"
   ON public.activities FOR ALL
   USING (session_id IN (
     SELECT session_id FROM public.session_agents WHERE fur_agent_id = auth.uid()

@@ -7,8 +7,8 @@
 - **Fixed deprecated ImagePicker**: Changed `MediaTypeOptions.Images` to `[MediaType.Images]` (line 95)
 
 ### 2. AgentDashboard.tsx  
-- **Added focus refresh**: Added `useFocusEffect` to reload assignments when screen focused
-- **Added debug logging**: Console logs to see what assignments are loaded
+- **Added focus refresh**: Added `useFocusEffect` to reload pet watches when screen focused
+- **Added debug logging**: Console logs to see what pet watches are loaded
 - Note: Upcoming section already exists (lines 161-184)
 
 ### 3. AgentProfileScreen.tsx
@@ -25,13 +25,13 @@
 1. **Wait for Metro to finish building** (watch terminal)
 2. **Reload app**: Press `r` in Expo Go or shake → Reload
 3. **Test as Agent**:
-   - Check console logs to see if assignments load
-   - Look for "Agent assignments:" in terminal
+   - Check console logs to see if pet watches load
+   - Look for "Agent pet watches:" in terminal
    - Check if upcoming sessions show in separate section
 4. **Test Agent Profile**: Tap agent chip → see photo if uploaded
 5. **Test Edit Session**: Tap "Edit Session" on any session card
 
-## If Assignments Still Don't Show
+## If Pet Watches Still Don't Show
 
 The issue is likely:
 - Agent not properly saved in `session_agents` table when creating session
@@ -39,7 +39,7 @@ The issue is likely:
 
 Check console output for:
 ```
-Agent assignments: [array of data] Error: null
+Agent pet watches: [array of data] Error: null
 ```
 
 If array is empty, the session creation isn't saving agents properly.

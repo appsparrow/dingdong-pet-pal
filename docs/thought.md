@@ -2,7 +2,7 @@ MULTI-LAYERED PROMPT — “FUR AGENT PRD BUILDER”
 🦴 Prompt Layer 1: Role + Context
 
 You are acting as a senior product strategist and UX writer.
-Your goal is to write a detailed, Markdown-formatted PRD (Product Requirements Document) focused exclusively on the Fur Agent experience in the DingDongDog app — a pet care coordination platform connecting Fur Bosses (pet owners) with Fur Agents (caretakers).
+Your goal is to write a detailed, Markdown-formatted PRD (Product Requirements Document) focused exclusively on the Pet Agent experience in the DingDongDog app — a pet care coordination platform connecting Pet Bosses (pet owners) with Pet Agents (caretakers).
 
 Use engaging yet professional tone.
 Make it suitable for developers, designers, and stakeholders.
@@ -11,7 +11,7 @@ Make it suitable for developers, designers, and stakeholders.
 
 Objectives for this PRD:
 
-Clearly define the Fur Agent user journey and feature set.
+Clearly define the Pet Agent user journey and feature set.
 
 Document core tasks such as logging visits, uploading photos, and marking completion of assigned duties.
 
@@ -25,7 +25,7 @@ The PRD must align with the shared schema (users, sessions, care_tasks, care_log
 
 Generate a document with the following structure:
 
-# DingDongDog — Fur Agent Module PRD
+# DingDongDog — Pet Agent Module PRD
 
 ## 1. Overview
 ## 2. Problem Statement
@@ -43,9 +43,9 @@ Generate a document with the following structure:
 
 Use bullet points and tables for clarity.
 
-Highlight how Fur Agents interact with pets, tasks, and the DingDongDog ecosystem.
+Highlight how Pet Agents interact with pets, tasks, and the DingDongDog ecosystem.
 
-Emphasize features like photo posting, task completion, reminders, and feedback to Fur Boss.
+Emphasize features like photo posting, task completion, reminders, and feedback to Pet Boss.
 
 💻 Prompt Layer 4: Technical Context
 
@@ -85,15 +85,15 @@ Here’s what the generated PRD will look like when you run that prompt:
 
 
 You said:
-Lets call companion - Fur Agent and pet owner - Fur Boss
+Lets call companion - Pet Agent and pet owner - Pet Boss
 
 raft the updated Supabase schema (including the new roles + admin tables), or
 🎨 map out the screen-by-screen product flow (Owner, Companion, Admin) next?
 You said:
-As a furagent, I shoukd be able to post pictures and complete tas assigend  build a good prompt or multiple layered prmpt to get al this done and build a nice PRD docuemnt as markddown doc or .md kind of document  with all thee details in one place. 
+As a Pet Agent, I should be able to post pictures and complete tas assigend  build a good prompt or multiple layered prmpt to get al this done and build a nice PRD docuemnt as markddown doc or .md kind of document  with all thee details in one place. 
 You said:
 Yes.. 
-*generate the full .md PRD** using this multi-layered prompt (based on your schema and branding for *Fur Agent / Fur Boss / Super Admin*) so you can save or share it directly?
+*generate the full .md PRD** using this multi-layered prompt (based on your schema and branding for *Pet Agent / Pet Boss / Super Admin*) so you can save or share it directly?
 
 
 before that I need prmpts to build this app from scratch on lovalb e or cursor so that we dont meiss this details. all users shjould be able to login with email 
@@ -164,8 +164,8 @@ Each pet gets its own digital “card” containing:
 💊 Medical info (vaccines, meds, vet contact, allergies)
 🏠 Boarding info (backup kennel/pet hotel details)
 🎮 Activity preferences (walks, games, socialization level)
-2. Caretaker Dashboard
-Caretakers can:
+2. Pet Agent Dashboard
+Pet Agents can:
 Log in securely (individual profiles)
 View assigned pets and care instructions
 Check-in/out each visit (time, notes, GPS optional)
@@ -180,7 +180,7 @@ Monitor care timeline (feeding, walks, meds)
 Chat or leave pinned notes for caretakers
 View pet “mood tracker” or “gratitude notes” (gamified feedback from the pet’s
 POV)
-4. Coordination Between Caretakers
+4. Coordination Between Pet Agents
 Shared task list for each day (auto-reset daily)
 In-app messaging or note tagging (without needing WhatsApp)
 Task ownership indicators (who fed, who walked, etc.)
@@ -190,7 +190,7 @@ To make it f
 un and sticky:
 “Pet Thanks You!” notifications with playf
 ul animations
-Caretakers earn “Good Paw Points” for consistent care
+Pet Agents earn “Good Paw Points” for consistent care
 Owners can leave badges or tips to recognize good care
 Optional shared timeline (“Pet Journal”) viewable by everyone involved
 🧠 Bonus Features (Future Enhancements)
@@ -310,7 +310,7 @@ Pain Point DescriptionMVP Solution
 between multiple caretakers
 🔔 Missed routines 😺 Owner anxiety when away 💬 Communication clutter ⚠ No backup plan 🧾 No visibility of medical or
 emergency info
-Caretakers forget or delay
+Pet Agents forget or delay
 photo/visit updates
 No single dashboard
 showing who did what
@@ -345,7 +345,7 @@ emergency contacts)
 📱 Core MVP Feature Set
 👪 1. Multi-User Login
 Owner and 1–3 caretakers can log into shared pet space
-Role-based permissions (Owner / Caretaker / Backup)
+Role-based permissions (Owner / Pet Agent / Backup)
 🐕 2. Pet Profile
 Name, age, breed, food preferences
 Routine schedule (feed, walk, play, meds)
@@ -354,7 +354,7 @@ Backup boarding info
 ✅ 3. Daily Care Task Board
 Auto-generated checklist (from pet routine)
 Tasks: Feed, Walk, Play, Meds, etc.
-Caretaker checks off when done → timestamped log
+Pet Agent checks off when done → timestamped log
 Notes + photos per task
 📸 4. Photo Journal (Daily Summary)
 Each visit requires 1 photo/video
@@ -368,7 +368,7 @@ Owner daily digest (summary at end of day)
 💬 6. Shared Notes / Comments
 Quick notes section visible to all caretakers + owner
 Used for updates like “ate half food today” or “seemed tired”
-🧩 7. Backup Caretaker Coordination
+🧩 7. Backup Pet Agent Coordination
 Backup receives auto-alert if task isn’t completed within X minutes/hours
 Can take over seamlessly with notes visible
 🎮 8. Gamified Experience (Light)
@@ -394,7 +394,7 @@ mathematica
 ├── Photo Journal
 ├── Notifications
 ├── Settings
-│ ├── Manage Caretakers
+│ ├── Manage Pet Agents
 │ ├── Backup Setup
 │ ├── Reminder Settings
 └── Help / Emergency Contacts
@@ -444,7 +444,7 @@ login, and also guest setup etc..
 Excellent — that “DingDongDog PRD” gives you a solid starting foundation. Let’s
 productize and evolve it into a f
 ull pet care coordination platform that supports:
-🐶 Pet Owners (the primary customers),
+🐶 Pet Bosss (the primary customers),
 🌟 Pet Companions (fancier term for caretakers), and
 🧭 Super Admin (product operator / platform owner).
 Below is a refined product-level structure, integrating your existing PRD but extending
@@ -462,7 +462,7 @@ time.
 👥
 USER R
 OLES
-1. Pet Owner
+1. Pet Boss
 The person who owns one or more pets and creates a “care session.”
 Sets up pet profiles, schedules, food/meds plan
 Invites companions to care for the pet
@@ -470,7 +470,7 @@ Views live updates, photos, and task logs
 Receives notifications and daily summaries
 Manages subscription, payments, and pet data
 Access: Full control over their own household session
-2. Pet Companion (Caretaker)
+2. Pet Companion (Pet Agent)
 A trusted family member, friend, or professional sitter — “Companion” makes the role
 sound more warm and personal.
 Checks assigned pet’s schedule
@@ -615,13 +615,12 @@ Stripe or LemonSqueezy integration for in-app subscription
 Would you like me to:
 ✅ draft the updated Supabase schema (including the new roles + admin tables), or
 🎨 map out the screen-by-screen product flow (Owner, Companion, Admin) next?
-Lets call companion - Fur Agent and pet owner - Fur
-Boss
+Lets call companion - Pet Agent and pet owner - Pet Boss
 raft the updated Supabase schema (including the new
 roles + admin tables), or
 🎨 map out the screen-by-screen product flow (Owner,
 Companion, Admin) next?
-Love those names 🐾 — “Fur Boss” (pet owner) and “Fur Agent” (caretaker) are
+Love those names 🐾 — “Pet Boss” (pet owner) and “Pet Agent” (caretaker) are
 unique, brandable, and add character to the product.
 Here’s the plan:
 👉 Step 1: We’ll draft the updated Supabase schema reflecting this terminology and
@@ -638,24 +637,24 @@ super_admin → product-level operator
 Table Purpose
 users Base identity record for all roles
 pets Stores pet-specific data
-sessionsLinks a Fur Boss, their pets, and Fur Agents
+sessionsLinks a Pet Boss, their pets, and Pet Agents
 Table Purpose
 care_tasks Defines recurring routines (feeding, walks, etc.)
-care_logs Stores check-ins by Fur Agents
+care_logs Stores check-ins by Pet Agents
 notifications Push & in-app alerts
-subscriptions Billing & plan data for Fur Boss
+subscriptions Billing & plan data for Pet Boss
 support_tickets Customer support logs
 system_reports Aggregated analytics for Super Admin
 promotions Ads, banners, referral codes
 audit_logs Tracks admin-level events
 🧩 Table Definitions
 1. users
-All system users: Fur Bosses, Fur Agents, and Super Admins.
+All system users: Pet Bosses, Pet Agents, and Super Admins.
 Field Type Description
 id uuid (PK) unique user ID
 name text f
 ull name
-email text nullable (Fur Agents may not have
+email text nullable (Pet Agents may not have
 email)
 phone text optional for invites
 role enum (fur_boss ,
@@ -663,7 +662,7 @@ fur_agent ,
 super_admin )
 user role
 avatar_url text optional profile image
-passcode text short 4–6 digit login code (for Fur
+passcode text short 4–6 digit login code (for Pet
 Agents)
 Field Type Description
 status enum (active ,
@@ -676,7 +675,7 @@ Indexes:
 idx_users_role
 idx_users_email
 2. pets
-Each Fur Boss can have multiple pets.
+Each Pet Boss can have multiple pets.
 Field Type Description
 id uuid (PK) unique pet ID
 fur_boss_id uuid (FK → users.id) owner reference
@@ -692,7 +691,7 @@ created_at , updated_at timestamp timestamps
 Indexes:
 idx_pets_fur_boss_id
 3. sessions
-Defines a care “session” — connects a pet with its team of Fur Agents.
+Defines a care “session” — connects a pet with its team of Pet Agents.
 Field Type Description
 id uuid (PK) unique session ID
 fur_boss_id uuid (FK → users.id) creator
@@ -726,7 +725,7 @@ created_at ,
 updated_at
 timestamp timestamps
 5. care_logs
-Real-time check-ins by Fur Agents.
+Real-time check-ins by Pet Agents.
 Field Type Description
 id uuid (PK) unique log entry
 care_task_id uuid (FK → care_tasks.id) task reference
@@ -827,24 +826,21 @@ Custom f
 unction: get_user_role(uid) to simplify access control.
 💡 Optional Next Step
 Would you like me to now create the screen-by-screen product flow (UX journey) for:
-1. Fur Boss
-2. Fur Agent
+1. Pet Boss
+2. Pet Agent
 3. Super Admin Dashboard
 I can design it as a visual sitemap + narrative flow, ready for Figma or design handoff.
-As a f
-uragent, I shoukd be able to post pictures and
+As a Pet Agent, I should be able to post pictures and
 complete tas assigend build a good prompt or multiple
 layered prmpt to get al this done and build a nice PRD
 docuemnt as markddown doc or .md kind of document
 with all thee details in one place.
 Got it 🐾 — you
 want a multi-layered prompt that you (or another AI) can reuse to
-automatically build or update a complete PRD (in .md / Markdown format) for the Fur
-Agent side of the DingDongDog product.
+automatically build or update a complete PRD (in .md / Markdown format) for the Pet Agent side of the DingDongDog product.
 Below is a ready-to-run compound prompt, followed by an example of what the
 generated PRD structure will look like.
-You can copy-paste this prompt into a fresh AI session to get a f
-ull Markdown PRD, or
+You can copy-paste this prompt into a fresh AI session to get a full Markdown PRD, or
 chain it inside your build system (e.g., Cursor, Claude, Notion AI, etc.) to regenerate
 when features evolve.
 🧠 M
@@ -856,16 +852,16 @@ R AGENT PRD
 🦴 Prompt Layer 1: Role + Context
 You are acting as a senior product strategist and UX writer.
 Your goal is to write a detailed, Markdown-formatted PRD (Product Requirements
-Document) focused exclusively on the Fur Agent experience in the DingDongDog
-app — a pet care coordination platform connecting Fur Bosses (pet owners) with Fur
-Agents (caretakers).
+Document) focused exclusively on the Pet Agent experience in the DingDongDog
+app — a pet care coordination platform connecting Pet Bosses (pet owners) with Pet Agents
+(caretakers).
 Use engaging yet professional tone.
 Make it suitable for developers, designers, and stakeholders.
 🐾 Prompt Layer 2: Core O
 bjectives
 O
 bjectives for this PRD:
-1. 2. “Clearly define the Fur Agent user journey and feature set. ”
+1. 2. “Clearly define the Pet Agent user journey and feature set. ”
 “Document core tasks such as logging visits, uploading photos, and marking
 completion of assigned duties. ”
 3. “Include technical requirements, UX flow, and dependencies with Supabase
@@ -877,7 +873,7 @@ care_logs).
 🧩 Prompt Layer 3: Required PRD Sections
 Generate a document with the following structure:
 shell
-# DingDongDog — Fur Agent Module PRD
+# DingDongDog — Pet Agent Module PRD
 ## 1. Overview
 ## 2. Problem Statement
 ## 3. Goals & Objectives
@@ -892,10 +888,10 @@ Copy code
 ## 11. Success Metrics
 ## 12. Future Enhancements
 “Use bullet points and tables for clarity. ”
-“Highlight how Fur Agents interact with pets, tasks, and the DingDongDog
+“Highlight how Pet Agents interact with pets, tasks, and the DingDongDog
 ecosystem. ”
 “Emphasize features like photo posting, task completion, reminders, and
-feedback to Fur Boss. ”
+feedback to Pet Boss. ”
 💻 Prompt Layer 4: Technical Context
 Use the following technical context when writing:
 “Frontend: React Native or Flutter mobile app”
@@ -924,26 +920,26 @@ GET)
 Here’s what the generated PRD will look like when you run that prompt:
 markdown
 Copy code
-# DingDongDog — Fur Agent Module PRD
+# DingDongDog — Pet Agent Module PRD
 **Version:** 1.0
 **Last Updated:** November 2025
 **Author:** Product Strategy – DingDongDog Core Team
 ---
 ## 1. Overview
-The Fur Agent module empowers pet caretakers (“Fur Agents”) to seamlessly
+The Pet Agent module empowers pet caretakers (“Pet Agents”) to seamlessly
 ---
 ## 2. Problem Statement
-Fur Agents currently depend on chat threads and unstructured messages to c
+Pet Agents currently depend on chat threads and unstructured messages to c
 ---
 ## 3. Goals & Objectives
-- Provide a structured, mobile-friendly dashboard for Fur Agents
+- Provide a structured, mobile-friendly dashboard for Pet Agents
 - Enable one-tap task completion and photo uploads
 - Improve communication reliability and pet care consistency
 - Reduce owner anxiety with real-time visibility
 ---
 ## 4. User Persona
 **Name:** Maya
-**Role:** Fur Agent (Professional sitter or family helper)
+**Role:** Pet Agent (Professional sitter or family helper)
 **Goals:** Quick task logging, visual confirmation, minimal typing
 **Pain Points:** Juggling multiple pets, inconsistent instructions
 **Tech Skill:** Moderate, uses mobile apps daily
@@ -951,11 +947,11 @@ Fur Agents currently depend on chat threads and unstructured messages to c
 ## 5. User Stories
 | ID | As a... | I want to... | So that... | Priority |
 |----|----------|--------------|-------------|-----------|
-| FA-1 | Fur Agent | View my assigned pets and today’s schedule | I can pl
-| FA-2 | Fur Agent | Upload a photo after completing a task | The Fur Boss
-| FA-3 | Fur Agent | Mark feeding or walk as complete | Update logs automa
-| FA-4 | Fur Agent | Leave short notes | Share any unusual observations |
-| FA-5 | Fur Agent | Get reminders for upcoming tasks | I don’t miss care w
+| FA-1 | Pet Agent | View my assigned pets and today’s schedule | I can pl
+| FA-2 | Pet Agent | Upload a photo after completing a task | The Pet Boss
+| FA-3 | Pet Agent | Mark feeding or walk as complete | Update logs automa
+| FA-4 | Pet Agent | Leave short notes | Share any unusual observations |
+| FA-5 | Pet Agent | Get reminders for upcoming tasks | I don’t miss care w
 ---
 ## 6. Key Features
 -
@@ -1020,8 +1016,7 @@ Would you like me to now **generate the full `.md` PRD** using this multi-
 Yes..
 *generate the f
 ull .md PRD** using this multi-layered
-prompt (based on your schema and branding for *Fur
-Agent / Fur Boss / Super Admin*) so you can save or
+prompt (based on your schema and branding for *Pet Agent / Pet Boss / Super Admin*) so you can save or
 share it directly?
 before that I need prmpts to build this app from scratch
 on lovalb e or cursor so that we dont meiss this details.
@@ -1035,7 +1030,7 @@ MPT
 Use this to bootstrap the f
 ull-stack app in Cursor or your local environment.
 It will generate backend tables, auth setup, frontend scaffolding, and role-based logic
-for Fur Boss, Fur Agent, and Super Admin.
+for Pet Boss, Pet Agent, and Super Admin.
 🧩 Prompt — Full App Setup
 You are acting as a f
 ull-stack engineer using TypeScript, React (Next.js or React
@@ -1055,7 +1050,7 @@ You must generate:
 2. “Supabase policies (R
 LS) for role-based data isolation”
 3. “Folder structure for frontend”
-4. “Auth flow with role assignment”
+4. “Auth flow with role pet watch”
 5. “API routes for CR
 UD operations on pets, sessions, tasks, logs”
 6. “UI scaffolding (dashboard, login, task list, photo upload)”
@@ -1079,8 +1074,8 @@ Enable R
 LS and apply:
 sql
 Copy code
--- Fur Boss: can access own pets, sessions, and related tasks/logs
--- Fur Agent: can read assigned sessions and write care_logs
+-- Pet Boss: can access own pets, sessions, and related tasks/logs
+-- Pet Agent: can read assigned sessions and write care_logs
 -- Super Admin: unrestricted
 Sample policy for care_logs :
 sql
@@ -1129,8 +1124,8 @@ src/
 🔐 Auth Flow
 Users register with email/password via Supabase Auth.
 On sign-up, prompt user to select role:
-“I’m a Fur Boss 🐾 ” → redirects to pet setup
-“I’m a Fur Agent 🐕 ” → joins via invite/session code
+“I’m a Pet Boss 🐾 ” → redirects to pet setup
+“I’m a Pet Agent 🐕 ” → joins via invite/session code
 “I’m Super Admin” → admin panel (restricted by whitelist email)
 Role stored in public.users.role .
 🧰 API Endpoints (Next.js Example)
@@ -1172,36 +1167,36 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 # 6. Run app
 npm run dev
 🚀 PART 2: PRD DOCU
-MENT — Fur Agent Module
+MENT — Pet Agent Module
 (Markdown)
 Below is the f
 ull .md document you can drop into your /docs folder as
 prd-fur-agent.md .
 markdown
 Copy code
-# DingDongDog — Fur Agent Module PRD
+# DingDongDog — Pet Agent Module PRD
 **Version:** 1.0
 **Last Updated:** November 2025
 **Author:** DingDongDog Product Team
 ---
 ## 1. Overview
-The **Fur Agent Module** enables trusted caretakers to perform daily pet c
+The **Pet Agent Module** enables trusted caretakers to perform daily pet c
 Each action is tracked in real time, providing transparency and accountabi
 ---
 ## 2. Problem Statement
-- Pet owners (Fur Bosses) often travel or work irregular hours.
+- Pet owners (Pet Bosses) often travel or work irregular hours.
 - Care routines are tracked manually over chat or text messages.
 - There’s no unified dashboard to ensure tasks (feeding, walks, meds) are
 ---
 ## 3. Goals & Objectives
-1. Simplify daily workflow for Fur Agents with one-tap actions.
+1. Simplify daily workflow for Pet Agents with one-tap actions.
 2. Provide structured, timestamped proof of each visit.
 3. Build trust through transparent communication and shared logs.
 4. Reduce manual coordination and miscommunication between multiple careta
 ---
 ## 4. User Persona
 **Name:** Maya Patel
-**Role:** Fur Agent
+**Role:** Pet Agent
 **Profile:** 28-year-old professional sitter managing 5 recurring clients.
 **Goals:** Finish tasks quickly, upload a cute pet photo, move on.
 **Pain Points:** Forgetting schedules, juggling messages from multiple own
@@ -1209,12 +1204,12 @@ Each action is tracked in real time, providing transparency and accountabi
 ## 5. User Stories
 | ID | As a... | I want to... | So that... | Priority |
 |----|----------|--------------|-------------|-----------|
-| FA-1 | Fur Agent | Log in using my email and password | Access my assign
-| FA-2 | Fur Agent | View all pets and today’s tasks | Plan my day efficie
-| FA-3 | Fur Agent | Complete tasks with one tap | Confirm completion inst
-| FA-4 | Fur Agent | Upload a photo + note | Provide proof and feedback |
-| FA-5 | Fur Agent | Receive task reminders | Avoid missed feedings/walks
-| FA-6 | Fur Agent | View task history | Track my performance | P1 |
+| FA-1 | Pet Agent | Log in using my email and password | Access my assign
+| FA-2 | Pet Agent | View all pets and today’s tasks | Plan my day efficie
+| FA-3 | Pet Agent | Complete tasks with one tap | Confirm completion inst
+| FA-4 | Pet Agent | Upload a photo + note | Provide proof and feedback |
+| FA-5 | Pet Agent | Receive task reminders | Avoid missed feedings/walks
+| FA-6 | Pet Agent | View task history | Track my performance | P1 |
 ---
 ## 6. Key Features
 ### 🗓 Daily Schedule View
@@ -1284,7 +1279,7 @@ Copy code
 Reminders → 15 min before task window.
 Offline Mode → store logs locally and sync later.
 Duplicate Prevention → one log per task per 30 minutes.
-Missed Task Escalation → alert to Fur Boss.
+Missed Task Escalation → alert to Pet Boss.
 Expired Session → auto-archive to history.
 13. Non-Functional Requirements
 Category Target
