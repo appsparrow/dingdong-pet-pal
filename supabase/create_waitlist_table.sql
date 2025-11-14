@@ -43,3 +43,4 @@ CREATE POLICY "Authenticated users can update waitlist"
 -- Add comment to table
 COMMENT ON TABLE public.waitlist IS 'Stores waitlist signups for Pettabl launch';
 
+
