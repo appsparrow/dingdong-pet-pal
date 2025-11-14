@@ -53,7 +53,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFB4A2]/10 via-background to-[#B794F6]/10">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center max-w-4xl mx-auto">
@@ -248,7 +248,7 @@ const Landing = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="py-20 bg-gradient-to-br from-primary to-secondary text-white">
+      <div className="py-20 bg-gradient-to-r from-[#FFB4A2] via-[#D4A5F5] to-[#B794F6] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Ready to Simplify Pet Sitting?

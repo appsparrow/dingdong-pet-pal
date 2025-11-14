@@ -332,6 +332,15 @@ const AgentDashboard = () => {
             </div>
           )}
         </div>
+
+        {/* Coming Soon Banner */}
+        <div className="px-4 pb-6">
+          <div className="bg-gradient-to-r from-[#FFB4A2] via-[#D4A5F5] to-[#B794F6] rounded-2xl p-4 text-center">
+            <p className="text-white font-semibold text-sm">
+              🍎 Apple and Android app coming soon! ✨
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

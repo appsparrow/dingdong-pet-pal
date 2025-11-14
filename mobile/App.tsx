@@ -19,6 +19,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Home, UserRound, PawPrint, Calendar } from 'lucide-react-native';
+import { HelmetProvider } from 'react-helmet-async';
 import { supabase } from './src/lib/supabase';
 import LandingScreen from './src/screens/LandingScreen';
 import BossDashboard from './src/screens/BossDashboard';
@@ -420,42 +421,55 @@ export default function App() {
     );
   }
 
-  if (!session) {
-    return (
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {Platform.OS === 'web' ? (
-              <>
-                <Stack.Screen name="Landing" component={LandingScreen} />
+  const AppContent = () => {
+    if (!session) {
+      return (
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              {Platform.OS === 'web' ? (
+                <>
+                  <Stack.Screen name="Landing" component={LandingScreen} />
+                  <Stack.Screen name="Auth">
+                    {(props) => <AuthScreen {...props} onSignIn={() => setSession(true)} />}
+                  </Stack.Screen>
+                </>
+              ) : (
                 <Stack.Screen name="Auth">
                   {(props) => <AuthScreen {...props} onSignIn={() => setSession(true)} />}
                 </Stack.Screen>
-              </>
-            ) : (
-              <Stack.Screen name="Auth">
-                {(props) => <AuthScreen {...props} onSignIn={() => setSession(true)} />}
-              </Stack.Screen>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </GestureHandlerRootView>
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </GestureHandlerRootView>
+      );
+    }
+
+    return (
+      <RoleProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <View style={[styles.appRoot, Platform.OS === 'web' && styles.webAppRoot]}>
+            <View style={[styles.appContainer, Platform.OS === 'web' && styles.webAppContainer]}>
+              <NavigationContainer>
+                <MainStack />
+              </NavigationContainer>
+            </View>
+          </View>
+        </GestureHandlerRootView>
+      </RoleProvider>
+    );
+  };
+
+  // Wrap with HelmetProvider for web SEO support
+  if (Platform.OS === 'web') {
+    return (
+      <HelmetProvider>
+        <AppContent />
+      </HelmetProvider>
     );
   }
 
-  return (
-    <RoleProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <View style={[styles.appRoot, Platform.OS === 'web' && styles.webAppRoot]}>
-          <View style={[styles.appContainer, Platform.OS === 'web' && styles.webAppContainer]}>
-            <NavigationContainer>
-              <MainStack />
-            </NavigationContainer>
-          </View>
-        </View>
-      </GestureHandlerRootView>
-    </RoleProvider>
-  );
+  return <AppContent />;
 }
 
 const styles = StyleSheet.create({

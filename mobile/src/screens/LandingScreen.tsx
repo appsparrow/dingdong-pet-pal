@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, Image, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Dog, Heart, Calendar, Users, Shield, Smartphone } from 'lucide-react-native';
+import { Helmet } from 'react-helmet-async';
 import { supabase } from '../lib/supabase';
 import { colors } from '../theme/colors';
 
@@ -60,8 +61,113 @@ export default function LandingScreen({ navigation }: any) {
     }
   };
 
+  // SEO metadata - only rendered on web
+  const siteUrl = 'https://pettabl.com';
+  const siteName = 'Pettabl';
+  const pageTitle = 'Pettabl – Smart In-Home Pet Sitting App | Pet Care Scheduling & Coordination';
+  const pageDescription = 'Pettabl is the easiest way to coordinate in-home pet sitting. Create schedules, assign trusted caretakers, track visits, and get photo updates for dogs, cats, birds, reptiles, and more. iOS & Android app coming soon.';
+  const keywords = 'pet sitting app, pet care scheduling, dog walking, cat sitter, bird care, reptile care, in-home pet sitting, pet coordination app, pet routines, pet updates, multi-pet app, pet parenting, caretaking app, pet management, pet care coordination, pet sitting software, pet care app, pet sitter app, dog care app, cat care app, pet activity tracking, pet schedule app, pet care management, trusted pet sitters, pet sitting coordination';
+  const ogImage = `${siteUrl}/logo-pettabl.png`;
+  const twitterHandle = '@pettabl';
+
+  // Structured Data (JSON-LD) for better SEO
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Pettabl',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'iOS, Android, Web',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    description: pageDescription,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '5',
+      ratingCount: '1',
+    },
+    author: {
+      '@type': 'Organization',
+      name: 'Pettabl',
+    },
+  };
+
   return (
-    <ScrollView ref={scrollRef} style={styles.container} contentContainerStyle={styles.scrollContent}>
+    <>
+      {isWeb && (
+        <Helmet>
+          {/* Primary Meta Tags */}
+          <title>{pageTitle}</title>
+          <meta name="title" content={pageTitle} />
+          <meta name="description" content={pageDescription} />
+          <meta name="keywords" content={keywords} />
+          <meta name="author" content="Pettabl" />
+          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+          <meta name="language" content="English" />
+          <meta name="revisit-after" content="7 days" />
+          <meta name="theme-color" content="#FFB4A2" />
+          <link rel="canonical" href={siteUrl} />
+
+          {/* Open Graph / Facebook */}
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={siteUrl} />
+          <meta property="og:title" content={pageTitle} />
+          <meta property="og:description" content={pageDescription} />
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content="Pettabl - Smart Pet Sitting App" />
+          <meta property="og:site_name" content={siteName} />
+          <meta property="og:locale" content="en_US" />
+
+          {/* Twitter */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:url" content={siteUrl} />
+          <meta name="twitter:title" content={pageTitle} />
+          <meta name="twitter:description" content={pageDescription} />
+          <meta name="twitter:image" content={ogImage} />
+          <meta name="twitter:image:alt" content="Pettabl - Smart Pet Sitting App" />
+          <meta name="twitter:site" content={twitterHandle} />
+          <meta name="twitter:creator" content={twitterHandle} />
+
+          {/* Additional Meta Tags */}
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+          <meta name="apple-mobile-web-app-title" content={siteName} />
+          <meta name="format-detection" content="telephone=no" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <meta name="msapplication-TileColor" content="#FFB4A2" />
+          <meta name="msapplication-config" content="/browserconfig.xml" />
+
+          {/* Geo Tags (if applicable) */}
+          <meta name="geo.region" content="US" />
+          <meta name="geo.placename" content="United States" />
+
+          {/* App Links */}
+          <meta property="al:ios:app_name" content={siteName} />
+          <meta property="al:android:app_name" content={siteName} />
+          <meta property="al:web:url" content={siteUrl} />
+
+          {/* Structured Data */}
+          <script type="application/ld+json">
+            {JSON.stringify(structuredData)}
+          </script>
+
+          {/* Additional SEO Tags */}
+          <meta name="application-name" content={siteName} />
+          <meta name="generator" content="Pettabl" />
+          <meta name="referrer" content="no-referrer-when-downgrade" />
+          <meta name="rating" content="general" />
+          <meta name="distribution" content="global" />
+          <meta name="coverage" content="worldwide" />
+          <meta name="target" content="all" />
+          <meta name="audience" content="all" />
+        </Helmet>
+      )}
+
+      <ScrollView ref={scrollRef} style={styles.container} contentContainerStyle={styles.scrollContent}>
       <LinearGradient
         colors={[colors.primary + '10', colors.background, colors.accent + '10']}
         style={styles.gradient}
@@ -71,6 +177,19 @@ export default function LandingScreen({ navigation }: any) {
           <View style={styles.logoContainer}>
             <Image source={logo} style={styles.logo} resizeMode="contain" />
           </View>
+          
+          {/* Coming Soon Banner - Top */}
+          <LinearGradient
+            colors={['#FFB4A2', '#D4A5F5', '#B794F6']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.topComingSoonBanner}
+          >
+            <Text style={styles.topComingSoonText}>
+              Apple iOS and Android app coming soon! ✨
+            </Text>
+          </LinearGradient>
+          
           <Text style={styles.description}>
             Coordinate in-home pet sitting with ease. Assign trusted caretakers, share routines, and keep your furry friends happy while you’re away.
           </Text>
@@ -198,7 +317,9 @@ export default function LandingScreen({ navigation }: any) {
 
         {/* CTA Section */}
         <LinearGradient
-          colors={[colors.primary, colors.secondary]}
+          colors={['#FFB4A2', '#D4A5F5', '#B794F6']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
           style={styles.cta}
         >
           <Text style={styles.ctaTitle}>Ready to Simplify Pet Sitting?</Text>
@@ -212,6 +333,10 @@ export default function LandingScreen({ navigation }: any) {
           >
             <Text style={styles.ctaButtonText}>Join the Waitlist 🎉</Text>
           </TouchableOpacity>
+          
+          <Text style={styles.comingSoonText}>
+           Apple iOS and Android app coming soon! ✨
+          </Text>
         </LinearGradient>
 
         {/* Footer */}
@@ -228,6 +353,7 @@ export default function LandingScreen({ navigation }: any) {
         </View>
       </LinearGradient>
     </ScrollView>
+    </>
   );
 }
 
@@ -263,6 +389,30 @@ const styles = StyleSheet.create({
   logo: {
     width: 280,
     height: 120,
+  },
+  topComingSoonBanner: {
+    width: '100%',
+    maxWidth: 600,
+    borderRadius: 20,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    marginBottom: 24,
+    ...(Platform.OS === 'web'
+      ? { boxShadow: '0px 8px 24px rgba(255, 180, 162, 0.3)' }
+      : {
+          shadowColor: '#FFB4A2',
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 8,
+          elevation: 5,
+        }),
+  },
+  topComingSoonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+    letterSpacing: 0.3,
   },
   title: {
     fontSize: 56,
@@ -488,6 +638,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: '700',
+  },
+  comingSoonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginTop: 24,
+    opacity: 0.95,
   },
   footer: {
     paddingVertical: 48,

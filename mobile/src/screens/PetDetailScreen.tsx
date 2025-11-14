@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Image, TextInput, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ArrowLeft, Plus, Edit, Save, X, Camera } from 'lucide-react-native';
+import { ArrowLeft, Plus, Edit, Save, X, Camera, UtensilsCrossed, Pill, Phone } from 'lucide-react-native';
 import { supabase } from '../lib/supabase';
 import { colors } from '../theme/colors';
 import { CreateSessionModal } from '../components/CreateSessionModal';
@@ -253,18 +253,6 @@ export default function PetDetailScreen({ route, navigation }: any) {
     );
   };
 
-  const getPetIcon = (petType: string | null) => {
-    switch (petType) {
-      case 'dog': return '🐶';
-      case 'cat': return '🐱';
-      case 'fish': return '🐠';
-      case 'bird': return '🐦';
-      case 'rabbit': return '🐰';
-      case 'turtle': return '🐢';
-      case 'hamster': return '🐭';
-      default: return '🐾';
-    }
-  };
 
   if (!pet) {
     return (
@@ -331,7 +319,7 @@ export default function PetDetailScreen({ route, navigation }: any) {
             <Image source={{ uri: photoUri || pet.photo_url }} style={styles.petPhoto} />
           ) : (
             <View style={styles.placeholderCircle}>
-              <Text style={styles.petIcon}>{getPetIcon(pet.pet_type)}</Text>
+              <PetIcon type={pet.pet_type as PetType} size={56} color={colors.primary} />
             </View>
           )}
           {editing && canManage && (
@@ -461,21 +449,30 @@ export default function PetDetailScreen({ route, navigation }: any) {
               
               {pet.food_preferences && (
                 <View style={styles.infoCard}>
-                  <Text style={styles.infoLabel}>🍽️ Food Preferences</Text>
+                  <View style={styles.infoLabelRow}>
+                    <UtensilsCrossed size={18} color={colors.primary} />
+                    <Text style={styles.infoLabel}>Food Preferences</Text>
+                  </View>
                   <Text style={styles.infoText}>{pet.food_preferences}</Text>
                 </View>
               )}
 
               {pet.medical_info && (
                 <View style={styles.infoCard}>
-                  <Text style={styles.infoLabel}>💊 Medical Information</Text>
+                  <View style={styles.infoLabelRow}>
+                    <Pill size={18} color={colors.primary} />
+                    <Text style={styles.infoLabel}>Medical Information</Text>
+                  </View>
                   <Text style={styles.infoText}>{pet.medical_info}</Text>
                 </View>
               )}
 
               {pet.vet_contact && (
                 <View style={styles.infoCard}>
-                  <Text style={styles.infoLabel}>📞 Vet Contact</Text>
+                  <View style={styles.infoLabelRow}>
+                    <Phone size={18} color={colors.primary} />
+                    <Text style={styles.infoLabel}>Vet Contact</Text>
+                  </View>
                   <Text style={styles.infoText}>{pet.vet_contact}</Text>
                 </View>
               )}
@@ -483,45 +480,47 @@ export default function PetDetailScreen({ route, navigation }: any) {
           )}
 
           {/* Pet Watches */}
-          <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Pet Watches</Text>
-              {isBoss && (
-                <TouchableOpacity style={styles.addButton} onPress={() => setSessionOpen(true)}>
-                  <Plus color="#fff" size={20} />
-                  <Text style={styles.addButtonText}>New</Text>
-                </TouchableOpacity>
+          {!editing && (
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitleNoMargin}>Pet Watches</Text>
+                {isBoss && (
+                  <TouchableOpacity style={styles.addButton} onPress={() => setSessionOpen(true)}>
+                    <Plus color="#fff" size={20} />
+                    <Text style={styles.addButtonText}>New</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+
+              {sessions.length === 0 ? (
+                <View style={styles.emptyState}>
+                  <Text style={styles.emptyIcon}>📅</Text>
+                  <Text style={styles.emptyText}>No pet watches yet</Text>
+                </View>
+              ) : (
+                sessions.map((session) => (
+                  <CarePlanCard
+                    key={session.id}
+                    title={pet.name}
+                    startDate={session.start_date}
+                    endDate={session.end_date}
+                    status={session.status}
+                    agents={session.session_agents.map((a: any) => ({
+                      id: a.fur_agent_id,
+                      name: a.profiles?.name,
+                      email: a.profiles?.email,
+                    }))}
+                    onPressEdit={isBoss ? () => setSessionOpen(session) : undefined}
+                    onPressDelete={isBoss ? () => handleDeleteSession(session.id) : undefined}
+                    onPressAgent={(agentId) => navigation.navigate('AgentProfile', { agentId })}
+                  />
+                ))
               )}
             </View>
-
-            {sessions.length === 0 ? (
-              <View style={styles.emptyState}>
-                <Text style={styles.emptyIcon}>📅</Text>
-                <Text style={styles.emptyText}>No pet watches yet</Text>
-              </View>
-            ) : (
-              sessions.map((session) => (
-                <CarePlanCard
-                  key={session.id}
-                  title={pet.name}
-                  startDate={session.start_date}
-                  endDate={session.end_date}
-                  status={session.status}
-                  agents={session.session_agents.map((a: any) => ({
-                    id: a.fur_agent_id,
-                    name: a.profiles?.name,
-                    email: a.profiles?.email,
-                  }))}
-                  onPressEdit={isBoss ? () => setSessionOpen(session) : undefined}
-                  onPressDelete={isBoss ? () => handleDeleteSession(session.id) : undefined}
-                  onPressAgent={(agentId) => navigation.navigate('AgentProfile', { agentId })}
-                />
-              ))
-            )}
-          </View>
+          )}
 
           {/* Activity Photos */}
-          {photos.length > 0 && (
+          {!editing && photos.length > 0 && (
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Activity Photos</Text>
               <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
@@ -545,22 +544,25 @@ export default function PetDetailScreen({ route, navigation }: any) {
             </View>
           )}
 
-          <View style={{ marginTop: 8 }}>
-            <Text style={{ fontSize: 16, fontWeight: '700', color: colors.text, marginBottom: 12 }}>Danger Zone</Text>
-            {canManage && (
-              <TouchableOpacity
-                style={{ height: 52, borderRadius: 14, borderWidth: 2, borderColor: '#ef4444', alignItems: 'center', justifyContent: 'center' }}
-                onPress={() => {
-                  Alert.alert('Delete Pet', `Are you sure you want to delete ${pet?.name}?`, [
-                    { text: 'Cancel', style: 'cancel' },
-                    { text: 'Delete', style: 'destructive', onPress: deletePet },
-                  ]);
-                }}
-              >
-                <Text style={{ color: '#ef4444', fontWeight: '700' }}>Delete Pet</Text>
-              </TouchableOpacity>
-            )}
-          </View>
+          {/* Danger Zone */}
+          {!editing && (
+            <View style={styles.section}>
+              <Text style={styles.dangerZoneTitle}>Danger Zone</Text>
+              {canManage && (
+                <TouchableOpacity
+                  style={styles.deleteButton}
+                  onPress={() => {
+                    Alert.alert('Delete Pet', `Are you sure you want to delete ${pet?.name}?`, [
+                      { text: 'Cancel', style: 'cancel' },
+                      { text: 'Delete', style: 'destructive', onPress: deletePet },
+                    ]);
+                  }}
+                >
+                  <Text style={styles.deleteButtonText}>Delete Pet</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
         </View>
       </ScrollView>
       {isBoss && (
@@ -597,12 +599,11 @@ const styles = StyleSheet.create({
   petPhotoWrapper: { width: 120, height: 120, borderRadius: 60, borderWidth: 4, borderColor: 'rgba(255,255,255,0.5)', overflow: 'hidden', justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' },
   petPhoto: { width: '100%', height: '100%' },
   placeholderCircle: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' },
-  petIcon: { fontSize: 56 },
   photoBadge: { position: 'absolute', bottom: 6, right: 6, width: 32, height: 32, borderRadius: 16, backgroundColor: 'rgba(0,0,0,0.35)', justifyContent: 'center', alignItems: 'center' },
   scroll: { flex: 1 },
-  scrollContent: { flexGrow: 1 },
+  scrollContent: { flexGrow: 1, paddingBottom: 20 },
   content: { marginTop: -32, paddingTop: 48, paddingHorizontal: 20, paddingBottom: 40, backgroundColor: 'rgba(255,255,255,0.82)', borderTopLeftRadius: 32, borderTopRightRadius: 32, minHeight: '100%' },
-  card: { backgroundColor: '#fff', borderRadius: 20, padding: 20, marginBottom: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8, elevation: 3 },
+  card: { backgroundColor: '#fff', borderRadius: 20, padding: 20, paddingBottom: 24, marginBottom: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8, elevation: 3 },
   petHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   petInfo: { flex: 1 },
   petName: { fontSize: 28, fontWeight: 'bold', color: colors.text, marginBottom: 4 },
@@ -612,8 +613,10 @@ const styles = StyleSheet.create({
   section: { marginBottom: 24 },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
   sectionTitle: { fontSize: 20, fontWeight: 'bold', color: colors.text, marginBottom: 16 },
+  sectionTitleNoMargin: { fontSize: 20, fontWeight: 'bold', color: colors.text },
   infoCard: { backgroundColor: '#fff', borderRadius: 16, padding: 16, marginBottom: 12, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 },
-  infoLabel: { fontSize: 14, fontWeight: '600', color: colors.text, marginBottom: 8 },
+  infoLabelRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
+  infoLabel: { fontSize: 14, fontWeight: '600', color: colors.text },
   infoText: { fontSize: 16, color: colors.textMuted, lineHeight: 24 },
   addButton: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.primary, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 12, gap: 4 },
   addButtonText: { color: '#fff', fontSize: 14, fontWeight: '600' },
@@ -666,11 +669,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 24,
+    marginBottom: 8,
     gap: 12,
   },
   cancelButton: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 8,
     backgroundColor: '#f0f0f0',
     borderRadius: 12,
@@ -683,13 +689,35 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
   },
   saveButton: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 8,
     backgroundColor: colors.primary,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 12,
+  },
+  dangerZoneTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.text,
+    marginBottom: 12,
+  },
+  deleteButton: {
+    height: 52,
+    borderRadius: 14,
+    borderWidth: 2,
+    borderColor: '#ef4444',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  deleteButtonText: {
+    color: '#ef4444',
+    fontWeight: '700',
+    fontSize: 16,
   },
   saveButtonText: {
     color: '#fff',

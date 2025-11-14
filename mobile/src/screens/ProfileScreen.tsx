@@ -392,23 +392,24 @@ export default function ProfileScreen() {
           </>
         )}
 
-        {/* Sign Out */}
-        {!editing && (
-          <TouchableOpacity style={styles.signOutButton} onPress={signOut}>
-            <View style={styles.buttonContent}>
-              <LogOut color={colors.primary} size={20} />
-              <Text style={styles.signOutText}>Sign Out</Text>
-            </View>
-          </TouchableOpacity>
-        )}
+        {/* Switch Role */}
         {!editing && (
           <TouchableOpacity
-            style={[styles.signOutButton, { borderColor: colors.accent, marginTop: 12 }]}
+            style={[styles.signOutButton, { borderColor: colors.accent }]}
             onPress={switchRole}
           >
             <View style={styles.buttonContent}>
               <Shuffle color={colors.accent} size={20} />
               <Text style={[styles.signOutText, { color: colors.accent }]}>Switch to {activeRole === 'fur_boss' ? 'Pet Watcher' : 'Pet Boss'}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        {/* Sign Out */}
+        {!editing && (
+          <TouchableOpacity style={[styles.signOutButton, { marginTop: 12 }]} onPress={signOut}>
+            <View style={styles.buttonContent}>
+              <LogOut color={colors.primary} size={20} />
+              <Text style={styles.signOutText}>Sign Out</Text>
             </View>
           </TouchableOpacity>
         )}

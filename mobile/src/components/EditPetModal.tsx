@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Image, Alert, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { Camera } from 'lucide-react-native';
 import { supabase } from '../lib/supabase';
 import { colors } from '../theme/colors';
+import { PetIcon } from './PetIcon';
 import { uploadImageToR2, deleteImageFromR2 } from '../lib/r2-storage';
 
 type Props = {
@@ -121,7 +123,10 @@ export function EditPetModal({ visible, onClose, pet, onSaved }: Props) {
                   {photoUri || pet?.photo_url ? (
                     <Image source={{ uri: photoUri || pet?.photo_url }} style={styles.photoImg} />
                   ) : (
-                    <Text style={styles.photoPlaceholder}>📷 Change Photo</Text>
+                    <View style={styles.photoPlaceholder}>
+                      <Camera size={32} color={colors.textMuted} />
+                      <Text style={styles.photoPlaceholderText}>Change Photo</Text>
+                    </View>
                   )}
                 </TouchableOpacity>
 
@@ -135,7 +140,10 @@ export function EditPetModal({ visible, onClose, pet, onSaved }: Props) {
                       onPress={() => setPetType(t)}
                       style={[styles.typeChip, petType === t && styles.typeChipActive]}
                     >
-                      <Text style={[styles.typeText, petType === t && styles.typeTextActive]}>{t}</Text>
+                      <View style={styles.typeChipContent}>
+                        <PetIcon type={t} size={18} color={petType === t ? colors.primary : colors.textMuted} />
+                        <Text style={[styles.typeText, petType === t && styles.typeTextActive]}>{t}</Text>
+                      </View>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -174,12 +182,14 @@ const styles = StyleSheet.create({
   title: { fontSize: 20, fontWeight: '700', marginBottom: 12, color: colors.text },
   photo: { width: 120, height: 120, borderRadius: 60, backgroundColor: '#f3f4f6', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginBottom: 16 },
   photoImg: { width: 120, height: 120, borderRadius: 60 },
-  photoPlaceholder: { color: colors.textMuted },
+  photoPlaceholder: { alignItems: 'center', justifyContent: 'center', gap: 8 },
+  photoPlaceholderText: { color: colors.textMuted, fontSize: 12, fontWeight: '500' },
   label: { fontSize: 14, fontWeight: '600', color: colors.textMuted, marginBottom: 6, marginTop: 10 },
   input: { height: 52, borderWidth: 2, borderColor: colors.border, borderRadius: 14, paddingHorizontal: 14, marginBottom: 12 },
   typeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 12 },
   typeChip: { borderWidth: 2, borderColor: colors.border, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 8 },
   typeChipActive: { borderColor: colors.primary, backgroundColor: colors.primary + '15' },
+  typeChipContent: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   typeText: { color: colors.textMuted, fontWeight: '600' },
   typeTextActive: { color: colors.primary },
   primaryButton: { height: 52, backgroundColor: colors.primary, borderRadius: 14, alignItems: 'center', justifyContent: 'center', marginTop: 4 },

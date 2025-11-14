@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Image, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { Camera } from 'lucide-react-native';
 import { supabase } from '../lib/supabase';
 import { colors } from '../theme/colors';
 import { PetIcon } from './PetIcon';
@@ -118,7 +119,10 @@ export function AddPetModal({ visible, onClose, onCreated }: Props) {
               {photoUri ? (
                 <Image source={{ uri: photoUri }} style={styles.photoImg} />
               ) : (
-                <Text style={styles.photoPlaceholder}>📷 Add Photo</Text>
+                <View style={styles.photoPlaceholder}>
+                  <Camera size={32} color={colors.textMuted} />
+                  <Text style={styles.photoPlaceholderText}>Add Photo</Text>
+                </View>
               )}
             </TouchableOpacity>
 
@@ -171,7 +175,8 @@ const styles = StyleSheet.create({
   title: { fontSize: 20, fontWeight: '700', marginBottom: 12, color: colors.text },
   photo: { width: 120, height: 120, borderRadius: 60, backgroundColor: '#f3f4f6', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginBottom: 16 },
   photoImg: { width: 120, height: 120, borderRadius: 60 },
-  photoPlaceholder: { color: colors.textMuted },
+  photoPlaceholder: { alignItems: 'center', justifyContent: 'center', gap: 8 },
+  photoPlaceholderText: { color: colors.textMuted, fontSize: 12, fontWeight: '500' },
   label: { fontSize: 14, fontWeight: '600', color: colors.textMuted, marginBottom: 6, marginTop: 10 },
   input: { height: 52, borderWidth: 2, borderColor: colors.border, borderRadius: 14, paddingHorizontal: 14, marginBottom: 12 },
   typeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 12 },
